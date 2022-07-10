@@ -6,14 +6,14 @@ require_once 'models/Database.php';
 // TODO : Créer une instance de la classe PDO (connexion à la base)
 $pdo = new Database;
 extract($_GET);
-if (isset($object)&&($objet==true)) {
+if (isset($object)&&($object==true)) {
 
     try {
         //code...
         $req = "SELECT * FROM foundlost ";
         $stmt = $pdo->getPDO()->prepare($req);
         $resultat = $stmt->execute();
-        var_dump(json_encode($stmt->fetchAll(PDO::FETCH_ASSOC)));
+        echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
         $stmt->closeCursor();
         if($resultat > 0){ 
            $pdo->getPDO();
