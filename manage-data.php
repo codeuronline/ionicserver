@@ -27,8 +27,8 @@ extract($_GET);
 $key = strip_tags($key);
 var_dump("key", $key);
 // Récupérer les paramètres envoyés par le client vers l’API
-//$input = file_get_contents('php://input');
-$input = '{"description":"voiture","status":0,"date":"2022-07-11","location":"Paris","firstname":"theodore","lastname":"Mozelle","email":"yugielf@gmail.com"}';
+$input = file_get_contents('php://input');
+//$input = '{"description":"voiture","status":0,"date":"2022-07-11","location":"Paris","firstname":"theodore","lastname":"Mozelle","email":"yugielf@gmail.com"}';
 
 if (!empty($input)) {
     $data = json_decode($input, true);
