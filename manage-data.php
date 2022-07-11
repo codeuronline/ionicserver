@@ -18,16 +18,17 @@ require_once 'models/Database.php';
 // TODO : Créer une instance de la classe PDO
 $pdo = new Database;
 $pdo->getPDO();
-var_dump("Instance PDO crée");
+// var_dump("Instance PDO crée");
 
 
 // Récupérer le paramètre d’action de l’URL du client depuis $_GET[‘key’] 
 // et nettoyer la valeur
 extract($_GET);
-$key = strip_tags($key);
-var_dump("key", $key);
+$key = strip_tags($_GET['key']);
+// var_dump("key", $key);
 // Récupérer les paramètres envoyés par le client vers l’API
 $input = file_get_contents('php://input');
+// var_dump("input",$input);
 //$input = '{"description":"voiture","status":0,"date":"2022-07-11","location":"Paris","firstname":"theodore","lastname":"Mozelle","email":"yugielf@gmail.com"}';
 
 if (!empty($input)) {
@@ -45,7 +46,7 @@ if (!empty($input)) {
     switch ($key) {
             //Ajoute un nouvel enregistrement
         case "create":
-            var_dump("CREATE DETECTE");
+            // var_dump("CREATE DETECTE");
             // TODO : Filtrer les valeurs entrantes
             if (!empty($description)) {
                 var_dump(filter_var($status, FILTER_VALIDATE_BOOLEAN,FILTER_NULL_ON_FAILURE));
