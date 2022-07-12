@@ -26,10 +26,9 @@ $pdo->getPDO();
 extract($_GET);
 $key = strip_tags($_GET['key']);
 // var_dump("key", $key);
-// Récupérer les paramètres envoyés par le client vers l’API
+
 $input = file_get_contents('php://input');
-// var_dump("input",$input);
-//$input = '{"description":"voiture","status":0,"date":"2022-07-11","location":"Paris","firstname":"theodore","lastname":"Mozelle","email":"yugielf@gmail.com"}';
+
 
 if (!empty($input)) {
     $data = json_decode($input, true);
@@ -49,7 +48,7 @@ if (!empty($input)) {
             // var_dump("CREATE DETECTE");
             // TODO : Filtrer les valeurs entrantes
             if (!empty($description)) {
-                var_dump(filter_var($status, FILTER_VALIDATE_BOOLEAN,FILTER_NULL_ON_FAILURE));
+                // var_dump(filter_var($status, FILTER_VALIDATE_BOOLEAN,FILTER_NULL_ON_FAILURE));
                 if (filter_var($status, FILTER_VALIDATE_BOOLEAN,FILTER_NULL_ON_FAILURE)!==null) {
                     if (is_date_valid($date)) {
                         if (!empty($location)) {
