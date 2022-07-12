@@ -1,7 +1,7 @@
 <?php
 define("URL", str_replace("manage-data.php", "", (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: Content-Type');
+//header('Access-Control-Allow-Headers: Content-Type');
 
 function is_date_valid($date, $format = "Y-m-d")
 {
@@ -29,7 +29,6 @@ var_dump("key", $key);
 // Récupérer les paramètres envoyés par le client vers l’API
 $input = file_get_contents('php://input');
 // $input = '{"description":"voiture","status":0,"date":"2022-07-11","location":"Paris","firstname":"theodore","lastname":"Mozelle","email":"yugielf@gmail.com"}';
-
 if (!empty($input)) {
     $data = json_decode($input, true);
     $description = strip_tags($data['description']);

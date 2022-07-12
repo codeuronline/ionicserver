@@ -1,10 +1,11 @@
 <?php
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-Type');
 // TODO : Définir les paramètres de connexion
 require_once 'models/Database.php';
 // TODO : Créer une instance de la classe PDO (connexion à la base)
 $pdo = new Database;
-$extract($_GET);
+extract($_GET);
 $key = strip_tags($key);
 if (isset($key) && !empty($key)) {
     switch ($key) {
@@ -14,7 +15,8 @@ if (isset($key) && !empty($key)) {
             $req = "SELECT * FROM foundlost WHERE status=1 ORDER date BY DESC";
             $stmt = $pdo->getPDO()->prepare($req);
             $resultat = $stmt->execute();
-            var_dump(json_encode($stmt->fetchAll(PDO::FETCH_ASSOC)));
+            $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($resultatValue);
             $stmt->closeCursor();
             if($resultat > 0){ 
                $pdo->getPDO();
@@ -28,10 +30,13 @@ if (isset($key) && !empty($key)) {
             # code...
             try {
                 // code...
-                $req = "SELECT * FROM foundlost WHERE status=0 ORDER BY DESC";
+                $req = "SELECT * FROM foundlost WHERE status=0 ORDER BY date DESC";
                 $stmt = $pdo->getPDO()->prepare($req);
                 $resultat = $stmt->execute();
-                var_dump(json_encode($stmt->fetchAll(PDO::FETCH_ASSOC)));
+                //$tab=[array("description"=>"bateau","date"=>"2022-11-25","location"=>"Paris")];
+                $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
+                echo json_encode($resultatValue);
+                // echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
                 $stmt->closeCursor();
                 if($resultat > 0){ 
                    $pdo->getPDO();
