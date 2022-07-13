@@ -12,7 +12,7 @@ if (isset($key) && !empty($key)) {
         case 'found':
         try {
             //code...
-            $req = "SELECT * FROM foundlost WHERE status=1 ORDER date BY DESC";
+            $req = "SELECT * FROM foundlost WHERE status=1 ORDER BY date DESC";
             $stmt = $pdo->getPDO()->prepare($req);
             $resultat = $stmt->execute();
             $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
