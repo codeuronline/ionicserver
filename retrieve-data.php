@@ -48,7 +48,7 @@ if (isset($key) && !empty($key)) {
             case 'id':
             # code...
             try {
-                var_dump("PARAMTRE ID_OJECT détecté",$id);
+                var_dump("PARAMETRE ID_OJECT détecté",$id);
                 $req = "SELECT * FROM foundlost WHERE id_object=:id_object";
                 $stmt = $pdo->getPDO()->prepare($req);
                 $stmt->bindValue(':id_object',$id,PDO::PARAM_INT);
