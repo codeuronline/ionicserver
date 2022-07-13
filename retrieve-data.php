@@ -45,6 +45,26 @@ if (isset($key) && !empty($key)) {
                 //throw $th;
             }
             break;
+            case 'id':
+            # code...
+            try {
+                var_dump("PARAMTRE ID_OJECT détecté",$id);
+                $req = "SELECT * FROM foundlost WHERE id_object=:id_object";
+                $stmt = $pdo->getPDO()->prepare($req);
+                $stmt->bindValue(':id_object',$id,PDO::PARAM_INT);
+                $resultat = $stmt->execute();
+                //$tab=[array("description"=>"bateau","date"=>"2022-11-25","location"=>"Paris")];
+                $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
+                echo json_encode($resultatValue);
+                // echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+                $stmt->closeCursor();
+                if($resultat > 0){ 
+                   $pdo->getPDO();
+                 }
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+            break;
         default:
             var_dump("Mot clé invalide");
             break;
