@@ -45,10 +45,10 @@ if (isset($key) && !empty($key)) {
                 //throw $th;
             }
             break;
-            case 'id':
-            # code...
-            try {
-                var_dump("PARAMETRE ID_OJECT détecté",$id);
+        default:
+        var_dump("PARAMETRE ID_OJECT détecté",$id);
+        try {
+       
                 $req = "SELECT * FROM foundlost WHERE id_object=:id_object";
                 $stmt = $pdo->getPDO()->prepare($req);
                 $stmt->bindValue(':id_object',$id,PDO::PARAM_INT);
@@ -64,9 +64,6 @@ if (isset($key) && !empty($key)) {
             } catch (\Throwable $th) {
                 //throw $th;
             }
-            break;
-        default:
-            var_dump("Mot clé invalide");
             break;
     }
         # code...
