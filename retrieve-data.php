@@ -33,10 +33,8 @@ if (isset($key) && !empty($key)) {
                 $req = "SELECT * FROM foundlost WHERE status=0 ORDER BY date DESC";
                 $stmt = $pdo->getPDO()->prepare($req);
                 $resultat = $stmt->execute();
-                //$tab=[array("description"=>"bateau","date"=>"2022-11-25","location"=>"Paris")];
                 $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo json_encode($resultatValue);
-                // echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
                 $stmt->closeCursor();
                 if($resultat > 0){ 
                    $pdo->getPDO();
@@ -45,9 +43,24 @@ if (isset($key) && !empty($key)) {
                 //throw $th;
             }
             break;
+         
         default:
-            var_dump("Mot clé invalide");
-            break;
+            
+            // code...        
+                $req = "SELECT * FROM foundlost WHERE id_object=$key";
+                $stmt = $pdo->getPDO()->prepare($req);
+                $resultat = $stmt->execute();
+                //$tab=[array("description"=>"bateau","date"=>"2022-11-25","location"=>"Paris")];
+                $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
+                // echo json_encode($resultatValue);
+                echo json_last_error_msg();
+                // echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+                $stmt->closeCursor();
+                if($resultat > 0){ 
+                   $pdo->getPDO();
+                 }
+            
+              break;   
     }
         # code...
 }
