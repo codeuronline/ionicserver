@@ -46,30 +46,30 @@ if (isset($key) && !empty($key)) {
             }
             break;
         case is_int(intVal($key)):
-        var_dump("PARAMETRE ID_OJECT détecté",$key);
-        try {
-            $key=intVal($key);
-            $req = "SELECT * FROM foundlost WHERE id_object=:id_object";
-            $stmt = $pdo->getPDO()->prepare($req);
-            $stmt->bindValue(':id_object',$key,PDO::PARAM_INT);
-            $resultat = $stmt->execute();
-            //$tab=[array("description"=>"bateau","date"=>"2022-11-25","location"=>"Paris")];
-            $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
-            var_export(json_encode($resultatValue));
-            // echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
-            $stmt->closeCursor();
-            if($resultat > 0){ 
-               $pdo->getPDO();
-             }
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
+            var_dump("PARAMETRE ID_OJECT détecté",$key);
+            try {
+                $key=intVal($key);
+                $req = "SELECT * FROM foundlost WHERE id_object=:id_object";
+                $stmt = $pdo->getPDO()->prepare($req);
+                $stmt->bindValue(':id_object',$key,PDO::PARAM_INT);
+                $resultat = $stmt->execute();
+                //$tab=[array("description"=>"bateau","date"=>"2022-11-25","location"=>"Paris")];
+                $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
+                var_export(json_encode($resultatValue));
+                // echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+                $stmt->closeCursor();
+                if($resultat > 0){ 
+                $pdo->getPDO();
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
         break;
-} break;
+            
         default:
-        
-        
+            var_dump("ERREUR DETECTE");      
         # code...
 }
-// TODO : Prépare et exécute la requête de lecture de la table (try/catch)
+}
+
 ?>
