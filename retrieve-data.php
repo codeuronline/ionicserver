@@ -46,7 +46,6 @@ if (isset($key) && !empty($key)) {
             }
             break;
         case is_int(intVal($key)):
-            var_dump("PARAMETRE ID_OJECT détecté",$key);
             try {
                 $key=intVal($key);
                 $req = "SELECT * FROM foundlost WHERE id_object=:id_object";
@@ -55,7 +54,7 @@ if (isset($key) && !empty($key)) {
                 $resultat = $stmt->execute();
                 //$tab=[array("description"=>"bateau","date"=>"2022-11-25","location"=>"Paris")];
                 $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
-                var_export(json_encode($resultatValue));
+                echo json_encode($resultatValue);
                 // echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
                 $stmt->closeCursor();
                 if($resultat > 0){ 
