@@ -100,10 +100,7 @@ if (!empty($input)) {
             } else {
                 var_dump("Problème Insertion sur Description: ", $description);
             }
-
-
             break;
-
             // Mettre à jour un enregistrement existant
         case "update":
             // TODO : Nettoyer les valeurs en provenant de l’URL client
@@ -140,8 +137,7 @@ if (!empty($input)) {
                                                 $stmt->bindValue(":lastname", $lastname, PDO::PARAM_STR);
                                                 $stmt->bindValue(":email", $email, PDO::PARAM_STR);
                                                 $resultat = $stmt->execute();
-                                                $stmt->closeCursor();
-                                        
+                                                $stmt->closeCursor();                   
                                                 if($resultat > 0){ 
                                                     var_dump("MODIFICATION PRODUCT IN BD");
                                                     $pdo->getPDO();
@@ -172,19 +168,18 @@ if (!empty($input)) {
                 } else {
                     var_dump("Problème Modification sur Description: ", $description);
                 }
-            }
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
 
             // Supprimer un enregistrement existant
-        case "delete" :
+        case 'delete':
             var_dump("DELETE DETECTE");
             // TODO : Nettoyer les valeurs de l’URL client (id_task)
             if (isset($_GET["id_task"])) {
                 $id_task = strip_tags($_GET["id_task"]);
                 // TODO : Préparer la requête dans un try/catch
                 try {
-                    $req = "DELETE FROM foundlost WHERE id_product=:id_task";
+                    $req = "DELETE FROM foundlost WHERE id_object=:id_task";
                     $stmt = $this->getPDO()->prepare($req);
                     $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
                     $resultat = $stmt->execute();    //code...
@@ -200,5 +195,8 @@ if (!empty($input)) {
             }
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
-    } // fin switch
-} // fin if
+        default: var_dump('ERREUR DE CLE');          
+    }
+     // fin switch
+ // fin if
+ }
