@@ -111,20 +111,27 @@ if (!empty($input)) {
             if (isset(($_GET["id_task"]))) {
                 $id_task = strip_tags($data['id_product']);
                 if (!empty($description)) {
-                    if (filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) != null) {
+                    $status=boolval($status);
+                    if (($status==0)||($status==1)) {
                         if (is_date_valid($date)) {
                             if (!empty($location)) {
                                 if (!empty($firstname)) {
                                     if (!empty($lastname)) {
-                                        if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    
+                                        if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) 
                                             try {
                                                 // TODO : Préparer la requête dans un try/catch
                                                 $req = "UPDATE foundlost SET 
-                                                foundlost (id_product,description,status,date,location,firstname,lastname,email)
-                                                values (:id_product,:description,:status,:date,:location,:firstname,:lastname,:email) WHERE id_product = :id_product";      
+                                                id_object=:id_object,
+                                                description:desription,
+                                                status=:status,
+                                                date=:date,
+                                                location=:location,
+                                                firstname=:firstname,
+                                                lastname=:lastname
+                                                email=:email
+                                                WHERE id_object = :id_object";      
                                                 $stmt = $pdo->getPDO()->prepare($req);
-                                                $stmt->bindValue(":id_product", $id_task, PDO::PARAM_INT);
+                                                $stmt->bindValue(":id_object", $id_task, PDO::PARAM_INT);
                                                 $stmt->bindValue(":description", $description, PDO::PARAM_STR);
                                                 $stmt->bindValue(":status", $status, PDO::PARAM_BOOL);
                                                 $stmt->bindValue(":date", $date, PDO::PARAM_STR);
@@ -132,7 +139,6 @@ if (!empty($input)) {
                                                 $stmt->bindValue(":firstname", $firstname, PDO::PARAM_STR);
                                                 $stmt->bindValue(":lastname", $lastname, PDO::PARAM_STR);
                                                 $stmt->bindValue(":email", $email, PDO::PARAM_STR);
-                                                $resultat = $stmt->execute();
                                                 $resultat = $stmt->execute();
                                                 $stmt->closeCursor();
                                         
@@ -171,7 +177,7 @@ if (!empty($input)) {
             break;
 
             // Supprimer un enregistrement existant
-        case "delete":
+        case "delete" :
             var_dump("DELETE DETECTE");
             // TODO : Nettoyer les valeurs de l’URL client (id_task)
             if (isset($_GET["id_task"])) {
