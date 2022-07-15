@@ -15,7 +15,7 @@ if (isset($key) && !empty($key)) {
             $req = "SELECT * FROM foundlost WHERE status=1 ORDER BY date DESC";
             $stmt = $pdo->getPDO()->prepare($req);
             $resultat = $stmt->execute();
-            $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
+            $resultatValue=$stmt->fetch(PDO::FETCH_ASSOC);
             echo json_encode($resultatValue);
             $stmt->closeCursor();
             if($resultat > 0){ 
@@ -33,10 +33,8 @@ if (isset($key) && !empty($key)) {
                 $req = "SELECT * FROM foundlost WHERE status=0 ORDER BY date DESC";
                 $stmt = $pdo->getPDO()->prepare($req);
                 $resultat = $stmt->execute();
-                //$tab=[array("description"=>"bateau","date"=>"2022-11-25","location"=>"Paris")];
                 $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo json_encode($resultatValue);
-                // echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
                 $stmt->closeCursor();
                 if($resultat > 0){ 
                    $pdo->getPDO();
