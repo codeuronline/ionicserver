@@ -167,7 +167,7 @@ if (!empty($input) || ($key == 'delete')) {
                     } else {
                         var_dump("Problème Modification sur Date: ", $date);
                     }
-                    //DATE - format YYYY-MM-DDilter_var($date,FILTER_V))
+                    //DATE - format YYYY-MM-DDiflter_var($date,FILTER_V))
                 } else {
                     var_dump("Problème Modification sur Status: ", $status);
                 }
@@ -178,7 +178,6 @@ if (!empty($input) || ($key == 'delete')) {
             break;
             // Supprimer un enregistrement existant
         case 'delete':
-
             var_dump("DELETE DETECTE");
             // TODO : Nettoyer les valeurs de l’URL client (id_task)
             if (isset(($_GET["id_task"]))) {
