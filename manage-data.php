@@ -189,11 +189,13 @@ if (!empty($input)) {
             // TODO : Nettoyer les valeurs de l’URL client (id_task)
             if (isset($_GET["id_task"])) {
                 $id_task = strip_tags($_GET["id_task"]);
+                $id_task= intVal($id_task);
                 // TODO : Préparer la requête dans un try/catch
                 try {
                     $req = "DELETE FROM foundlost WHERE id_product=:id_task";
                     $stmt = $this->getPDO()->prepare($req);
                     $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
+                    echo $stmt;
                     $resultat = $stmt->execute();    //code...
                     $stmt->closeCursor();
                     if($resultat > 0){ 
