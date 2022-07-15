@@ -23,8 +23,12 @@ var_dump("Instance PDO crée");
 
 // Récupérer le paramètre d’action de l’URL du client depuis $_GET[‘key’] 
 // et nettoyer la valeur
-extract($_GET);
-$key = strip_tags($key);
+if (isset($_GET['key'])){
+    $key=strip_tags($_GET['key']);
+}
+if (isset($_GET['id_task'])){
+    $id_task=strip_tags($_GET['id_task']);
+} 
 var_dump("key", $key);
 // Récupérer les paramètres envoyés par le client vers l’API
 $input = file_get_contents('php://input');
@@ -109,9 +113,11 @@ if (!empty($input)) {
             // TODO : Nettoyer les valeurs en provenant de l’URL client
             var_dump("UPDATE DETECTE");
             if (isset(($_GET["id_task"]))) {
-                $id_task = strip_tags($data['id_product']);
+                $id_object = strip_tags($data['id_product']);
+                $id_object =intVal($id_product);
+                $status=intval($status);
                 if (!empty($description)) {
-                    if (filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) != null) {
+                    if (($status==0) ||($status==1)) {
                         if (is_date_valid($date)) {
                             if (!empty($location)) {
                                 if (!empty($firstname)) {
@@ -120,11 +126,18 @@ if (!empty($input)) {
     
                                             try {
                                                 // TODO : Préparer la requête dans un try/catch
+                                                
                                                 $req = "UPDATE foundlost SET 
-                                                foundlost (id_product,description,status,date,location,firstname,lastname,email)
-                                                values (:id_product,:description,:status,:date,:location,:firstname,:lastname,:email) WHERE id_product = :id_product";      
+                                                    id_object=:id_object,
+                                                    description=:description,
+                                                    status=:status,date=:date,
+                                                    location=:location,
+                                                    firstname=:firstname,
+                                                    lastname=:lastname,
+                                                    email=:email
+                                                  WHERE id_object = :id_object";      
                                                 $stmt = $pdo->getPDO()->prepare($req);
-                                                $stmt->bindValue(":id_product", $id_task, PDO::PARAM_INT);
+                                                $stmt->bindValue(":id_object", $id_object, PDO::PARAM_INT);
                                                 $stmt->bindValue(":description", $description, PDO::PARAM_STR);
                                                 $stmt->bindValue(":status", $status, PDO::PARAM_BOOL);
                                                 $stmt->bindValue(":date", $date, PDO::PARAM_STR);
