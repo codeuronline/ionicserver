@@ -193,7 +193,7 @@ if (!empty($input)) {
                 // TODO : Préparer la requête dans un try/catch
                 try {
                     $req = "DELETE FROM foundlost WHERE id_product=:id_task";
-                    $stmt = $this->getPDO()->prepare($req);
+                    $stmt = $pdo->getPDO()->prepare($req);
                     $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
                     echo $stmt;
                     $resultat = $stmt->execute();    //code...
