@@ -15,7 +15,7 @@ if (isset($key) && !empty($key)) {
             $req = "SELECT * FROM foundlost WHERE status=1 ORDER BY date DESC";
             $stmt = $pdo->getPDO()->prepare($req);
             $resultat = $stmt->execute();
-            $resultatValue=$stmt->fetch(PDO::FETCH_ASSOC);
+            $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
             echo json_encode($resultatValue);
             $stmt->closeCursor();
             if($resultat > 0){ 
@@ -43,30 +43,30 @@ if (isset($key) && !empty($key)) {
                 //throw $th;
             }
             break;
-        case is_int(intVal($key)):
+         case is_int(intVal($key)):
+            //var_dump("ID DETECTE");
             try {
-                $key=intVal($key);
-                $req = "SELECT * FROM foundlost WHERE id_object=:id_object";
+                $key = intval($key);      
+                $req = "SELECT * FROM foundlost WHERE id_object=$key";
                 $stmt = $pdo->getPDO()->prepare($req);
-                $stmt->bindValue(':id_object',$key,PDO::PARAM_INT);
+                // $stmt->bindValue(":id",$key,PDO::PARAM_INT);
                 $resultat = $stmt->execute();
                 //$tab=[array("description"=>"bateau","date"=>"2022-11-25","location"=>"Paris")];
                 $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
-                echo json_encode($resultatValue);
+                 echo json_encode($resultatValue);
                 // echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
                 $stmt->closeCursor();
                 if($resultat > 0){ 
-                $pdo->getPDO();
-                }
+                   $pdo->getPDO();
+                 }
             } catch (\Throwable $th) {
                 //throw $th;
-            }
-        break;
-            
+            }                 break;   
         default:
-            var_dump("ERREUR DETECTE");      
-        # code...
+        var_dump("ERREUR D ACCES");
+        break;
+        }
+    
 }
-}
-
+// TODO : Prépare et exécute la requête de lecture de la table (try/catch)
 ?>
