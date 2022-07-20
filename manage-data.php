@@ -19,8 +19,6 @@ require_once 'models/Database.php';
 $pdo = new Database;
 $pdo->getPDO();
 var_dump("Instance PDO crée");
-
-
 // Récupérer le paramètre d’action de l’URL du client depuis $_GET[‘key’] 
 // et nettoyer la valeur
 extract($_GET);
