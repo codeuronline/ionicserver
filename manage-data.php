@@ -35,6 +35,7 @@ $input = file_get_contents('php://input');
 if (!empty($input) || ($key == 'delete')) {
     if (($key) != 'delete') {
         $data = json_decode($input, true);
+        var_dump($data);
         $id_object =  strip_tags($data['id_object']);
         $description = strip_tags($data['description']);
         $status = strip_tags($data['status']);
@@ -43,6 +44,7 @@ if (!empty($input) || ($key == 'delete')) {
         $firstname = strip_tags($data['firstname']);
         $lastname = strip_tags($data['lastname']);
         $email = strip_tags($data['email']);
+        
     }
     // En fonction du mode d’action requis
     switch ($key) {
