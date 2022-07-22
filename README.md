@@ -4,7 +4,7 @@
 
 ## 3 elements du serveurs :
 
-### [appli manage-data.php](https://github.com/codeuronline/ionicserver/manage-data.php)
+### [appli manage-data.php](https://github.com/codeuronline/ionicserver/blob/main/manage-data.php
 
 Permet de gerer la BD foundlist(en create/modification/suppression)
 
@@ -15,10 +15,10 @@ Permet de gerer la BD foundlist(en create/modification/suppression)
 #### delete necessite une second cl" id_task pour definir l'objet a effacer
  delete un objet dans la BD et efface le cas échéant la image sur le serveur
 
-### [appli retrieve-data.php](https://github.com/codeuronline/ionicserver/retrieve-data.php)
+### [appli retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
 
 Permet de récupérer les informations de la BD
 
-### [appli image.php](https://github.com/codeuronline/ionicserver/image.php)
+### [appli image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
 
 Permet de réceptionner le stockage d'une image pour [appli foundlost](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost) dans le repertoire upload/
