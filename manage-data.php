@@ -251,8 +251,6 @@ if (!empty($input) || ($key == 'delete')) {
                 // TODO : Préparer la requête dans un try/catch
                 $req = "DELETE FROM foundlost WHERE id_object=$id_task";
                 $stmt = $pdo->getPDO()->prepare($req);
-                $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
-                $resultat = $stmt->execute();    //code...
                 $stmt->closeCursor();
                 if ($resultat > 0) {
                     var_dump("SUPPRESSION PRODUCT IN BD");
