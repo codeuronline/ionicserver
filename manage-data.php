@@ -23,6 +23,7 @@ var_dump("Instance PDO crée");
 
 // Récupérer le paramètre d’action de l’URL du client depuis $_GET[‘key’] 
 // et nettoyer la valeur
+<<<<<<< HEAD
 extract($_GET);
 if (isset($key)) {
     $key = strip_tags($key);
@@ -30,6 +31,14 @@ if (isset($key)) {
 if (isset($id_task)) {
     $id_task = strip_tags($id_task);
 }
+=======
+if (isset($_GET['key'])){
+    $key=strip_tags($_GET['key']);
+}
+if (isset($_GET['id_task'])){
+    $id_task=strip_tags($_GET['id_task']);
+} 
+>>>>>>> origin/master
 var_dump("key", $key);
 // Récupérer les paramètres envoyés par le client vers l’API
 $input = file_get_contents('php://input');
@@ -111,11 +120,19 @@ if (!empty($input) || ($key == 'delete')) {
             // TODO : Nettoyer les valeurs en provenant de l’URL client
             var_dump("UPDATE DETECTE");
             if (isset(($_GET["id_task"]))) {
+<<<<<<< HEAD
                 $id_task = strip_tags($data['id_object']);
                 $id_task = intval($id_task);
                 if (!empty($description)) {
                     $status = boolval($status);
                     if (($status == 0) || ($status == 1)) {
+=======
+                $id_object = strip_tags($data['id_product']);
+                $id_object =intVal($id_product);
+                $status=intval($status);
+                if (!empty($description)) {
+                    if (($status==0) ||($status==1)) {
+>>>>>>> origin/master
                         if (is_date_valid($date)) {
                             if (!empty($location)) {
                                 if (!empty($firstname)) {
@@ -180,6 +197,7 @@ if (!empty($input) || ($key == 'delete')) {
         case 'delete':
             var_dump("DELETE DETECTE");
             // TODO : Nettoyer les valeurs de l’URL client (id_task)
+<<<<<<< HEAD
             if (isset(($_GET["id_task"]))) {
                 var_dump($id_task);
                 // TODO : Préparer la requête dans un try/catch
@@ -191,6 +209,25 @@ if (!empty($input) || ($key == 'delete')) {
                 if($resultat>0){
                     var_dump("SUPPRESSION PRODUCT IN BD");
                     $pdo->getPDO();
+=======
+            if (isset($_GET["id_task"])) {
+                $id_task = strip_tags($_GET["id_task"]);
+                $id_task= intVal($id_task);
+                // TODO : Préparer la requête dans un try/catch
+                try {
+                    $req = "DELETE FROM foundlost WHERE id_product=:id_task";
+                    $stmt = $this->getPDO()->prepare($req);
+                    $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
+                    echo $stmt;
+                    $resultat = $stmt->execute();    //code...
+                    $stmt->closeCursor();
+                    if($resultat > 0){ 
+                        var_dump("SUPPRESSION PRODUCT IN BD");
+                        $pdo->getPDO();
+                     }
+                } catch (\Throwable $th) {
+                    var_dump($th);
+>>>>>>> origin/master
                 }
             }
             // TODO : Préparer et exécuter la requête (dans un try/catch)
