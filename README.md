@@ -1,4 +1,4 @@
-# ionicserver()
+# ionicserver
 
 ## API sur serveur PHP/Mysql liée à l'appli mobile FoundLost
 
