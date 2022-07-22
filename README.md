@@ -1,10 +1,10 @@
 # ionicserver
 
-## API sur serveur PHP/Mysql liée à l'appli mobile [appli foundlost](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost)
+## API sur serveur PHP/Mysql liée à l'appli mobile [lostfound](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost)
 
 ## 3 elements du serveurs :
 
-### [appli manage-data.php](https://github.com/codeuronline/ionicserver/blob/main/manage-data.php
+### [appli manage-data.php](https://github.com/codeuronline/ionicserver/blob/main/manage-data.php)
 
 Permet de gerer la BD foundlist(en create/modification/suppression)
 
