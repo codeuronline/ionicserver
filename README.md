@@ -1,24 +1,27 @@
 # ionicserver
 
-## API sur serveur PHP/Mysql liée à l'appli mobile [lostfound](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost)
+## API sur serveur PHP/Mysql liée à l'appli mobile [Lostfound](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost)
 
-## 3 elements du serveurs :
+## 3 éléments du serveurs :
 
 ### [appli manage-data.php](https://github.com/codeuronline/ionicserver/blob/main/manage-data.php)
 
-Permet de gerer la BD foundlist(en create/modification/suppression)
+Permet de gerer la BD foundlist(create/modification/suppression)
 
 #### create
- create un objet dans la BD
-#### update neccsite une second cle id_task pour definir l'objet à modifier
+ create un objet dans la BD provenant d'un objet JSON
+#### update néccsite une seconde clé id_task pour définir l'objet à modifier
  update un objet dans la BD
-#### delete necessite une second cl" id_task pour definir l'objet a effacer
- delete un objet dans la BD et efface le cas échéant la image sur le serveur
+#### delete necessite une second clé id_task pour définir l'objet à effacer
+ delete un objet dans la BD et efface le cas échéant l'image stocké sur le serveur
 
 ### [appli retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
 
-Permet de récupérer les informations de la BD
+Permet de récupérer les informations de la BD selon la clé
+ found -> Renvoie la liste des objets trouvés
+ lost  -> Renvoie la liste des objets perdus
+ un numéro -> Renvoie l'objet qui porte ce num&ro
 
 ### [appli image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
 
-Permet de réceptionner le stockage d'une image pour [appli foundlost](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost) dans le repertoire upload/
+Permet de réceptionner le fichier image pour l'appli [foundlost](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost) dans le repertoire upload/
