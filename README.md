@@ -1,6 +1,6 @@
 # ionicserver
 
-## API sur serveur PHP/Mysql liée à l'appli mobile [Lostfound](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost)
+## API sur serveur PHP/Mysql liée à l'appli mobile [FoundLost](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost)
 
 ## 3 éléments du serveurs :
 
