@@ -6,7 +6,7 @@
 
 ### [appli manage-data.php](https://github.com/codeuronline/ionicserver/blob/main/manage-data.php)
 
-Permet de gerer la BD foundlist(create/modification/suppression)
+Permet de gérer la BD foundlist(create/modification/suppression)
 
 #### create
  create un objet dans la BD provenant d'un objet JSON
