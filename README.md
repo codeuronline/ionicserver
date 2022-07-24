@@ -9,11 +9,11 @@
 Permet de gérer la BD foundlist(create/modification/suppression)
 
 #### create
- create un objet dans la BD provenant d'un objet JSON
+Créer un objet dans la BD provenant d'un objet JSON
 #### update néccsite une seconde clé id_task pour définir l'objet à modifier
- update un objet dans la BD
-#### delete necessite une second clé id_task pour définir l'objet à effacer
- delete un objet dans la BD et efface le cas échéant l'image stocké sur le serveur
+Met à jour un objet dans la BD
+#### delete nécessite une second clé id_task pour définir l'objet à effacer
+Supprime un objet dans la BD et efface le cas échéant l'image stocké sur le serveur
 
 ### [appli retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
 
