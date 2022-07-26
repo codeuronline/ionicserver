@@ -244,7 +244,7 @@ if (!empty($input) || ($key == 'delete')) {
                 $resultat = $stmt->execute();
                 $resultatValue=$stmt->fetch(PDO::FETCH_ASSOC);
                 $stmt->closeCursor();
-                if ($resultat['filename']!=null ||$resultat['filename']!="objet_vide.png") {
+                if ($resultat['filename']!=null) {
                     unlink("upload/" . $resultat['filename']);
                     var_dump("SUPPRESSION de l'image");
                 }
