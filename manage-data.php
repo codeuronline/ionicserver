@@ -124,7 +124,7 @@ if (!empty($input) || ($key == 'delete')) {
                                 if (!empty($firstname)) {
                                     if (!empty($lastname)) {
                                         if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                                            // TODO : Préparer la requête dans un try/catch    
+                                            // TODO : Préparer la requête dans un try/catch    //pb au changement de status
                                             if (isset($data['filename'])) {
                                                 try {
                                                     /**necessite de verifier l'existence d'une image avant d'effacer de update l'obejet avec une nouvelle image*/

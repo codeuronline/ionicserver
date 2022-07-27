@@ -10,32 +10,32 @@
 </head>
 
 <body>
-SUCCES ===> <pre class='xdebug-var-dump' dir='ltr'>
+    SUCCES ===
+    <pre class='xdebug-var-dump' dir='ltr'>
 <small>C:\laragon\www\ionicserver\manage-data.php:21:</small><small>string</small> <font color='#cc0000'>'Instance PDO crée'</font> <i>(length=18)</i>
-</pre><pre class='xdebug-var-dump' dir='ltr'>
+</pre>
+    <pre class='xdebug-var-dump' dir='ltr'>
 <small>C:\laragon\www\ionicserver\manage-data.php:31:</small><small>string</small> <font color='#cc0000'>'key'</font> <i>(length=3)</i>
-</pre><pre class='xdebug-var-dump' dir='ltr'>
-<small>C:\laragon\www\ionicserver\manage-data.php:31:</small><small>string</small> <font color='#cc0000'>'delete'</font> <i>(length=6)</i>
-</pre><pre class='xdebug-var-dump' dir='ltr'>
-<small>C:\laragon\www\ionicserver\manage-data.php:238:</small><small>string</small> <font color='#cc0000'>'DELETE DETECTE'</font> <i>(length=14)</i>
-</pre><pre class='xdebug-var-dump' dir='ltr'>
-<small>C:\laragon\www\ionicserver\manage-data.php:241:</small><small>string</small> <font color='#cc0000'>'36'</font> <i>(length=2)</i>
-</pre><br />
-<font size='1'><table class='xdebug-error xe-notice' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
-<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Notice: Undefined variable: elemen in C:\laragon\www\ionicserver\manage-data.php on line <i>249</i></th></tr>
-<tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
-<tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
-<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0014</td><td bgcolor='#eeeeec' align='right'>446240</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='C:\laragon\www\ionicserver\manage-data.php' bgcolor='#eeeeec'>...\manage-data.php<b>:</b>0</td></tr>
-</table></font>
-<br />
-<font size='1'><table class='xdebug-error xe-notice' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
-<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Notice: Trying to access array offset on value of type null in C:\laragon\www\ionicserver\manage-data.php on line <i>249</i></th></tr>
-<tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
-<tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
-<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0014</td><td bgcolor='#eeeeec' align='right'>446240</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='C:\laragon\www\ionicserver\manage-data.php' bgcolor='#eeeeec'>...\manage-data.php<b>:</b>0</td></tr>
-</table></font>
-<pre class='xdebug-var-dump' dir='ltr'>
-<small>C:\laragon\www\ionicserver\manage-data.php:261:</small><small>string</small> <font color='#cc0000'>'SUPPRESSION PRODUCT IN BD'</font> <i>(length=25)</i>
+</pre>
+    <pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\laragon\www\ionicserver\manage-data.php:31:</small><small>string</small> <font color='#cc0000'>'update'</font> <i>(length=6)</i>
+</pre>
+    <pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\laragon\www\ionicserver\manage-data.php:38:</small>
+<b>array</b> <i>(size=10)</i>
+  'id_object' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'1'</font> <i>(length=1)</i>
+  'status' <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>1</font>
+  'description' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'fxgfdgfdgd'</font> <i>(length=10)</i>
+  'location' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'gdgdgd'</font> <i>(length=6)</i>
+  'date' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'2022-07-27'</font> <i>(length=10)</i>
+  'firstname' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'gdgdfgd'</font> <i>(length=7)</i>
+  'lastname' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'gdgdg'</font> <i>(length=5)</i>
+  'email' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'jkasperski@free.fr'</font> <i>(length=18)</i>
+  'checkedpicture' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0'</font> <i>(length=1)</i>
+  'filename' <font color='#888a85'>=&gt;</font> <font color='#3465a4'>null</font>
+</pre>
+    <pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\laragon\www\ionicserver\manage-data.php:115:</small><small>string</small> <font color='#cc0000'>'UPDATE DETECTE'</font> <i>(length=14)</i>
 </pre>
 </body>
 
