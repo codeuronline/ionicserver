@@ -131,10 +131,12 @@ if (!empty($input) || ($key == 'delete')) {
                                                     $reqExistence = "SELECT filename FROM foundlost WHERE id_object=$id_task";
                                                     $stmt = $pdo->getPDO()->prepare($reqExistence);
                                                     $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
-                                                    $resultatExistence = $stmt->execute()->fetch(PDO::FETCH_ASSOC);
+                                                    $resultatExistence = $stmt->execute();
+                                                                                                   
+                                                    $element=$stmt->fetchAll(PDO::FETCH_ASSOC);
                                                     $stmt->closeCursor();
                                                     if ($resultatExistence > 0) {
-                                                        unlink("upload/" . $resultatExistence['filename']);
+                                                        unlink("upload/" . $elements[0]['filename']);
                                                         var_dump("SUPPRESSION de l'image");
                                                     }
                                                     $pdo->getPDO();
