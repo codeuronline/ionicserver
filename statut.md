@@ -6,11 +6,16 @@ vous pouvez échanger avec la si la requête contient le mot clé (create,delete
 
 sous la forme http//:`<adresse du ionicserver>`/manage-data.php?key=`<cle>`
 
-
 ### mot clé : create(finished)
 
-il doit etre associé à un objet json avec un certain nombre de champs
+il doit être associé à un objet json avec un certain nombre de champs
 
+* description(string)
+* date(YY-MM-DD)
+* localisation(string)
+* nom (string)
+* prénom (string)
+* email(valide)
 
 ### mot clé: update(finished)
 
