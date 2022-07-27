@@ -244,10 +244,10 @@ if (!empty($input) || ($key == 'delete')) {
                 $stmt = $pdo->getPDO()->prepare($reqExistence);
                 $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
                 $resultat = $stmt->execute();
-                $resultatValue=$stmt->fetch(PDO::FETCH_ASSOC);
+                $element=$stmt->fetch(PDO::FETCH_ASSOC);
                 $stmt->closeCursor();
-                if ($resultat['filename']!=null) {
-                    unlink("upload/" . $resultat['filename']);
+                if ($element['filename']!=null) {
+                    unlink("upload/" . $element['filename']);
                     var_dump("SUPPRESSION de l'image");
                 }
                 $pdo->getPDO();
@@ -255,9 +255,9 @@ if (!empty($input) || ($key == 'delete')) {
                 $req = "DELETE FROM foundlost WHERE id_object=$id_task";
                 $stmt = $pdo->getPDO()->prepare($req);
                 $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
-                $resultat = $stmt->execute();    //code...
+                $resultat1 = $stmt->execute();    //code...
                 $stmt->closeCursor();
-                if ($resultat > 0) {
+                if ($resultat1 > 0) {
                     var_dump("SUPPRESSION PRODUCT IN BD");
                     $pdo->getPDO();
                 }
