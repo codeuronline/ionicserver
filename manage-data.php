@@ -131,12 +131,11 @@ if (!empty($input) || ($key == 'delete')) {
                                                     $reqExistence = "SELECT filename FROM foundlost WHERE id_object=$id_task";
                                                     $stmt = $pdo->getPDO()->prepare($reqExistence);
                                                     $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
-                                                    $resultatExistence = $stmt->execute();
-                                                                                                   
-                                                    $element=$stmt->fetchAll(PDO::FETCH_ASSOC);
+                                                    $resultatExistence = $stmt->execute();                                                    
+                                                    $element=$stmt->fetch(PDO::FETCH_ASSOC);
                                                     $stmt->closeCursor();
                                                     if ($resultatExistence > 0) {
-                                                        unlink("upload/" . $elements[0]['filename']);
+                                                        unlink("upload/" . $element['filename']);
                                                         var_dump("SUPPRESSION de l'image");
                                                     }
                                                     $pdo->getPDO();
@@ -178,7 +177,6 @@ if (!empty($input) || ($key == 'delete')) {
                                             }
                                         } else {
                                             try {
-
                                                 $req = "UPDATE foundlost SET 
                                                 id_object=:id_object,
                                                 description=:description,
@@ -239,10 +237,10 @@ if (!empty($input) || ($key == 'delete')) {
             // TODO : Nettoyer les valeurs de l’URL client (id_task)
             if (isset(($_GET["id_task"]))) {
                 var_dump($id_task);
-                /**necessite  de verifierl'existence d'une image avant d'effacer le l'objet */
+                /**on vérifie s'il n'existe pas une trace d'un enregistrement précédent */
                 $reqExistence = "SELECT filename FROM foundlost WHERE id_object=$id_task";
                 $stmt = $pdo->getPDO()->prepare($reqExistence);
-                $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
+                //$stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
                 $resultat = $stmt->execute();
                 $element=$stmt->fetch(PDO::FETCH_ASSOC);
                 $stmt->closeCursor();
@@ -254,7 +252,7 @@ if (!empty($input) || ($key == 'delete')) {
                 // TODO : Préparer la requête dans un try/catch
                 $req = "DELETE FROM foundlost WHERE id_object=$id_task";
                 $stmt = $pdo->getPDO()->prepare($req);
-                $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
+                //$stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
                 $resultat1 = $stmt->execute();    //code...
                 $stmt->closeCursor();
                 if ($resultat1 > 0) {
