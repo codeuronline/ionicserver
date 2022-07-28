@@ -118,14 +118,20 @@ if (!empty($input) || ($key == 'delete')) {
                 $id_task = intval($id_task);
                 if (!empty($description)) {
                     $status = boolval($status);
-                    if (($status == 0) || ($status == 1)) {
+                    var_dump('status',$status);
+                    if (($status == 0) || ($status == 1)||($status==false)||($status=true)) {
+                        var_dump('status');
+                        $status=($status==true)?1:0;
                         if (is_date_valid($date)) {
+                            var_dump('date');
                             if (!empty($location)) {
                                 if (!empty($firstname)) {
                                     if (!empty($lastname)) {
                                         if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
                                             // TODO : Préparer la requête dans un try/catch    //pb au changement de status
-                                            if (isset($data['filename'])) {
+                                            var_dump('email',$email);
+                                            if ($data['filename']!=null) {
+                                                var_dump('FileName detected');
                                                 try {
                                                     /**necessite de verifier l'existence d'une image avant d'effacer de update l'obejet avec une nouvelle image*/
                                                     $reqExistence = "SELECT filename FROM foundlost WHERE id_object=$id_task";
@@ -174,39 +180,40 @@ if (!empty($input) || ($key == 'delete')) {
                                                     var_dump($th);
                                                     //throw $th;
                                                 }
-                                            }
-                                        } else {
-                                            try {
-                                                $req = "UPDATE foundlost SET 
-                                                id_object=:id_object,
-                                                description=:description,
-                                                status=:status,
-                                                date=:date,
-                                                location=:location,
-                                                firstname=:firstname,
-                                                lastname=:lastname,
-                                                email=:email
-                                                WHERE id_object = :id_object";
-                                                $stmt = $pdo->getPDO()->prepare($req);
-                                                $stmt->bindValue(":id_object", $id_task, PDO::PARAM_INT);
-                                                $stmt->bindValue(":description", $description, PDO::PARAM_STR);
-                                                $stmt->bindValue(":status", $status, PDO::PARAM_BOOL);
-                                                $stmt->bindValue(":date", $date, PDO::PARAM_STR);
-                                                $stmt->bindValue(":location", $location, PDO::PARAM_STR);
-                                                $stmt->bindValue(":firstname", $firstname, PDO::PARAM_STR);
-                                                $stmt->bindValue(":lastname", $lastname, PDO::PARAM_STR);
-                                                $stmt->bindValue(":email", $email, PDO::PARAM_STR);
-                                                $resultat = $stmt->execute();
-                                                $stmt->closeCursor();
-                                                if ($resultat > 0) {
-                                                    var_dump("MODIFICATION PRODUCT IN BD");
-                                                    $pdo->getPDO();
+                                            } else {
+                                                var_dump('no ');
+                                                try {
+                                                    $req = "UPDATE foundlost SET 
+                                                    id_object=:id_object,
+                                                    description=:description,
+                                                    status=:status,
+                                                    date=:date,
+                                                    location=:location,
+                                                    firstname=:firstname,
+                                                    lastname=:lastname,
+                                                    email=:email
+                                                    WHERE id_object = :id_object";
+                                                    $stmt = $pdo->getPDO()->prepare($req);
+                                                    $stmt->bindValue(":id_object", $id_task, PDO::PARAM_INT);
+                                                    $stmt->bindValue(":description", $description, PDO::PARAM_STR);
+                                                    $stmt->bindValue(":status", $status, PDO::PARAM_BOOL);
+                                                    $stmt->bindValue(":date", $date, PDO::PARAM_STR);
+                                                    $stmt->bindValue(":location", $location, PDO::PARAM_STR);
+                                                    $stmt->bindValue(":firstname", $firstname, PDO::PARAM_STR);
+                                                    $stmt->bindValue(":lastname", $lastname, PDO::PARAM_STR);
+                                                    $stmt->bindValue(":email", $email, PDO::PARAM_STR);
+                                                    $resultat = $stmt->execute();
+                                                    $stmt->closeCursor();
+                                                    if ($resultat > 0) {
+                                                        var_dump("MODIFICATION PRODUCT IN BD");
+                                                        $pdo->getPDO();
+                                                    }
+                                                } catch (\Throwable $th) {
+                                                    var_dump($th);
+                                                    //throw $th;
                                                 }
-                                            } catch (\Throwable $th) {
-                                                var_dump($th);
-                                                //throw $th;
                                             }
-                                        }
+                                        } 
                                     } else {
                                         var_dump("Problème Modification sur Email", $email);
                                     }
