@@ -141,8 +141,10 @@ if (!empty($input) || ($key == 'delete')) {
                                                     $element=$stmt->fetch(PDO::FETCH_ASSOC);
                                                     $stmt->closeCursor();
                                                     if ($resultatExistence > 0) {
-                                                        unlink("upload/" . $element['filename']);
-                                                        var_dump("SUPPRESSION de l'image");
+                                                        if ($element['filename']!= null) {
+                                                            unlink("upload/" . $element['filename']);
+                                                            var_dump("SUPPRESSION de l'image");
+                                                        }
                                                     }
                                                     $pdo->getPDO();
                                                     $checkedpicture = boolval($checkedpicture);
