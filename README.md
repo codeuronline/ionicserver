@@ -9,18 +9,41 @@
 Permet de gérer la BD foundlist(create/modification/suppression)
 
 #### create
-Créer un objet dans la BD provenant d'un objet JSON
+il doit être associé à un objet json avec un certain nombre de champs
+
+* description(string)
+* date(YY-MM-DD)
+* localisation(string)
+* nom (string)
+* prénom (string)
+* email(valide)
+
 #### update néccsite une seconde clé id_task pour définir l'objet à modifier
+
 Met à jour un objet dans la BD
+
+http//:`<adresse du ionicserver>`/manage-data.php?key=update&id_task=
+
 #### delete nécessite une second clé id_task pour définir l'objet à effacer
+  
+http//:`<adresse du ionicserver>`/manage-data.php?key=delete&id_task=
+
 Supprime un objet dans la BD et efface le cas échéant l'image stockée sur le serveur
+
+#### un numero (integer)
+
+retourne l'objet dont la key est le **numéro**
+
+http//:`<adresse du ionicserver>`/manage-data.php?key=
 
 ### [appli retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
 
 Permet de récupérer les informations de la BD selon la clé
  found -> Renvoie la liste des objets trouvés
  lost  -> Renvoie la liste des objets perdus
- un numéro -> Renvoie l'objet qui porte ce num&ro
+ un numéro -> Renvoie l'objet qui porte ce numéro
+
+
 
 ### [appli image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
 
