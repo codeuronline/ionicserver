@@ -50,3 +50,4 @@ Permet de récupérer les informations de la BD selon la clé
 Permet de réceptionner le fichier image pour l'appli [foundlost](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost) dans le repertoire upload/
 ### Mise à jour du 28/07/2022
 #### -> déplacement de la condition sur le status qui était mis au mauvais endroit et par conséquent ne traitait pas le changement de statuts
+#### -> correction d'un bug si l'image était déja insérée en BD 
