@@ -5,7 +5,7 @@ if(isset($_FILES['photo']['name'])){
    
    $filename = $_POST['id'];
    // Location
-   // nceessite de recupere son vrai nom
+   // necessite de recupere son vrai nom
    $location = 'upload/'.$filename;
 
    // file extension
