@@ -9,6 +9,9 @@
 Permet de gérer la BD foundlist(create/modification/suppression)
 
 #### Create
+syntaxe:
+http//:`<adresse du ionicserver>`/manage-data.php?key=create
+
 Il doit être associé à un objet json avec un certain nombre de champs
 
 * description(string)
@@ -22,29 +25,36 @@ Il doit être associé à un objet json avec un certain nombre de champs
 * filename(string) ** champ optionnel 
 
 #### Update 
+Met à jour un objet dans la BD
 Néccsite une seconde clé id_task pour définir l'objet à modifier
 
-Met à jour un objet dans la BD
-
+Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=update&id_task=
 
 #### delete nécessite une second clé id_task pour définir l'objet à effacer
-  
+Supprime un objet dans la BD et efface le cas échéant l'image stockée sur le serveur
+Syntaxe:  
 http//:`<adresse du ionicserver>`/manage-data.php?key=delete&id_task=
 
-Supprime un objet dans la BD et efface le cas échéant l'image stockée sur le serveur
+
 
 #### un numero (integer)
+Retourne l'objet dont la key est le **numéro**
 
-retourne l'objet dont la key est le **numéro**
-
+Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=
 
 ### [appli retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
 
-Permet de récupérer les informations de la BD selon la clé
- found -> Renvoie la liste des objets trouvés
+
+Syntaxe:
+http//:`<adresse du ionicserver>`/manage-data.php?key=found
+found -> Renvoie la liste des objets trouvés
+
+http//:`<adresse du ionicserver>`/manage-data.php?key=lost
  lost  -> Renvoie la liste des objets perdus
+ 
+http//:`<adresse du ionicserver>`/manage-data.php?key=integer
  un numéro -> Renvoie l'objet qui porte ce numéro
 
 
