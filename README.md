@@ -9,7 +9,7 @@
 Permet de gérer la BD foundlist(create/modification/suppression)
 
 #### Create
-syntaxe:
+#### Syntaxe:  
 http//:`<adresse du ionicserver>`/manage-data.php?key=create
 
 Il doit être associé à un objet json avec un certain nombre de champs
@@ -28,40 +28,39 @@ Il doit être associé à un objet json avec un certain nombre de champs
 Met à jour un objet dans la BD
 Néccsite une seconde clé id_task pour définir l'objet à modifier
 
-Syntaxe:
+#### Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=update&id_task=
 
 #### delete nécessite une second clé id_task pour définir l'objet à effacer
 Supprime un objet dans la BD et efface le cas échéant l'image stockée sur le serveur
-Syntaxe:  
+
+#### Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=delete&id_task=
-
-
 
 #### un numero (integer)
 Retourne l'objet dont la key est le **numéro**
 
-Syntaxe:
+#### Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=
 
 ### [appli retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
 
-
-Syntaxe:
+#### Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=found
 found -> Renvoie la liste des objets trouvés
 
+#### Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=lost
- lost  -> Renvoie la liste des objets perdus
- 
+lost  -> Renvoie la liste des objets perdus
+
+#### Syntaxe: 
 http//:`<adresse du ionicserver>`/manage-data.php?key=integer
- un numéro -> Renvoie l'objet qui porte ce numéro
-
-
+un numéro -> Renvoie l'objet qui porte ce numéro
 
 ### [appli image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
 
 Permet de réceptionner le fichier image pour l'appli [foundlost](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost) dans le repertoire upload/
+
 ### Mise à jour du 28/07/2022
 #### -> déplacement de la condition sur le status qui était mis au mauvais endroit et par conséquent ne traitait pas le changement de statuts
 #### -> correction d'un bug si l'image était déja insérée en BD 
