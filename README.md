@@ -52,4 +52,4 @@ Permet de réceptionner le fichier image pour l'appli [foundlost](https://github
 #### -> déplacement de la condition sur le status qui était mis au mauvais endroit et par conséquent ne traitait pas le changement de statuts
 #### -> correction d'un bug si l'image était déja insérée en BD 
 ### Mise à jour du 01/08/2022
-#### -> correction d'un bug qui effaçait systématiquement l'ancienne image stockée sur le serveur
+#### -> correction d'un bug qui effaçait systématiquement l'ancienne image stockée sur le serveur en mode update
