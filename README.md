@@ -8,17 +8,21 @@
 
 Permet de gérer la BD foundlist(create/modification/suppression)
 
-#### create
-il doit être associé à un objet json avec un certain nombre de champs
+#### Create
+Il doit être associé à un objet json avec un certain nombre de champs
 
 * description(string)
+* status(boolean)
 * date(YY-MM-DD)
 * localisation(string)
 * nom (string)
 * prénom (string)
 * email(valide)
+* checkedpicture(boolean) ** champ optionnel
+* filename(string) **champ optionnel 
 
-#### update néccsite une seconde clé id_task pour définir l'objet à modifier
+#### Update 
+Néccsite une seconde clé id_task pour définir l'objet à modifier
 
 Met à jour un objet dans la BD
 
