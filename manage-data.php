@@ -118,12 +118,10 @@ if (!empty($input) || ($key == 'delete')) {
                 $id_task = intval($id_task);
                 if (!empty($description)) {
                     $status = boolval($status);
-                    var_dump('status',$status);
                     if (($status == 0) || ($status == 1)||($status==false)||($status=true)) {
-                        var_dump('status');
+                        var_dump('status',$status);
                         $status=($status==true)?1:0;
                         if (is_date_valid($date)) {
-                            var_dump('date');
                             if (!empty($location)) {
                                 if (!empty($firstname)) {
                                     if (!empty($lastname)) {
@@ -131,6 +129,7 @@ if (!empty($input) || ($key == 'delete')) {
                                             // TODO : Préparer la requête dans un try/catch    //pb au changement de status
                                             var_dump('email',$email);
                                             if ($data['filename']!=null) {
+                                                if (isset($data['checkedpicture'])) { 
                                                 var_dump('FileName detected');
                                                 try {
                                                     /**necessite de verifier l'existence d'une image avant d'effacer de update l'obejet avec une nouvelle image*/
@@ -142,8 +141,11 @@ if (!empty($input) || ($key == 'delete')) {
                                                     $stmt->closeCursor();
                                                     if ($resultatExistence > 0) {
                                                         if ($element['filename']!= null) {
-                                                            unlink("upload/" . $element['filename']);
-                                                            var_dump("SUPPRESSION de l'image");
+                                                            if ($data['filename']!=$element['filename']) {
+                                                                unlink("upload/" . $element['filename']);
+                                                                var_dump("SUPPRESSION de l'image");# code...
+                                                            }
+                                                            
                                                         }
                                                     }
                                                     $pdo->getPDO();
@@ -182,7 +184,7 @@ if (!empty($input) || ($key == 'delete')) {
                                                     var_dump($th);
                                                     //throw $th;
                                                 }
-                                            } else {
+                                            }} else {
                                                 var_dump('no ');
                                                 try {
                                                     $req = "UPDATE foundlost SET 
