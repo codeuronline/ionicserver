@@ -19,7 +19,7 @@ Il doit être associé à un objet json avec un certain nombre de champs
 * prénom (string)
 * email(valide)
 * checkedpicture(boolean) ** champ optionnel
-* filename(string) **champ optionnel 
+* filename(string) ** champ optionnel 
 
 #### Update 
 Néccsite une seconde clé id_task pour définir l'objet à modifier
