@@ -31,11 +31,32 @@ Néccsite une seconde clé id_task pour définir l'objet à modifier
 #### Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=update&id_task=
 
-#### delete nécessite une second clé id_task pour définir l'objet à effacer
+#### Delete 
+Nécessite une second clé id_task pour définir l'objet à effacer
 Supprime un objet dans la BD et efface le cas échéant l'image stockée sur le serveur
 
 #### Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=delete&id_task=
+
+#### User
+Nouvelle route pour ajouter un utlisateur via methode POST
+nécessite 2 champs
+--> mail pour login
+--> mot de passe
+
+#### Syntaxe:
+http//:`<adresse du ionicserver>`/manage-data.php?key=user
+
+#### connexion
+Nouvelle route pour verifier un utlisateur via methode POST
+nécessite 2 champs
+compare avec les élements deja present en BD
+--> mail pour login
+--> mot de passe
+
+#### Syntaxe:
+http//:`<adresse du ionicserver>`/manage-data.php?key=connexion
+
 
 #### un numero (integer)
 Retourne l'objet dont la key est le **numéro**
@@ -66,3 +87,4 @@ Permet de réceptionner le fichier image pour l'appli [foundlost](https://github
 #### -> correction d'un bug si l'image était déja insérée en BD 
 ### Mise à jour du 01/08/2022
 #### -> correction d'un bug qui effaçait systématiquement l'ancienne image stockée sur le serveur en mode update
+#### -> modification interface pour gérer une authentification mail/mot de passe encours
