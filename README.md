@@ -87,4 +87,6 @@ Permet de réceptionner le fichier image pour l'appli [foundlost](https://github
 #### -> correction d'un bug si l'image était déja insérée en BD 
 ### Mise à jour du 01/08/2022
 #### -> correction d'un bug qui effaçait systématiquement l'ancienne image stockée sur le serveur en mode update
-#### -> modification interface pour gérer une authentification mail/mot de passe encours
+### Mise à jour du 04/08/2022
+#### -> Modification interface pour gérer une authentification mail/mot de passe -> en cours
+#### -> Creation d'un nouveau fichier (https://github.com/codeuronline/ionicserver/blob/main/existence.php) pour gérer les requêtes ajax au niveau des utilisateurs déjà présent
