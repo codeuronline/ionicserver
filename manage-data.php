@@ -3,6 +3,14 @@ define("URL", str_replace("manage-data.php", "", (isset($_SERVER['HTTPS']) ? "ht
 header('Access-Control-Allow-Origin: *');
 //header('Access-Control-Allow-Headers: Content-Type');
 
+// s'assure qu'il n'y a pas d'injection sql
+function valid_data($data){
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+// s'assure que la date est on bon format
 function is_date_valid($date, $format = "Y-m-d")
 {
     $parsed_date = date_parse_from_format($format, $date);
@@ -37,16 +45,21 @@ if (!empty($input) || ($key == 'delete')) {
         $data = json_decode($input, true);
         var_dump($data);
         $id_object =  strip_tags($data['id_object']);
-        $description = strip_tags($data['description']);
+        $description = strip_tags(valid_data($data['description']));
         $status = strip_tags($data['status']);
         $date = strip_tags($data['date']);
-        $location = strip_tags($data['location']);
-        $firstname = strip_tags($data['firstname']);
-        $lastname = strip_tags($data['lastname']);
-        $email = strip_tags($data['email']);
+        $location = strip_tags(valid_data($data['location']));
+        $firstname = strip_tags(valid_data($data['firstname']));
+        $lastname = strip_tags(valid_data($data['lastname']));
+        $email = strip_tags(valid_data($data['email']));
+
+        if (isset ($data['email_user'])) {
+            $email_user= strip_tags(valid_data($data['email_user']));
+            $password =strip_tags(valid_data($data['password']));
+        }
         if (isset($data['checkedpicture'])) {
             $checkedpicture = strip_tags($data['checkedpicture']);
-            $filename = strip_tags($data['filename']);    # code...
+            $filename = strip_tags(valid_data($data['filename']));    # code...
         }
     }
     // En fonction du mode d’action requis
@@ -262,6 +275,14 @@ if (!empty($input) || ($key == 'delete')) {
             }
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
+            case 'createUser':
+            var_dump("CREATE USER detecté");
+            //attention 
+            
+            break;
+            
+            case 'connexion': break;
+            var_dump("INTERROGATION USER detecté");
         default:
             var_dump('ERREUR DE CLE');
             break;
