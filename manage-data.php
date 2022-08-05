@@ -288,7 +288,23 @@ if (!empty($input) || ($key == 'delete')) {
             break;
             case 'createUser':
             var_dump("CREATE USER detecté");
-            //attention ou
+            //attention avant d'inseron verifie que le couple n'existe pas {1->login 1->password} {1->0}
+            // donc on cherche seulemnt si login existe dejà
+            try {
+                $reqExistence = "SELECT email_user FROM user WHERE email_user=$email_user";
+                $stmt = $pdo->getPDO()->prepare($reqExistence);
+                $resultat = $stmt->execute();
+                $element=$stmt->fetch(PDO::FETCH_ASSOC);
+                $stmt->closeCursor();
+                if (count($element)>0){
+                    echo json_encode($create=false);
+                } else {
+                   $reqInsertion=""; 
+                }
+            } catch (\Throwable $th) {
+            echo "pb requete";
+            }
+                
             
             break;
             
