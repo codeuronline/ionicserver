@@ -27,7 +27,7 @@ require_once 'models/Database.php';
 // TODO : Créer une instance de la classe PDO
 $pdo = new Database;
 $pdo->getPDO();
-var_dump("Instance PDO crée");
+// var_dump("Instance PDO crée");
 // Récupérer le paramètre d’action de l’URL du client depuis $_GET[‘key’] 
 // et nettoyer la valeur
 extract($_GET);
@@ -39,30 +39,37 @@ if (isset($id_task)) {
 }
 var_dump("key", $key);
 // Récupérer les paramètres envoyés par le client vers l’API
-$input = file_get_contents('php://input');
+$input = file_get_contents('php://input');;
 // $input = '{"description":"voiture","status":0,"date":"2022-07-11","location":"Paris","firstname":"theodore","lastname":"Mozelle","email":"yugielf@gmail.com"}';
 if (!empty($input) || ($key == 'delete')) {
-    if (($key) != 'delete') {
-        $data = json_decode($input, true);
-        var_dump($data);
-        $id_object =  strip_tags($data['id_object']);
-        $description = strip_tags(valid_data($data['description']));
-        $status = strip_tags($data['status']);
-        $date = strip_tags($data['date']);
-        $location = strip_tags(valid_data($data['location']));
-        $firstname = strip_tags(valid_data($data['firstname']));
-        $lastname = strip_tags(valid_data($data['lastname']));
-        $email = strip_tags(valid_data($data['email']));
-
-        if (isset($data['email_user'])) {
+    $data = json_decode($input, true);
+    if ($key != 'delete') {
+        if ($key == "connexion" || $key == "user") {
             $email_user = strip_tags(valid_data($data['email_user']));
             $password = strip_tags(valid_data($data['password']));
-        }
-        if (isset($data['checkedpicture'])) {
-            $checkedpicture = strip_tags($data['checkedpicture']);
-            $filename = strip_tags(valid_data($data['filename']));    # code...
+        } else {
+            
+            var_dump($data);
+            $id_object =  strip_tags($data['id_object']);
+            $description = strip_tags(valid_data($data['description']));
+            $status = strip_tags($data['status']);
+            $date = strip_tags($data['date']);
+            $location = strip_tags(valid_data($data['location']));
+            $firstname = strip_tags(valid_data($data['firstname']));
+            $lastname = strip_tags(valid_data($data['lastname']));
+            $email = strip_tags(valid_data($data['email']));
+
+            if (isset($data['checkedpicture'])) {
+                $checkedpicture = strip_tags($data['checkedpicture']);
+                $filename = strip_tags(valid_data($data['filename']));
+            }
+            if (isset($data['email_user'])) {
+                $email_user = strip_tags(valid_data($data['email_user']));
+                $password = strip_tags(valid_data($data['password']));
+            }
         }
     }
+
     // En fonction du mode d’action requis
     switch ($key) {
             //Ajoute un nouvel enregistrement
@@ -287,47 +294,53 @@ if (!empty($input) || ($key == 'delete')) {
             }
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
-        case 'createUser':
+        case 'user':
             var_dump("CREATE USER detecté");
             // attention avant d'inserer on vérifie que le couple n'existe pas {1->login 1->password} {1->0}
             // donc on cherche seulement si login existe dejà
-            try {
-                $reqExistence = "SELECT email_user FROM user WHERE email_user=$email_user";
-                $stmt = $pdo->getPDO()->prepare($reqExistence);
-                $resultat = $stmt->execute();
-                $element = $stmt->fetch(PDO::FETCH_ASSOC);
-                $stmt->closeCursor();
-                if (count($element) > 0) {
-                    echo json_encode($create = false);
-                } else {
-                    //on prepare les variables
-                    try {
-                        $reqInsert = "INSERT INTO user (user_email,password) VALUES(:user_email,:password)";
-                        $password = password_hash($password, PASSWORD_DEFAULT);
-                        $stmt = $pdo->getPDO()->prepare($reqInsert);
-                        $stmt->bindValue(":password", $password, PDO::PARAM_STR);
-                        $stmt->bindValue(":email_user", $email, PDO::PARAM_STR);
-                        $resultat = $stmt->execute();
-                        $stmt->closCursor();
-                        echo json_encode($create = true);
-                    } catch (\Throwable $th) {
-                        echo "ERREUR d'INSERTION";
+            if (!empty($email_user) && filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
+                try {
+                    $reqExistence = "SELECT email_user FROM user WHERE email_user='$email_user'";
+                    $stmt = $pdo->getPDO()->prepare($reqExistence);
+                    $resultat = $stmt->execute();
+                    $element = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ( $stmt->rowCount() > 0) {
+                        echo json_encode($create = false);
+                        $stmt->closeCursor();
+                    } else {
+                        $stmt->closeCursor();
+                        //on prepare les variables
+                        try {
+                            $reqInsert = "INSERT INTO user (email_user,password) VALUES(:email_user,:password)";
+                            $password = password_hash($password, PASSWORD_DEFAULT);
+                            $stmt = $pdo->getPDO()->prepare($reqInsert);
+                            $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
+                            $stmt->bindValue(":password", $password, PDO::PARAM_STR);
+                            $resultat = $stmt->execute();
+                            $stmt->closeCursor();
+                            echo json_encode($create = true);
+                        } catch (\Throwable $th) {
+                            echo "ERREUR d'INSERTION";
+                        }
                     }
+                } catch (\Throwable $th) {
+                    echo "PROBLEME SUR LA REQUETE";
                 }
-            } catch (\Throwable $th) {
-                echo "PROBLEME SUR LA REQUETE";
+            } else {
+                echo "Probleme email";
             }
+
             break;
         case 'connexion':
             var_dump("CONNEXION USER detecté");
             try {
-                $reqExistence = "SELECT email_user,password FROM user WHERE email_user=$email_user";
+                $reqExistence = "SELECT email_user,password FROM user WHERE email_user='$email_user'";
                 $stmt = $pdo->getPDO()->prepare($reqExistence);
                 $resultat = $stmt->execute();
                 $element = $stmt->fetch(PDO::FETCH_ASSOC);
                 if ($email_user == $element['email_user']) {
                     if (password_verify($password, $element['password'])) {
-                            // les mots de pass coincide -> on renvoie la connexion à vrai
+                        // les mots de pass coincide -> on renvoie la connexion à vrai
                         echo json_encode($connexion = true);
                     } else {
                         // erreur sur le mot de pass -> on renvoie la connexion à faux 
@@ -345,6 +358,6 @@ if (!empty($input) || ($key == 'delete')) {
             var_dump('ERREUR DE CLE');
             break;
     }
+}
     // fin switch
     // fin if
-}
