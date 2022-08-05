@@ -277,7 +277,7 @@ if (!empty($input) || ($key == 'delete')) {
             break;
             case 'createUser':
             var_dump("CREATE USER detecté");
-            //attention 
+            //attention ou
             
             break;
             
