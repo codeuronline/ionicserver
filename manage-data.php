@@ -4,7 +4,8 @@ header('Access-Control-Allow-Origin: *');
 //header('Access-Control-Allow-Headers: Content-Type');
 
 // s'assure qu'il n'y a pas d'injection sql
-function valid_data($data){
+function valid_data($data)
+{
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
@@ -53,9 +54,9 @@ if (!empty($input) || ($key == 'delete')) {
         $lastname = strip_tags(valid_data($data['lastname']));
         $email = strip_tags(valid_data($data['email']));
 
-        if (isset ($data['email_user'])) {
-            $email_user= strip_tags(valid_data($data['email_user']));
-            $password =strip_tags(valid_data($data['password']));
+        if (isset($data['email_user'])) {
+            $email_user = strip_tags(valid_data($data['email_user']));
+            $password = strip_tags(valid_data($data['password']));
         }
         if (isset($data['checkedpicture'])) {
             $checkedpicture = strip_tags($data['checkedpicture']);
@@ -131,39 +132,38 @@ if (!empty($input) || ($key == 'delete')) {
                 $id_task = intval($id_task);
                 if (!empty($description)) {
                     $status = boolval($status);
-                    if (($status == 0) || ($status == 1)||($status==false)||($status=true)) {
-                        var_dump('status',$status);
-                        $status=($status==true)?1:0;
+                    if (($status == 0) || ($status == 1) || ($status == false) || ($status = true)) {
+                        var_dump('status', $status);
+                        $status = ($status == true) ? 1 : 0;
                         if (is_date_valid($date)) {
                             if (!empty($location)) {
                                 if (!empty($firstname)) {
                                     if (!empty($lastname)) {
                                         if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
                                             // TODO : Préparer la requête dans un try/catch    //pb au changement de status
-                                            var_dump('email',$email);
-                                            if ($data['filename']!=null) {
-                                                if (isset($data['checkedpicture'])) { 
-                                                var_dump('FileName detected');
-                                                try {
-                                                    /**necessite de verifier l'existence d'une image avant d'effacer de update l'obejet avec une nouvelle image*/
-                                                    $reqExistence = "SELECT filename FROM foundlost WHERE id_object=$id_task";
-                                                    $stmt = $pdo->getPDO()->prepare($reqExistence);
-                                                    $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
-                                                    $resultatExistence = $stmt->execute();                                                    
-                                                    $element=$stmt->fetch(PDO::FETCH_ASSOC);
-                                                    $stmt->closeCursor();
-                                                    if ($resultatExistence > 0) {
-                                                        if ($element['filename']!= null) {
-                                                            if ($data['filename']!=$element['filename']) {
-                                                                unlink("upload/" . $element['filename']);
-                                                                var_dump("SUPPRESSION de l'image");# code...
+                                            var_dump('email', $email);
+                                            if ($data['filename'] != null) {
+                                                if (isset($data['checkedpicture'])) {
+                                                    var_dump('FileName detected');
+                                                    try {
+                                                        /**necessite de verifier l'existence d'une image avant d'effacer de update l'obejet avec une nouvelle image*/
+                                                        $reqExistence = "SELECT filename FROM foundlost WHERE id_object=$id_task";
+                                                        $stmt = $pdo->getPDO()->prepare($reqExistence);
+                                                        $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
+                                                        $resultatExistence = $stmt->execute();
+                                                        $element = $stmt->fetch(PDO::FETCH_ASSOC);
+                                                        $stmt->closeCursor();
+                                                        if ($resultatExistence > 0) {
+                                                            if ($element['filename'] != null) {
+                                                                if ($data['filename'] != $element['filename']) {
+                                                                    unlink("upload/" . $element['filename']);
+                                                                    var_dump("SUPPRESSION de l'image"); # code...
+                                                                }
                                                             }
-                                                            
                                                         }
-                                                    }
-                                                    $pdo->getPDO();
-                                                    $checkedpicture = boolval($checkedpicture);
-                                                    $req = "UPDATE foundlost SET 
+                                                        $pdo->getPDO();
+                                                        $checkedpicture = boolval($checkedpicture);
+                                                        $req = "UPDATE foundlost SET 
                                                   id_object=:id_object,
                                                   description=:description,
                                                   status=:status,
@@ -175,29 +175,30 @@ if (!empty($input) || ($key == 'delete')) {
                                                   checkedpicture=:checkedpicture,
                                                   filename=:filename 
                                                   WHERE id_object = :id_object";
-                                                    $stmt = $pdo->getPDO()->prepare($req);
-                                                    $stmt->bindValue(":id_object", $id_task, PDO::PARAM_INT);
-                                                    $stmt->bindValue(":description", $description, PDO::PARAM_STR);
-                                                    $stmt->bindValue(":status", $status, PDO::PARAM_BOOL);
-                                                    $stmt->bindValue(":date", $date, PDO::PARAM_STR);
-                                                    $stmt->bindValue(":location", $location, PDO::PARAM_STR);
-                                                    $stmt->bindValue(":firstname", $firstname, PDO::PARAM_STR);
-                                                    $stmt->bindValue(":lastname", $lastname, PDO::PARAM_STR);
-                                                    $stmt->bindValue(":email", $email, PDO::PARAM_STR);
-                                                    $stmt->bindValue(":checkedpicture", $checkedpicture, PDO::PARAM_BOOL);
-                                                    $stmt->bindValue(":filename", $filename, PDO::PARAM_STR);
-                                                    $resultat = $stmt->execute();
-                                                    $stmt->closeCursor();
-                                                    $stmt->closeCursor();
-                                                    if ($resultat > 0) {
-                                                        var_dump("MODIFICATION PRODUCT IN BD AVEC INSERTION D IMAGE");
-                                                        $pdo->getPDO();
+                                                        $stmt = $pdo->getPDO()->prepare($req);
+                                                        $stmt->bindValue(":id_object", $id_task, PDO::PARAM_INT);
+                                                        $stmt->bindValue(":description", $description, PDO::PARAM_STR);
+                                                        $stmt->bindValue(":status", $status, PDO::PARAM_BOOL);
+                                                        $stmt->bindValue(":date", $date, PDO::PARAM_STR);
+                                                        $stmt->bindValue(":location", $location, PDO::PARAM_STR);
+                                                        $stmt->bindValue(":firstname", $firstname, PDO::PARAM_STR);
+                                                        $stmt->bindValue(":lastname", $lastname, PDO::PARAM_STR);
+                                                        $stmt->bindValue(":email", $email, PDO::PARAM_STR);
+                                                        $stmt->bindValue(":checkedpicture", $checkedpicture, PDO::PARAM_BOOL);
+                                                        $stmt->bindValue(":filename", $filename, PDO::PARAM_STR);
+                                                        $resultat = $stmt->execute();
+                                                        $stmt->closeCursor();
+                                                        $stmt->closeCursor();
+                                                        if ($resultat > 0) {
+                                                            var_dump("MODIFICATION PRODUCT IN BD AVEC INSERTION D IMAGE");
+                                                            $pdo->getPDO();
+                                                        }
+                                                    } catch (\Throwable $th) {
+                                                        var_dump($th);
+                                                        //throw $th;
                                                     }
-                                                } catch (\Throwable $th) {
-                                                    var_dump($th);
-                                                    //throw $th;
                                                 }
-                                            }} else {
+                                            } else {
                                                 var_dump('no ');
                                                 try {
                                                     $req = "UPDATE foundlost SET 
@@ -230,7 +231,7 @@ if (!empty($input) || ($key == 'delete')) {
                                                     //throw $th;
                                                 }
                                             }
-                                        } 
+                                        }
                                     } else {
                                         var_dump("Problème Modification sur Email", $email);
                                     }
@@ -266,9 +267,9 @@ if (!empty($input) || ($key == 'delete')) {
                 $stmt = $pdo->getPDO()->prepare($reqExistence);
                 //$stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
                 $resultat = $stmt->execute();
-                $element=$stmt->fetch(PDO::FETCH_ASSOC);
+                $element = $stmt->fetch(PDO::FETCH_ASSOC);
                 $stmt->closeCursor();
-                if ($element['filename']!=null) {
+                if ($element['filename'] != null) {
                     unlink("upload/" . $element['filename']);
                     var_dump("SUPPRESSION de l'image");
                 }
@@ -286,30 +287,60 @@ if (!empty($input) || ($key == 'delete')) {
             }
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
-            case 'createUser':
+        case 'createUser':
             var_dump("CREATE USER detecté");
-            //attention avant d'inseron verifie que le couple n'existe pas {1->login 1->password} {1->0}
-            // donc on cherche seulemnt si login existe dejà
+            // attention avant d'inserer on vérifie que le couple n'existe pas {1->login 1->password} {1->0}
+            // donc on cherche seulement si login existe dejà
             try {
                 $reqExistence = "SELECT email_user FROM user WHERE email_user=$email_user";
                 $stmt = $pdo->getPDO()->prepare($reqExistence);
                 $resultat = $stmt->execute();
-                $element=$stmt->fetch(PDO::FETCH_ASSOC);
+                $element = $stmt->fetch(PDO::FETCH_ASSOC);
                 $stmt->closeCursor();
-                if (count($element)>0){
-                    echo json_encode($create=false);
+                if (count($element) > 0) {
+                    echo json_encode($create = false);
                 } else {
-                   $reqInsertion=""; 
+                    //on prepare les variables
+                    try {
+                        $reqInsert = "INSERT INTO user (user_email,password) VALUES(:user_email,:password)";
+                        $password = password_hash($password, PASSWORD_DEFAULT);
+                        $stmt = $pdo->getPDO()->prepare($reqInsert);
+                        $stmt->bindValue(":password", $password, PDO::PARAM_STR);
+                        $stmt->bindValue(":email_user", $email, PDO::PARAM_STR);
+                        $resultat = $stmt->execute();
+                        $stmt->closCursor();
+                        echo json_encode($create = true);
+                    } catch (\Throwable $th) {
+                        echo "ERREUR d'INSERTION";
+                    }
                 }
             } catch (\Throwable $th) {
-            echo "pb requete";
+                echo "PROBLEME SUR LA REQUETE";
             }
-                
-            
             break;
-            
-            case 'connexion': break;
-            var_dump("INTERROGATION USER detecté");
+        case 'connexion':
+            var_dump("CONNEXION USER detecté");
+            try {
+                $reqExistence = "SELECT email_user,password FROM user WHERE email_user=$email_user";
+                $stmt = $pdo->getPDO()->prepare($reqExistence);
+                $resultat = $stmt->execute();
+                $element = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($email_user == $element['email_user']) {
+                    if (password_verify($password, $element['password'])) {
+                            // les mots de pass coincide -> on renvoie la connexion à vrai
+                        echo json_encode($connexion = true);
+                    } else {
+                        // erreur sur le mot de pass -> on renvoie la connexion à faux 
+                        echo json_encode($connexion = false);
+                    }
+                } else {
+                    //errreur le login n'existe pas-> nrenvoie la connexion à faux
+                    echo json_encode($connexion = false);
+                }
+            } catch (\Throwable $th) {
+                echo "ERREUR DE CONNEXION";
+            }
+            break;
         default:
             var_dump('ERREUR DE CLE');
             break;
