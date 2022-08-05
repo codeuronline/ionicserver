@@ -62,7 +62,7 @@ http//:`<adresse du ionicserver>`/manage-data.php?key=connexion
 Retourne l'objet dont la key est le **numéro**
 
 #### Syntaxe:
-http//:`<adresse du ionicserver>`/manage-data.php?key=
+http//:`<adresse du ionicserver>`/manage-data.php?key=numero
 
 ### [appli retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
 
