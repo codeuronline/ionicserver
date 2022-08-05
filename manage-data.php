@@ -48,7 +48,7 @@ if (!empty($input) || ($key == 'delete')) {
             $email_user = strip_tags(valid_data($data['email_user']));
             $password = strip_tags(valid_data($data['password']));
         } else {
-            
+
             var_dump($data);
             $id_object =  strip_tags($data['id_object']);
             $description = strip_tags(valid_data($data['description']));
@@ -304,7 +304,7 @@ if (!empty($input) || ($key == 'delete')) {
                     $stmt = $pdo->getPDO()->prepare($reqExistence);
                     $resultat = $stmt->execute();
                     $element = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ( $stmt->rowCount() > 0) {
+                    if ($stmt->rowCount() > 0) {
                         echo json_encode($create = false);
                         $stmt->closeCursor();
                     } else {
