@@ -37,7 +37,7 @@ if (isset($key)) {
 if (isset($id_task)) {
     $id_task = strip_tags($id_task);
 }
-var_dump("key", $key);
+//var_dump("key", $key);
 // Récupérer les paramètres envoyés par le client vers l’API
 $input = file_get_contents('php://input');;
 // $input = '{"description":"voiture","status":0,"date":"2022-07-11","location":"Paris","firstname":"theodore","lastname":"Mozelle","email":"yugielf@gmail.com"}';
@@ -295,7 +295,7 @@ if (!empty($input) || ($key == 'delete')) {
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
         case 'user':
-            var_dump("CREATE USER detecté");
+            //var_dump("CREATE USER detecté");
             // attention avant d'inserer on vérifie que le couple n'existe pas {1->login 1->password} {1->0}
             // donc on cherche seulement si login existe dejà
             if (!empty($email_user) && filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
@@ -332,7 +332,7 @@ if (!empty($input) || ($key == 'delete')) {
 
             break;
         case 'connexion':
-            var_dump("CONNEXION USER detecté");
+            //var_dump("CONNEXION USER detecté");
             try {
                 $reqExistence = "SELECT email_user,password FROM user WHERE email_user='$email_user'";
                 $stmt = $pdo->getPDO()->prepare($reqExistence);
