@@ -1,5 +1,5 @@
 <?php
-define("URL", str_replace("manage-data.php", "", (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
+//define("URL", str_replace("manage-data.php", "", (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 header('Access-Control-Allow-Origin: *');
 //header('Access-Control-Allow-Headers: Content-Type');
 
