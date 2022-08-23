@@ -1,7 +1,7 @@
 <?php
 define("URL", str_replace("manage-data.php", "", (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: Content-Type');
+//header('Access-Control-Allow-Headers: Content-Type');
 
 // s'assure qu'il n'y a pas d'injection sql
 function valid_data($data)
@@ -294,14 +294,6 @@ if (!empty($input) || ($key == 'delete')) {
             }
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
-        case 'search':
-            break;
-            // à défaut on fait une recherche exclusive sur description
-            // mais on va verifier que certain argument n'ont pas été rajouté
-            // checkedLocatision
-            // checkedFirstname
-            // checkedLastname
-            // checkedDate <-argument à traiter à part
         case 'user':
             //var_dump("CREATE USER detecté");
             // attention avant d'inserer on vérifie que le couple n'existe pas {1->login 1->password} {1->0}
