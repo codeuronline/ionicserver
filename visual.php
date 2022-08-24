@@ -1,0 +1,26 @@
+<?php
+include('test.php');
+var_dump("exemple avec utlisateur");
+$propriete="age";
+$element = new Utilisateur;
+$element->__set($propriete,5);
+$element->__set("user_name","bob");
+$element->__get($propriete);
+$element->__get("user_name");
+var_dump($element);
+echo "<hr>";
+$aKid= new Kid;
+var_dump("exemple avec enfant");
+var_dump($aKid);
+$akid->age="12";
+echo $aKid->age;
+echo "<hr>";
+var_dump($akid2);
+$aKid2=new Kid;
+$aKid2->age=10;
+echo "<hr>";
+echo $aKid2->age;
+echo "<hr>";
+var_dump($akid2);
+echo "<hr>";
+echo $aKid2->age;
