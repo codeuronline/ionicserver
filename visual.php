@@ -12,7 +12,7 @@ echo "<hr>";
 $aKid= new Kid;
 var_dump("exemple avec enfant");
 var_dump($aKid);
-$akid->age="fdgsfdqhs";
+$akid->age="12";
 echo $aKid->age;
 echo "<hr>";
 var_dump($akid2);
