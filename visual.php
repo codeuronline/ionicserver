@@ -47,4 +47,7 @@ $aKid2->__set("size",55);
 echo "<hr>";
 var_dump($aKid2);
 echo "<hr>";
-echo $aKid2->__get("sexe")."//".$aKid2->__get("size");
+var_dump("acces avec les methodes magiques");
+echo $aKid2->__get("sexe")."//".$aKid2->__get("size")."<br>";
+var_dump("acces directement a la prorpiete bien qu'elle soit declare private et dans un tableau");
+echo $aKid2->sexe."//".$aKid2->size;
