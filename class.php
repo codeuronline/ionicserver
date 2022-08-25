@@ -1,30 +1,40 @@
 <?php
     
     class Utilisateur{
-        protected $user_name;
-        protected $user_region;
-        protected $prix_abo;
-        protected $user_pass;
+        private $firstname;
+        private $lastname;
         public const ABONNEMENT = 15;
-        
+        protected $data=[];
        
         
-        public function getNom(){
-            echo $this->user_name;
-        }
-        public function getPrixAbo(){
-            echo $this->prix_abo;
-        }
-        
+       
         public function __get($prop){
-            echo '<br>Propriété ' .$prop. ' inaccessible.<br>';
+            
+            if (in_array($prop,$this->data)){
+                return $this->data[$prop];
+            }else{
+                ($prop==="lastname") ? $valeur= $this->lastname :(($prop==="firstname")?$valeur= $this->firstname: $valeur="propriété inexistante");   
         }
-        public function __set($prop, $valeur){
-            echo '<br>Impossible de mettre à jour la valeur de ' .$prop. ' avec "'
-            .$valeur. '" (propriété inaccessible)<br>';
-        }
+        return $valeur;
     }
-   
+    public function __set($prop, $valeur){
+        if ($prop==="lastname") {
+            $this->lastname=$valeur;
+        }elseif($prop==="firstname"){ 
+            $this->firstname=$valeur;
+        }elseif(!array_key_exists($prop,$this->data)){
+                $value= "propriété inexistante->création de la propriete dans la propriete tableau data";
+                $this->data[$prop]=$valeur;
+          } else{
+            $value= "propriete deja existante dans le tableau-> mise à jour de la valeur";
+            $this->data[$prop]= $valeur;
+          }       
+        (isset($value))? $valeur=$value:null;
+        echo $valeur;
+   }
+    }
+
+
     class Kid {
  
         /**
@@ -127,25 +137,3 @@ class PropertyTest
         return $this->hidden;
     }
 }
-
-
-echo "<pre>\n";
-
-$obj = new PropertyTest;
-
-$obj->a = 1;
-echo $obj->a . "\n\n";
-
-var_dump(isset($obj->a));
-unset($obj->a);
-var_dump(isset($obj->a));
-echo "\n";
-
-echo $obj->declared . "\n\n";
-
-echo "Manipulons maintenant la propriété privée nommée 'hidden' :\n";
-echo "'hidden' est visible depuis la classe, donc __get() n'est pas utilisée...\n";
-echo $obj->getHidden() . "\n";
-echo "'hidden' n'est pas visible en dehors de la classe, donc __get() est utilisée...\n";
-echo $obj->hidden . "\n";
-?>
