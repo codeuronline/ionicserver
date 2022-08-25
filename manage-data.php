@@ -270,8 +270,9 @@ if (!empty($input) || ($key == 'delete')) {
             if (isset(($_GET["id_task"]))) {
                 var_dump($id_task);
                 /**on vérifie s'il n'existe pas une trace d'un enregistrement précédent */
-                $reqExistence = "SELECT filename FROM foundlost WHERE id_object=$id_task";
+                $reqExistence = "SELECT filename FROM foundlost WHERE id_object=:id_task";
                 $stmt = $pdo->getPDO()->prepare($reqExistence);
+                $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
                 //$stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
                 $resultat = $stmt->execute();
                 $element = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -308,8 +309,9 @@ if (!empty($input) || ($key == 'delete')) {
             // donc on cherche seulement si login existe dejà
             if (!empty($email_user) && filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
                 try {
-                    $reqExistence = "SELECT email_user FROM user WHERE email_user='$email_user'";
+                    $reqExistence = "SELECT email_user FROM user WHERE email_user=:email_user";
                     $stmt = $pdo->getPDO()->prepare($reqExistence);
+                    $stmt->bindValue(":email_user",$email_user,PDO::PARAM_STR);
                     $resultat = $stmt->execute();
                     $element = $stmt->fetch(PDO::FETCH_ASSOC);
                     if ( $stmt->rowCount() > 0) {
@@ -342,8 +344,9 @@ if (!empty($input) || ($key == 'delete')) {
         case 'connexion':
             //var_dump("CONNEXION USER detecté");
             try {
-                $reqExistence = "SELECT email_user,password FROM user WHERE email_user='$email_user'";
+                $reqExistence = "SELECT email_user,password FROM user WHERE email_user=:email_user";
                 $stmt = $pdo->getPDO()->prepare($reqExistence);
+                $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
                 $resultat = $stmt->execute();
                 $element = $stmt->fetch(PDO::FETCH_ASSOC);
                 if ($email_user == $element['email_user']) {
