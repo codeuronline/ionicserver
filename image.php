@@ -16,7 +16,7 @@ if(isset($_FILES['photo']['name'])){
    $valid_ext = array("gif","jpg","png","jpeg");
 
    $response = 0;
-   if(in_array($file_extension,$valid_ext)){
+   if(in_array(mime_content_type($file_extension),$valid_ext)){
       // Upload file
       if(move_uploaded_file($_FILES['photo']['tmp_name'],$location)){
          $response = 1;
