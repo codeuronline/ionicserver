@@ -47,9 +47,9 @@ if (isset($key) && !empty($key)) {
             //var_dump("ID DETECTE");
             try {
                 $key = intval($key);      
-                $req = "SELECT * FROM foundlost WHERE id_object=$key";
+                $req = "SELECT * FROM foundlost WHERE id_object=:id";
                 $stmt = $pdo->getPDO()->prepare($req);
-                // $stmt->bindValue(":id",$key,PDO::PARAM_INT);
+                $stmt->bindValue(":id",$key,PDO::PARAM_INT);
                 $resultat = $stmt->execute();
                 //$tab=[array("description"=>"bateau","date"=>"2022-11-25","location"=>"Paris")];
                 $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -60,7 +60,7 @@ if (isset($key) && !empty($key)) {
                    $pdo->getPDO();
                  }
             } catch (\Throwable $th) {
-                //throw $th;
+                echo "id non défini";
             }                 break;   
         default:
         var_dump("ERREUR D ACCES");
