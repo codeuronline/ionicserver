@@ -7,7 +7,7 @@ require_once 'models/Database.php';
 // TODO : Créer une instance de la classe PDO (connexion à la base)
 $pdo = new Database;
 extract($_GET);
-$key = strip_tags($key);
+$key = strip_tags(@$key);
 if (isset($key) && !empty($key)) {
     switch ($key) {
         case 'found':
@@ -27,7 +27,7 @@ if (isset($key) && !empty($key)) {
         }
         break;
         case 'lost':
-                    try {
+            try {
                 // code...
                 $req = "SELECT * FROM foundlost WHERE status=0 ORDER BY date DESC";
                 $stmt = $pdo->getPDO()->prepare($req);
@@ -57,12 +57,13 @@ if (isset($key) && !empty($key)) {
                    $pdo->getPDO();
                  }
             } catch (\Throwable $th) {
-                echo "ID non défini";
-            }                 break;   
+                echo "ID NON DEFINI";
+            }                 
+            break;   
         default:
-        var_dump("ERREUR D ACCES");
+        var_dump("COMMANDE NON RECONNUE");
         break;
         }
     
-}
+}else{echo "ERREUR D'ACCES";}
 // TODO : Prépare et exécute la requête de lecture de la table (try/catch)

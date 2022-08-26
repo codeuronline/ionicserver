@@ -30,7 +30,7 @@ if(isset($_FILES['photo']['name'])){
    $response = 0;
    if(in_array($file_extension,$valid_ext)){
       if(check_image_mime($_FILES['photo']['tmp_name'])==true){
-   //if(in_array(mime_content_type($file_extension),$valid_ext)){
+   // if(in_array(mime_content_type($file_extension),$valid_ext)){
    // Upload file
    error_log($location);
       if(move_uploaded_file($_FILES['photo']['tmp_name'],$location)){
