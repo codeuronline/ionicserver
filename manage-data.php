@@ -26,22 +26,21 @@ require_once 'models/Database.php';
 
 // TODO : Créer une instance de la classe PDO
 $pdo = new Database;
-$pdo->getPDO();
+//$pdo->getPDO();
 // var_dump("Instance PDO crée");
 // Récupérer le paramètre d’action de l’URL du client depuis $_GET[‘key’] 
 // et nettoyer la valeur
 extract($_GET);
 if (isset($key)) {
-    $key = strip_tags($key);
+    $key = strip_tags(valid_data($key));
 }
 if (isset($id_task)) {
-    $id_task = strip_tags($id_task);
+    $id_task = strip_tags(valid_data($id_task));
 }
 //var_dump("key", $key);
 // Récupérer les paramètres envoyés par le client vers l’API
-$input = file_get_contents('php://input');;
-// $input = '{"description":"voiture","status":0,"date":"2022-07-11","location":"Paris","firstname":"theodore","lastname":"Mozelle","email":"yugielf@gmail.com"}';
-if (!empty($input) || ($key == 'delete')) {
+$input = file_get_contents('php://input');
+if (!empty($input) || (@$key == 'delete')) {
     $data = json_decode($input, true);
     if ($key != 'delete') {
         if ($key == "connexion" || $key == "user") {
@@ -77,7 +76,7 @@ if (!empty($input) || ($key == 'delete')) {
             var_dump("CREATE DETECTE");
             // TODO : Filtrer les valeurs entrantes
             if (!empty($description)) {
-                var_dump(filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE));
+                //var_dump(filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE));
                 if (filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) !== null) {
                     if (is_date_valid($date)) {
                         if (!empty($location)) {
@@ -277,15 +276,16 @@ if (!empty($input) || ($key == 'delete')) {
                 $resultat = $stmt->execute();
                 $element = $stmt->fetch(PDO::FETCH_ASSOC);
                 $stmt->closeCursor();
-                if ($element['filename'] != null) {
+                //if ($element['filename'] != null) {
+                if (isset($element['filename'])&&!empty($element['filename'])) {
                     unlink("upload/" . $element['filename']);
                     var_dump("SUPPRESSION de l'image");
                 }
                 $pdo->getPDO();
                 // TODO : Préparer la requête dans un try/catch
-                $req = "DELETE FROM foundlost WHERE id_object=$id_task";
+                $req = "DELETE FROM foundlost WHERE id_object=:id_task";
                 $stmt = $pdo->getPDO()->prepare($req);
-                //$stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
+                $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
                 $resultat1 = $stmt->execute();    //code...
                 $stmt->closeCursor();
                 if ($resultat1 > 0) {
@@ -298,11 +298,11 @@ if (!empty($input) || ($key == 'delete')) {
         case 'search':
             break;
             // à défaut on fait une recherche exclusive sur description
-            // mais on va verifier que certain argument n'ont pas été rajouté
-            // checkedLocatision
-            // checkedFirstname
-            // checkedLastname
-            // checkedDate <-argument à traiter à part
+            // pas besoin de completer cette methode car le dom de la page contient deja tous les elements
+            // checkedlocalisation / checkedDate <-argument à traiter à part-> la recherche se fait exclusivement 
+            // sur la description 
+            // sur la date
+            // sur la localisation 
         case 'user':
             //var_dump("CREATE USER detecté");
             // attention avant d'inserer on vérifie que le couple n'existe pas {1->login 1->password} {1->0}

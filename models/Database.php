@@ -17,8 +17,6 @@ class Database
             self::$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_ASSOC);
             self::$pdo->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES utf8');
     }
-        
-
     //  fonction Obtenir une instance de PDO
     public function getPDO()  
     {
