@@ -1,7 +1,8 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: Content-Type');
 // TODO : Définir les paramètres de connexion
+// accepte toute les requetes
+header('Access-Control-Allow-Origin: *');
+//header('Access-Control-Allow-Headers: Content-Type');
 require_once 'models/Database.php';
 // TODO : Créer une instance de la classe PDO (connexion à la base)
 $pdo = new Database;
@@ -24,11 +25,9 @@ if (isset($key) && !empty($key)) {
         } catch (\Throwable $th) {
             //throw $th;
         }
-        # code...
-            break;
+        break;
         case 'lost':
-            # code...
-            try {
+                    try {
                 // code...
                 $req = "SELECT * FROM foundlost WHERE status=0 ORDER BY date DESC";
                 $stmt = $pdo->getPDO()->prepare($req);
@@ -51,16 +50,14 @@ if (isset($key) && !empty($key)) {
                 $stmt = $pdo->getPDO()->prepare($req);
                 $stmt->bindValue(":id",$key,PDO::PARAM_INT);
                 $resultat = $stmt->execute();
-                //$tab=[array("description"=>"bateau","date"=>"2022-11-25","location"=>"Paris")];
                 $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
                  echo json_encode($resultatValue);
-                // echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
                 $stmt->closeCursor();
                 if($resultat > 0){ 
                    $pdo->getPDO();
                  }
             } catch (\Throwable $th) {
-                echo "id non défini";
+                echo "ID non défini";
             }                 break;   
         default:
         var_dump("ERREUR D ACCES");
@@ -69,4 +66,3 @@ if (isset($key) && !empty($key)) {
     
 }
 // TODO : Prépare et exécute la requête de lecture de la table (try/catch)
-?>

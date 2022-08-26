@@ -1,12 +1,12 @@
 <?php
 class Database
 {
-    private static $host = "localhost";         //chemin d'acces de lhote contenant la Base de donnée
-    private static $dbname = "ionicfoundlost";        // nom de la base de donnée
-    private static $attribut= "charset=utf8";   // attribu de la Base de donnée    
-    private static $user = "root";              // login de connection
-    private static $pwd = "";                   // mot de pass de connection à la BD
-    private static $pdo;                        // variable d'instance PDO
+    private static $host    = "localhost";          // chemin d'acces de lhote contenant la Base de donnée
+    private static $dbname  = "ionicfoundlost";     // nom de la base de donnée
+    private static $attribut= "charset=utf8";       // attribut de la Base de donnée    
+    private static $user    = "root";               // login de connection
+    private static $pwd     = "";                   // mot de pass de connection à la BD
+    private static $pdo;                            // variable d'instance PDO
     
     // Appliquer les paramètres à PDO
     //  
@@ -19,7 +19,7 @@ class Database
     }
         
 
-    //  fonction :Obtenir une instance de PDO
+    //  fonction Obtenir une instance de PDO
     public function getPDO()  
     {
             if (self::$pdo === null) {
