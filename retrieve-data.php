@@ -28,7 +28,6 @@ if (isset($key) && !empty($key)) {
         break;
         case 'lost':
             try {
-                // code...
                 $req = "SELECT * FROM foundlost WHERE status=0 ORDER BY date DESC";
                 $stmt = $pdo->getPDO()->prepare($req);
                 $resultat = $stmt->execute();
@@ -51,7 +50,7 @@ if (isset($key) && !empty($key)) {
                 $stmt->bindValue(":id",$key,PDO::PARAM_INT);
                 $resultat = $stmt->execute();
                 $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
-                 echo json_encode($resultatValue);
+                echo json_encode($resultatValue);
                 $stmt->closeCursor();
                 if($resultat > 0){ 
                    $pdo->getPDO();
