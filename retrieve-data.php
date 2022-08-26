@@ -61,7 +61,7 @@ if (isset($key) && !empty($key)) {
             }                 
             break;   
         default:
-        var_dump("COMMANDE NON RECONNUE");
+        echo "COMMANDE NON RECONNUE";
         break;
         }
     
