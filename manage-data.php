@@ -2,8 +2,24 @@
 define("URL", str_replace("manage-data.php", "", (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 header('Access-Control-Allow-Origin: *');
 //header('Access-Control-Allow-Headers: Content-Type');
+// definition des constantes de tailles pour chaque
+define("MAX_LOGIN_SIZE",50);
+define("MIN_LOGIN_SIZE",6);
+define("MAX_PASSWORD_SIZE",20);
+define("MIN_PASSWORD_SIZE",20);
+define("MAX_DESCRIPTION_SIZE",100);
+define("MIN_DESCRIPTION_SIZE",0);
+define("MAX_LOCATION_SIZE",50);
+define("MIN_LOCATION_SIZE",2);
+define("MAX_FIRSTNAME_SIZE",20);
+define("MIN_FIRSTNAME_SIZE",0);
+define("MAX_LASTNAME_SIZE",20);
+define("MIN_LASTNAME_SIZE",0);
+define("MAX_EMAIL_SIZE",MAX_LOGIN_SIZE);
+define("MIN_EMAIL_SIZE",MIN_LOGIN_SIZE);
 
-// s'assure qu'il n'y a pas d'injection sql
+
+// s'assure qu'il n'y a pas d'injection sql"
 function valid_data($data)
 {
     $data = trim($data);
@@ -75,14 +91,14 @@ if (!empty($input) || (@$key == 'delete')) {
         case "create":
             var_dump("CREATE DETECTE");
             // TODO : Filtrer les valeurs entrantes
-            if (!empty($description)) {
+            if (!empty($description)&&(strlen($description)>MIN_DESCRIPTION_SIZE)&&strlen($description)<=MAX_DESCRIPTION_SIZE) {
                 //var_dump(filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE));
                 if (filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) !== null) {
                     if (is_date_valid($date)) {
-                        if (!empty($location)) {
-                            if (!empty($firstname)) {
-                                if (!empty($lastname)) {
-                                    if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                        if (!empty($location)&&(strlen($location)>MIN_LOCATION_SIZE)&&(strlen($location)<=MAX_LOCATION_SIZE)) {
+                            if (!empty($firstname)&&(strlen($firstname)>MIN_FIRSTNAME_SIZE)&&(strlen($firstname)<=MAX_FIRSTNAME_SIZE)) {
+                                if (!empty($lastname)&&(strlen($lastname)>MIN_LASTNAME_SIZE)&&(strlen($lastname)<=MAX_LASTNAME_SIZE)) {
+                                    if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) &&(strlen($email)>MIN_EMAIL_SIZE)&&(strlen($email)<=MAX_EMAIL_SIZE)) {
                                         try {
                                             // TODO : Préparer la requête dans un try/catch
                                             $req = "INSERT INTO 
@@ -136,16 +152,16 @@ if (!empty($input) || (@$key == 'delete')) {
             if (isset(($_GET["id_task"]))) {
                 $id_task = strip_tags($data['id_object']);
                 $id_task = intval($id_task);
-                if (!empty($description)) {
+                if (!empty($description)&&(strlen($description)>MIN_DESCRIPTION_SIZE)&&strlen($description)<=MAX_DESCRIPTION_SIZE) {
                     $status = boolval($status);
                     if (($status == 0) || ($status == 1) || ($status == false) || ($status = true)) {
                         var_dump('status', $status);
                         $status = ($status == true) ? 1 : 0;
                         if (is_date_valid($date)) {
-                            if (!empty($location)) {
-                                if (!empty($firstname)) {
-                                    if (!empty($lastname)) {
-                                        if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                            if (!empty($location)&&(strlen($location)>MIN_LOCATION_SIZE)&&(strlen($location)<=MAX_LOCATION_SIZE)) {
+                                if (!empty($firstname)&&(strlen($firstname)>MIN_FIRSTNAME_SIZE)&&(strlen($firstname)<=MAX_FIRSTNAME_SIZE)) {
+                                    if (!empty($lastname)&&(strlen($lastname)>MIN_LASTNAME_SIZE)&&(strlen($lastname)<=MAX_LASTNAME_SIZE)) {
+                                        if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) &&(strlen($email)>MIN_EMAIL_SIZE)&&(strlen($email)<=MAX_EMAIL_SIZE)) {
                                             // TODO : Préparer la requête dans un try/catch    //pb au changement de status
                                             var_dump('email', $email);
                                             if ($data['filename'] != null) {
@@ -170,17 +186,17 @@ if (!empty($input) || (@$key == 'delete')) {
                                                         $pdo->getPDO();
                                                         $checkedpicture = boolval($checkedpicture);
                                                         $req = "UPDATE foundlost SET 
-                                                  id_object=:id_object,
-                                                  description=:description,
-                                                  status=:status,
-                                                  date=:date,
-                                                  location=:location,
-                                                  firstname=:firstname,
-                                                  lastname=:lastname,
-                                                  email=:email,
-                                                  checkedpicture=:checkedpicture,
-                                                  filename=:filename 
-                                                  WHERE id_object = :id_object";
+                                                                id_object=:id_object,
+                                                                description=:description,
+                                                                status=:status,
+                                                                date=:date,
+                                                                location=:location,
+                                                                firstname=:firstname,
+                                                                lastname=:lastname,
+                                                                email=:email,
+                                                                checkedpicture=:checkedpicture,
+                                                                filename=:filename 
+                                                                WHERE id_object = :id_object";
                                                         $stmt = $pdo->getPDO()->prepare($req);
                                                         $stmt->bindValue(":id_object", $id_task, PDO::PARAM_INT);
                                                         $stmt->bindValue(":description", $description, PDO::PARAM_STR);
@@ -201,7 +217,7 @@ if (!empty($input) || (@$key == 'delete')) {
                                                         }
                                                     } catch (\Throwable $th) {
                                                         var_dump($th);
-                                                        //throw $th;
+                                                        echo "ERREUR DE MODIFICATION";
                                                     }
                                                 }
                                             } else {
@@ -233,8 +249,8 @@ if (!empty($input) || (@$key == 'delete')) {
                                                         $pdo->getPDO();
                                                     }
                                                 } catch (\Throwable $th) {
-                                                    var_dump($th);
-                                                    //throw $th;
+                                                    echo "ERREUR DE MODIFICATION";
+                                                    
                                                 }
                                             }
                                         }
@@ -295,14 +311,12 @@ if (!empty($input) || (@$key == 'delete')) {
             }
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
-        case 'search':
+        case 'recover':
             break;
-            // à défaut on fait une recherche exclusive sur description
-            // pas besoin de completer cette methode car le dom de la page contient deja tous les elements
-            // checkedlocalisation / checkedDate <-argument à traiter à part-> la recherche se fait exclusivement 
-            // sur la description 
-            // sur la date
-            // sur la localisation 
+            // trois elements a comparer avant d'inserer  le nouvel elment
+            // le mail est valide et existe dans la base de donnée
+            // le captcha generer en php correspond au captcha saisie dans le formulaire
+            // les passwords corresponds
         case 'user':
             //var_dump("CREATE USER detecté");
             // attention avant d'inserer on vérifie que le couple n'existe pas {1->login 1->password} {1->0}
