@@ -103,4 +103,4 @@ Permet de réceptionner le fichier image pour l'appli [foundlost](https://github
 #### -> Creation d'un nouveau fichier (https://github.com/codeuronline/ionicserver/blob/main/existence.php) pour gérer les requêtes ajax au niveau des utilisateurs déjà présents
 ### Mise à jour du 28/08/2022
 #### -> Renforcement de la sécurité au niveau de taille des champs acceptés
-#### -> Ajout d'un fichier captcha.php générant les images de captcha à la demande
+#### -> Ajout d'un fichier captcha.php générant les images de (https://github.com/codeuronline/ionicserver/blob/main/captcha.php) à la demande
