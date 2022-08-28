@@ -78,12 +78,16 @@ http//:`<adresse du ionicserver>`/manage-data.php?key=integer
 un numéro -> Renvoie l'objet qui porte ce numéro
 
 #### recover
-nouvelle reoute pour renitialiser le mot de pass via methoded POST
+nouvelle route pour renitialiser le mot de pass via methoded POST
 nécessite 3 champs
 compare avec éléments dejàa present en BD
 -> mail pour login s'il existe
 -> le captcha recopié de captcha.php généré
 -> et de la vérification de la coincidence des passwords 
+
+#### Syntaxe: 
+http//:`<adresse du ionicserver>`/manage-data.php?key=recover
+-> change le comportement du create en mode recover qui écrase l'ancien mot de pass pour le meme login
 
 ### [appli image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
 
