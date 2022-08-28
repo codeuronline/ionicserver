@@ -1,22 +1,23 @@
 <?php
+session_start();
 //define("URL", str_replace("manage-data.php", "", (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 header('Access-Control-Allow-Origin: *');
 //header('Access-Control-Allow-Headers: Content-Type');
 // definition des constantes de tailles pour chaque
-define("MAX_LOGIN_SIZE",50);
-define("MIN_LOGIN_SIZE",6);
-define("MAX_PASSWORD_SIZE",20);
-define("MIN_PASSWORD_SIZE",20);
-define("MAX_DESCRIPTION_SIZE",100);
-define("MIN_DESCRIPTION_SIZE",0);
-define("MAX_LOCATION_SIZE",50);
-define("MIN_LOCATION_SIZE",2);
-define("MAX_FIRSTNAME_SIZE",20);
-define("MIN_FIRSTNAME_SIZE",0);
-define("MAX_LASTNAME_SIZE",20);
-define("MIN_LASTNAME_SIZE",0);
-define("MAX_EMAIL_SIZE",MAX_LOGIN_SIZE);
-define("MIN_EMAIL_SIZE",MIN_LOGIN_SIZE);
+define("MAX_LOGIN_SIZE", 50);
+define("MIN_LOGIN_SIZE", 6);
+define("MAX_PASSWORD_SIZE", 20);
+define("MIN_PASSWORD_SIZE", 20);
+define("MAX_DESCRIPTION_SIZE", 100);
+define("MIN_DESCRIPTION_SIZE", 0);
+define("MAX_LOCATION_SIZE", 50);
+define("MIN_LOCATION_SIZE", 2);
+define("MAX_FIRSTNAME_SIZE", 20);
+define("MIN_FIRSTNAME_SIZE", 0);
+define("MAX_LASTNAME_SIZE", 20);
+define("MIN_LASTNAME_SIZE", 0);
+define("MAX_EMAIL_SIZE", MAX_LOGIN_SIZE);
+define("MIN_EMAIL_SIZE", MIN_LOGIN_SIZE);
 
 
 // s'assure qu'il n'y a pas d'injection sql"
@@ -36,6 +37,15 @@ function is_date_valid($date, $format = "Y-m-d")
     }
 
     return false;
+}
+function test_password($password1, $password2)
+{
+    return ($password1 == $password2) ? true : false;
+}
+function test_captcha($valeur, $valeur2)
+{
+    unset($_SESSION['captcha']);
+    return ($valeur == $valeur2) ? true : false;
 }
 // TODO : Définir les paramètres de connexion à la base
 require_once 'models/Database.php';
@@ -62,8 +72,12 @@ if (!empty($input) || (@$key == 'delete')) {
         if ($key == "connexion" || $key == "user") {
             $email_user = strip_tags(valid_data($data['email_user']));
             $password = strip_tags(valid_data($data['password']));
+            if ($key == "recover") {
+                $captcha = strip_tags(valid_data($data['captcha']));
+                $passwordVerify = strip_tags(valid_data($data['passwordVerify']));
+            }
         } else {
-            
+
             var_dump($data);
             $id_object =  strip_tags($data['id_object']);
             $description = strip_tags(valid_data($data['description']));
@@ -91,14 +105,14 @@ if (!empty($input) || (@$key == 'delete')) {
         case "create":
             var_dump("CREATE DETECTE");
             // TODO : Filtrer les valeurs entrantes
-            if (!empty($description)&&(strlen($description)>MIN_DESCRIPTION_SIZE)&&strlen($description)<=MAX_DESCRIPTION_SIZE) {
+            if (!empty($description) && (strlen($description) > MIN_DESCRIPTION_SIZE) && strlen($description) <= MAX_DESCRIPTION_SIZE) {
                 //var_dump(filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE));
                 if (filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) !== null) {
                     if (is_date_valid($date)) {
-                        if (!empty($location)&&(strlen($location)>MIN_LOCATION_SIZE)&&(strlen($location)<=MAX_LOCATION_SIZE)) {
-                            if (!empty($firstname)&&(strlen($firstname)>MIN_FIRSTNAME_SIZE)&&(strlen($firstname)<=MAX_FIRSTNAME_SIZE)) {
-                                if (!empty($lastname)&&(strlen($lastname)>MIN_LASTNAME_SIZE)&&(strlen($lastname)<=MAX_LASTNAME_SIZE)) {
-                                    if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) &&(strlen($email)>MIN_EMAIL_SIZE)&&(strlen($email)<=MAX_EMAIL_SIZE)) {
+                        if (!empty($location) && (strlen($location) > MIN_LOCATION_SIZE) && (strlen($location) <= MAX_LOCATION_SIZE)) {
+                            if (!empty($firstname) && (strlen($firstname) > MIN_FIRSTNAME_SIZE) && (strlen($firstname) <= MAX_FIRSTNAME_SIZE)) {
+                                if (!empty($lastname) && (strlen($lastname) > MIN_LASTNAME_SIZE) && (strlen($lastname) <= MAX_LASTNAME_SIZE)) {
+                                    if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) && (strlen($email) > MIN_EMAIL_SIZE) && (strlen($email) <= MAX_EMAIL_SIZE)) {
                                         try {
                                             // TODO : Préparer la requête dans un try/catch
                                             $req = "INSERT INTO 
@@ -152,16 +166,16 @@ if (!empty($input) || (@$key == 'delete')) {
             if (isset(($_GET["id_task"]))) {
                 $id_task = strip_tags($data['id_object']);
                 $id_task = intval($id_task);
-                if (!empty($description)&&(strlen($description)>MIN_DESCRIPTION_SIZE)&&strlen($description)<=MAX_DESCRIPTION_SIZE) {
+                if (!empty($description) && (strlen($description) > MIN_DESCRIPTION_SIZE) && strlen($description) <= MAX_DESCRIPTION_SIZE) {
                     $status = boolval($status);
                     if (($status == 0) || ($status == 1) || ($status == false) || ($status = true)) {
                         var_dump('status', $status);
                         $status = ($status == true) ? 1 : 0;
                         if (is_date_valid($date)) {
-                            if (!empty($location)&&(strlen($location)>MIN_LOCATION_SIZE)&&(strlen($location)<=MAX_LOCATION_SIZE)) {
-                                if (!empty($firstname)&&(strlen($firstname)>MIN_FIRSTNAME_SIZE)&&(strlen($firstname)<=MAX_FIRSTNAME_SIZE)) {
-                                    if (!empty($lastname)&&(strlen($lastname)>MIN_LASTNAME_SIZE)&&(strlen($lastname)<=MAX_LASTNAME_SIZE)) {
-                                        if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) &&(strlen($email)>MIN_EMAIL_SIZE)&&(strlen($email)<=MAX_EMAIL_SIZE)) {
+                            if (!empty($location) && (strlen($location) > MIN_LOCATION_SIZE) && (strlen($location) <= MAX_LOCATION_SIZE)) {
+                                if (!empty($firstname) && (strlen($firstname) > MIN_FIRSTNAME_SIZE) && (strlen($firstname) <= MAX_FIRSTNAME_SIZE)) {
+                                    if (!empty($lastname) && (strlen($lastname) > MIN_LASTNAME_SIZE) && (strlen($lastname) <= MAX_LASTNAME_SIZE)) {
+                                        if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) && (strlen($email) > MIN_EMAIL_SIZE) && (strlen($email) <= MAX_EMAIL_SIZE)) {
                                             // TODO : Préparer la requête dans un try/catch    //pb au changement de status
                                             var_dump('email', $email);
                                             if ($data['filename'] != null) {
@@ -250,7 +264,6 @@ if (!empty($input) || (@$key == 'delete')) {
                                                     }
                                                 } catch (\Throwable $th) {
                                                     echo "ERREUR DE MODIFICATION";
-                                                    
                                                 }
                                             }
                                         }
@@ -293,7 +306,7 @@ if (!empty($input) || (@$key == 'delete')) {
                 $element = $stmt->fetch(PDO::FETCH_ASSOC);
                 $stmt->closeCursor();
                 //if ($element['filename'] != null) {
-                if (isset($element['filename'])&&!empty($element['filename'])) {
+                if (isset($element['filename']) && !empty($element['filename'])) {
                     unlink("upload/" . $element['filename']);
                     var_dump("SUPPRESSION de l'image");
                 }
@@ -312,6 +325,48 @@ if (!empty($input) || (@$key == 'delete')) {
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
         case 'recover':
+            if (!empty($email_user) && filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
+                try {
+                    $reqExistence = "SELECT email_user FROM user WHERE email_user=:email_user";
+                    $stmt = $pdo->getPDO()->prepare($reqExistence);
+                    $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
+                    $resultat = $stmt->execute();
+                    $element = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($stmt->rowCount() > 0) {
+                        echo json_encode($recover = false);
+                        $stmt->closeCursor();
+                    } else {
+                        $stmt->closeCursor();
+                        //on prepare les variables
+                        if (test_password($password, $passwordVerify)) {
+                            if (test_captcha($captcha, $_SESSION['captcha'])) {
+                                // tout est bon
+                                try {
+                                    $password = password_hash($password, PASSWORD_DEFAULT);
+                                    $reqUpdate = "UPDATE user SET password=:password WHERE emai_user = :email_user";
+                                    
+                                    $stmt = $pdo->getPDO()->prepare($reqUpdate);
+                                    $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
+                                    $stmt->bindValue(":password", $password, PDO::PARAM_STR);
+                                    $resultat = $stmt->execute();
+                                    $stmt->closeCursor();
+                                    echo json_encode($recover = true);
+                                } catch (\Throwable $th) {
+                                    echo "ERREUR D'UPDATE";
+                                }
+                            } else {
+                                echo "ERREUR DE CAPTCHA";
+                            }
+                        } else {
+                            echo "ERREUR LES PASSWORDS NE SONT PAS IDENTIQUES";
+                        }
+                    }
+                } catch (\Throwable $th) {
+                    echo "ERREUR EMAIL NON REFERENCE";
+                }
+            } else {
+                echo "probleme d'email";
+            }
             break;
             // trois elements a comparer avant d'inserer  le nouvel elment
             // le mail est valide et existe dans la base de donnée
@@ -325,10 +380,10 @@ if (!empty($input) || (@$key == 'delete')) {
                 try {
                     $reqExistence = "SELECT email_user FROM user WHERE email_user=:email_user";
                     $stmt = $pdo->getPDO()->prepare($reqExistence);
-                    $stmt->bindValue(":email_user",$email_user,PDO::PARAM_STR);
+                    $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
                     $resultat = $stmt->execute();
                     $element = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ( $stmt->rowCount() > 0) {
+                    if ($stmt->rowCount() > 0) {
                         echo json_encode($create = false);
                         $stmt->closeCursor();
                     } else {
