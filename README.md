@@ -57,7 +57,6 @@ compare avec les élements deja present en BD
 #### Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=connexion
 
-
 #### un numero (integer)
 Retourne l'objet dont la key est le **numéro**
 
@@ -78,6 +77,18 @@ lost  -> Renvoie la liste des objets perdus
 http//:`<adresse du ionicserver>`/manage-data.php?key=integer
 un numéro -> Renvoie l'objet qui porte ce numéro
 
+#### recover
+nouvelle route pour renitialiser le mot de pass via methoded POST
+nécessite 3 champs
+compare avec éléments dejàa present en BD
+-> mail pour login s'il existe
+-> le captcha recopié de captcha.php généré
+-> et de la vérification de la coincidence des passwords 
+
+#### Syntaxe: 
+http//:`<adresse du ionicserver>`/manage-data.php?key=recover
+-> change le comportement du create en mode recover qui écrase l'ancien mot de pass pour le meme login
+
 ### [appli image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
 
 Permet de réceptionner le fichier image pour l'appli [foundlost](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost) dans le repertoire upload/
@@ -90,3 +101,6 @@ Permet de réceptionner le fichier image pour l'appli [foundlost](https://github
 ### Mise à jour du 04/08/2022
 #### -> Modification interface pour gérer une authentification mail/mot de passe -> terminer
 #### -> Creation d'un nouveau fichier (https://github.com/codeuronline/ionicserver/blob/main/existence.php) pour gérer les requêtes ajax au niveau des utilisateurs déjà présents
+### Mise à jour du 28/08/2022
+#### -> Renforcement de la sécurité au niveau de taille des champs acceptés
+#### -> Ajout d'un fichier captcha.php générant les images de (https://github.com/codeuronline/ionicserver/blob/main/captcha.php) à la demande
