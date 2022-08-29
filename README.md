@@ -63,7 +63,7 @@ Retourne l'objet dont la key est le **numéro**
 #### Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=numero
 
-### [appli retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
+### [fichier retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
 
 #### Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=found
@@ -92,7 +92,7 @@ http//:`<adresse du ionicserver>`/manage-data.php?key=recover
 ### [fichier image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
 
 Permet de réceptionner le fichier image pour l'appli [foundlost](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost) dans le repertoire upload/
-### [fichier captcha.php](https://github.com/codeuronline/ionicserver/blob/main/captcha.php)
+### [fichier captcha.php](https://github.com/codeuronline/ionicserver/blob/master/captcha.php)
 -> Créer un élément de Session captcha et renvoie l'image du captcha au format jpeg
 
 ### Mise à jour du 28/07/2022
