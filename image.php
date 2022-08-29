@@ -17,7 +17,7 @@ error_log(print_r($_FILES),1);
 if(isset($_FILES['photo']['name'])){
    // file name
    // Valid extensions
-   $valid_ext = array("gif","jpg","png","jpeg","webp");
+   $valid_ext = array("gif","jpg","png","jpeg","webp","jfif");
    $filename = $_POST['id'];
    // Location
    // necessite de recupere son vrai nom
