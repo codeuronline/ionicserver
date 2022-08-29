@@ -4,7 +4,7 @@
 
 ## 3 éléments du serveurs :
 
-### [appli manage-data.php](https://github.com/codeuronline/ionicserver/blob/main/manage-data.php)
+### [fichier manage-data.php](https://github.com/codeuronline/ionicserver/blob/main/manage-data.php)
 
 Permet de gérer la BD foundlist(create/modification/suppression)
 
@@ -89,9 +89,11 @@ compare avec éléments dejàa present en BD
 http//:`<adresse du ionicserver>`/manage-data.php?key=recover
 -> change le comportement du create en mode recover qui écrase l'ancien mot de pass pour le meme login
 
-### [appli image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
+### [fichier image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
 
 Permet de réceptionner le fichier image pour l'appli [foundlost](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost) dans le repertoire upload/
+### [fichier captcha.php](https://github.com/codeuronline/ionicserver/blob/main/captcha.php)
+-> Créer un élément de Session captcha et renvoie l'image du captcha au format jpeg
 
 ### Mise à jour du 28/07/2022
 #### -> déplacement de la condition sur le status qui était mis au mauvais endroit et par conséquent ne traitait pas le changement de statuts
