@@ -47,7 +47,7 @@ nécessite 2 champs
 #### Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=user
 
-#### connexion
+#### Connexion
 Nouvelle route pour verifier un utlisateur via methode POST
 nécessite 2 champs
 compare avec les élements deja present en BD
@@ -63,6 +63,20 @@ Retourne l'objet dont la key est le **numéro**
 #### Syntaxe:
 http//:`<adresse du ionicserver>`/manage-data.php?key=numero
 
+#### Recover
+nouvelle route pour renitialiser le mot de pass via methode POST
+--> nécessite 3 champs
+--> compare avec éléments dejà present en BD
+--> élément contenu pour les test
+-> mail pour login s'il existe
+-> le captcha recopié de captcha.php généré
+-> et les 2 password pour vérifier de leur coincidence 
+
+#### Syntaxe: 
+http//:`<adresse du ionicserver>`/manage-data.php?key=recover
+-> change le comportement du create en mode recover qui écrase l'ancien mot de pass pour le meme login
+
+
 ### [fichier retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
 
 #### Syntaxe:
@@ -77,17 +91,6 @@ lost  -> Renvoie la liste des objets perdus
 http//:`<adresse du ionicserver>`/manage-data.php?key=integer
 un numéro -> Renvoie l'objet qui porte ce numéro
 
-#### recover
-nouvelle route pour renitialiser le mot de pass via methoded POST
-nécessite 3 champs
-compare avec éléments dejàa present en BD
--> mail pour login s'il existe
--> le captcha recopié de captcha.php généré
--> et de la vérification de la coincidence des passwords 
-
-#### Syntaxe: 
-http//:`<adresse du ionicserver>`/manage-data.php?key=recover
--> change le comportement du create en mode recover qui écrase l'ancien mot de pass pour le meme login
 
 ### [fichier image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
 
