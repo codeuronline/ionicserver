@@ -52,7 +52,6 @@ require_once 'models/Database.php';
 
 // TODO : Créer une instance de la classe PDO
 $pdo = new Database;
-//$pdo->getPDO();
 // var_dump("Instance PDO crée");
 // Récupérer le paramètre d’action de l’URL du client depuis $_GET[‘key’] 
 // et nettoyer la valeur
@@ -77,7 +76,6 @@ if (!empty($input) || (@$key == 'delete')) {
                 $passwordVerify = strip_tags(valid_data($data['passwordVerify']));
             }
         } else {
-
             var_dump($data);
             $id_object =  strip_tags($data['id_object']);
             $description = strip_tags(valid_data($data['description']));
@@ -87,7 +85,6 @@ if (!empty($input) || (@$key == 'delete')) {
             $firstname = strip_tags(valid_data($data['firstname']));
             $lastname = strip_tags(valid_data($data['lastname']));
             $email = strip_tags(valid_data($data['email']));
-
             if (isset($data['checkedpicture'])) {
                 $checkedpicture = strip_tags($data['checkedpicture']);
                 $filename = strip_tags(valid_data($data['filename']));
@@ -325,6 +322,10 @@ if (!empty($input) || (@$key == 'delete')) {
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
         case 'recover':
+            // trois elements a comparer avant d'inserer  le nouvel element
+            // le mail est valide et existe dans la base de donnée
+            // le captcha generer en php correspond au captcha saisie dans le formulaire
+            // les passwords corresponds
             if (!empty($email_user) && filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
                 try {
                     $reqExistence = "SELECT email_user FROM user WHERE email_user=:email_user";
@@ -337,14 +338,14 @@ if (!empty($input) || (@$key == 'delete')) {
                         $stmt->closeCursor();
                     } else {
                         $stmt->closeCursor();
-                        //on prepare les variables
+                        // on prepare les variables test des password
                         if (test_password($password, $passwordVerify)) {
+                            //t est du captcha
                             if (test_captcha($captcha, $_SESSION['captcha'])) {
-                                // tout est bon
+                                // tout est bon -> on injecte le nouveau password
                                 try {
                                     $password = password_hash($password, PASSWORD_DEFAULT);
-                                    $reqUpdate = "UPDATE user SET password=:password WHERE emai_user = :email_user";
-                                    
+                                    $reqUpdate = "UPDATE user SET password=:password WHERE email_user = :email_user";
                                     $stmt = $pdo->getPDO()->prepare($reqUpdate);
                                     $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
                                     $stmt->bindValue(":password", $password, PDO::PARAM_STR);
@@ -368,10 +369,6 @@ if (!empty($input) || (@$key == 'delete')) {
                 echo "probleme d'email";
             }
             break;
-            // trois elements a comparer avant d'inserer  le nouvel elment
-            // le mail est valide et existe dans la base de donnée
-            // le captcha generer en php correspond au captcha saisie dans le formulaire
-            // les passwords corresponds
         case 'user':
             //var_dump("CREATE USER detecté");
             // attention avant d'inserer on vérifie que le couple n'existe pas {1->login 1->password} {1->0}
