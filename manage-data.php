@@ -381,7 +381,7 @@ if (!empty($input) || (@$key == 'delete')) {
                     $resultat = $stmt->execute();
                     $element = $stmt->fetch(PDO::FETCH_ASSOC);
                     if ($stmt->rowCount() > 0) {
-                        echo json_encode($create = false);
+                        echo json_encode(false);
                         $stmt->closeCursor();
                     } else {
                         $stmt->closeCursor();
@@ -415,17 +415,23 @@ if (!empty($input) || (@$key == 'delete')) {
                 $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
                 $resultat = $stmt->execute();
                 $element = $stmt->fetch(PDO::FETCH_ASSOC);
-                if ($email_user == $element['email_user']) {
-                    if (password_verify($password, $element['password'])) {
-                        // les mots de pass coincide -> on renvoie la connexion à vrai
-                        echo json_encode($connexion = true);
+                if ($stmt->rowCount() > 0) {
+                    // on compare les elements
+                    if ($email_user == $element['email_user']) {
+                        if (password_verify($password, $element['password'])) {
+                            // les mots de pass coincide -> on renvoie la connexion à vrai
+                            echo json_encode($connexion = true);
+                        } else {
+                            // erreur sur le mot de pass -> on renvoie la connexion à faux 
+                            echo json_encode($connexion = false);
+                        }
                     } else {
-                        // erreur sur le mot de pass -> on renvoie la connexion à faux 
+                        //errreur le login n'existe pas-> nrenvoie la connexion à faux
                         echo json_encode($connexion = false);
                     }
-                } else {
-                    //errreur le login n'existe pas-> nrenvoie la connexion à faux
-                    echo json_encode($connexion = false);
+                } else { 
+                    // element non trouve
+                    echo json_encode($connexion=false);
                 }
             } catch (\Throwable $th) {
                 echo "ERREUR DE CONNEXION";
