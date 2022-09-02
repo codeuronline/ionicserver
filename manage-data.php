@@ -341,7 +341,7 @@ if (!empty($input) || (@$key == 'delete')) {
                             var_dump("----------------------------");
                             var_dump($_SESSION);
                             var_dump($_SESSION['captcha']);
-                            if (test_captcha($captcha, $_SESSION['captcha'])) {
+                            if (test_captcha($captcha, 40346)) {
                                 // tout est bon -> on injecte le nouveau password
                                 try {
                                     $password = password_hash($password, PASSWORD_DEFAULT);
