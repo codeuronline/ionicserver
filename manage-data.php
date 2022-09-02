@@ -44,8 +44,7 @@ function test_password($password1, $password2)
 }
 function test_captcha($valeur, $valeur2)
 {
-    unset($_SESSION['captcha']);
-    return ($valeur == $valeur2) ? true : false;
+    return ($valeur==$valeur2) ? true : false;
 }
 // TODO : Définir les paramètres de connexion à la base
 require_once 'models/Database.php';
@@ -68,7 +67,7 @@ $input = file_get_contents('php://input');
 if (!empty($input) || (@$key == 'delete')) {
     $data = json_decode($input, true);
     if ($key != 'delete') {
-        if ($key == "connexion" || $key == "user") {
+        if ($key == "connexion" || $key == "user"|| $key== "recover") {
             $email_user = strip_tags(valid_data($data['email_user']));
             $password = strip_tags(valid_data($data['password']));
             if ($key == "recover") {
@@ -76,7 +75,6 @@ if (!empty($input) || (@$key == 'delete')) {
                 $passwordVerify = strip_tags(valid_data($data['passwordVerify']));
             }
         } else {
-            var_dump($data);
             $id_object =  strip_tags($data['id_object']);
             $description = strip_tags(valid_data($data['description']));
             $status = strip_tags($data['status']);
@@ -322,6 +320,7 @@ if (!empty($input) || (@$key == 'delete')) {
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
         case 'recover':
+            var_dump("RECOVER DETECTE"); 
             // trois elements a comparer avant d'inserer  le nouvel element
             // le mail est valide et existe dans la base de donnée
             // le captcha generer en php correspond au captcha saisie dans le formulaire
@@ -333,14 +332,15 @@ if (!empty($input) || (@$key == 'delete')) {
                     $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
                     $resultat = $stmt->execute();
                     $element = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($stmt->rowCount() > 0) {
-                        echo json_encode($recover = false);
+                    if ($stmt->rowCount() > 0) {   
                         $stmt->closeCursor();
-                    } else {
-                        $stmt->closeCursor();
-                        // on prepare les variables test des password
                         if (test_password($password, $passwordVerify)) {
                             //t est du captcha
+                            $captcha=intVal($captcha);
+                            var_dump($captcha);
+                            var_dump("----------------------------");
+                            var_dump($_SESSION);
+                            var_dump($_SESSION['captcha']);
                             if (test_captcha($captcha, $_SESSION['captcha'])) {
                                 // tout est bon -> on injecte le nouveau password
                                 try {
@@ -361,6 +361,10 @@ if (!empty($input) || (@$key == 'delete')) {
                         } else {
                             echo "ERREUR LES PASSWORDS NE SONT PAS IDENTIQUES";
                         }
+                    } else {
+                        $stmt->closeCursor();
+                        // on prepare les variables test des password
+                        
                     }
                 } catch (\Throwable $th) {
                     echo "ERREUR EMAIL NON REFERENCE";

@@ -3,6 +3,9 @@ session_start();
 if (!(isset($_SESSION['captcha']))){
     $_SESSION['captcha']= random_int(10000,99999);
     error_log(print_r($_SESSION, 1));
+}else {
+    unset($_SESSION['captcha']);
+    $_SESSION['captcha']= random_int(10000,99999);
 }
  //   $captcha=random_int(10000,99999);
     header("Content-type: image/jpeg");
