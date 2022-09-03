@@ -289,7 +289,7 @@ if (!empty($input) || (@$key == 'delete')) {
             break;
             // Supprimer un enregistrement existant
         case 'delete':
-            var_dump("DELETE DETECTE");
+            echo "DELETE DETECTE";
             // TODO : Nettoyer les valeurs de l’URL client (id_task)
             if (isset(($_GET["id_task"]))) {
                 var_dump($id_task);
@@ -321,7 +321,7 @@ if (!empty($input) || (@$key == 'delete')) {
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
         case 'recover':
-            var_dump("RECOVER DETECTE");
+            echo "RECOVER DETECTE";
             // trois elements a comparer avant d'inserer  le nouvel element
             // le mail est valide et existe dans la base de donnée
             // le captcha generer en php correspond au captcha saisie dans le formulaire
