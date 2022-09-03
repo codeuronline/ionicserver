@@ -2,6 +2,8 @@
 session_start();
 //define("URL", str_replace("manage-data.php", "", (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Methods:GET, POST, OPTIONS, PUT, DELETE');
+header("Access-Control-Allow-Headers: Content-type, authorization");
 //header('Access-Control-Allow-Headers: Content-Type');
 // definition des constantes de tailles pour chaque
 define("MAX_LOGIN_SIZE", 50);
@@ -38,11 +40,11 @@ function is_date_valid($date, $format = "Y-m-d")
 
     return false;
 }
-function test_password($password1, $password2)
+function valid_password($password1, $password2)
 {
     return ($password1 == $password2) ? true : false;
 }
-function test_captcha($valeur, $valeur2)
+function valid_captcha($valeur, $valeur2)
 {
     return ($valeur==$valeur2) ? true : false;
 }
@@ -334,16 +336,15 @@ if (!empty($input) || (@$key == 'delete')) {
                     $element = $stmt->fetch(PDO::FETCH_ASSOC);
                     if ($stmt->rowCount() > 0) {   
                         $stmt->closeCursor();
-                        if (test_password($password, $passwordVerify)) {
+                        if (valid_password($password, $passwordVerify)) {
                             //t est du captcha
                             $captcha=intVal($captcha);
                             var_dump($captcha);
                             var_dump("----------------------------");
-                            var_dump($_SESSION);
-                            var_dump($_SESSION['captcha']);
-                            if (test_captcha($captcha, 40346)) {
+                            if (valid_captcha($captcha,$GLOBALS["captcha"])) {
                                 // tout est bon -> on injecte le nouveau password
                                 try {
+                                    unset($GLOBALS["captcha"]);
                                     $password = password_hash($password, PASSWORD_DEFAULT);
                                     $reqUpdate = "UPDATE user SET password=:password WHERE email_user = :email_user";
                                     $stmt = $pdo->getPDO()->prepare($reqUpdate);
