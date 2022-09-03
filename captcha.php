@@ -3,7 +3,7 @@ session_start();
 // if (!(isset($_SESSION['captcha']))){
     // on utilise la super  global car ionic ne permet pas d'utiliser la variable session
     // information la creation est possible dans la variable session 
-    // mais dès qu'on l'appel elle est vide 
+    // mais dès qu'on l'appelle elle est detruite et rend vide
     $GLOBALS["captcha"]= random_int(10000,99999);
     error_log(print_r($GLOBALS, 1));
 // }else {
