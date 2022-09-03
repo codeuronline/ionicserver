@@ -46,7 +46,7 @@ function valid_password($password1, $password2)
 }
 function valid_captcha($valeur, $valeur2)
 {
-    return ($valeur==$valeur2) ? true : false;
+    return ($valeur == $valeur2) ? true : false;
 }
 // TODO : Définir les paramètres de connexion à la base
 require_once 'models/Database.php';
@@ -69,7 +69,7 @@ $input = file_get_contents('php://input');
 if (!empty($input) || (@$key == 'delete')) {
     $data = json_decode($input, true);
     if ($key != 'delete') {
-        if ($key == "connexion" || $key == "user"|| $key== "recover") {
+        if ($key == "connexion" || $key == "user" || $key == "recover") {
             $email_user = strip_tags(valid_data($data['email_user']));
             $password = strip_tags(valid_data($data['password']));
             if ($key == "recover") {
@@ -322,7 +322,7 @@ if (!empty($input) || (@$key == 'delete')) {
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
         case 'recover':
-            var_dump("RECOVER DETECTE"); 
+            var_dump("RECOVER DETECTE");
             // trois elements a comparer avant d'inserer  le nouvel element
             // le mail est valide et existe dans la base de donnée
             // le captcha generer en php correspond au captcha saisie dans le formulaire
@@ -334,16 +334,13 @@ if (!empty($input) || (@$key == 'delete')) {
                     $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
                     $resultat = $stmt->execute();
                     $element = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($stmt->rowCount() > 0) {   
+                    if ($stmt->rowCount() > 0) {
                         $stmt->closeCursor();
                         if (valid_password($password, $passwordVerify)) {
-                            //t est du captcha
-                            $captcha=intVal($captcha);
-                            var_dump($captcha);
-                            var_dump("----------------------------");
-                            if (valid_captcha($captcha,$GLOBALS["captcha"])) {
+                            if (valid_captcha(intval($captcha), $GLOBALS["captcha"])) {
                                 // tout est bon -> on injecte le nouveau password
                                 try {
+                                    // on supprime la variable captcha;
                                     unset($GLOBALS["captcha"]);
                                     $password = password_hash($password, PASSWORD_DEFAULT);
                                     $reqUpdate = "UPDATE user SET password=:password WHERE email_user = :email_user";
@@ -365,7 +362,7 @@ if (!empty($input) || (@$key == 'delete')) {
                     } else {
                         $stmt->closeCursor();
                         // on prepare les variables test des password
-                        
+
                     }
                 } catch (\Throwable $th) {
                     echo "ERREUR EMAIL NON REFERENCE";
@@ -434,9 +431,9 @@ if (!empty($input) || (@$key == 'delete')) {
                         //errreur le login n'existe pas-> nrenvoie la connexion à faux
                         echo json_encode($connexion = false);
                     }
-                } else { 
+                } else {
                     // element non trouve
-                    echo json_encode($connexion=false);
+                    echo json_encode($connexion = false);
                 }
             } catch (\Throwable $th) {
                 echo "ERREUR DE CONNEXION";
