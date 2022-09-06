@@ -10,10 +10,11 @@ extract($_GET);
 $key = strip_tags(@$key);
 if (isset($key) && !empty($key)) {
     switch ($key) {
+        // recuperation des elements trouvés
         case 'found':
         try {
             //code...
-            $req = "SELECT * FROM foundlost WHERE status=1 ORDER BY date DESC";
+            $req = "SELECT id_object,status,description,date,firstname,lastname,email,checkedpicture,filename FROM foundlost WHERE status=1 ORDER BY date DESC";
             $stmt = $pdo->getPDO()->prepare($req);
             $resultat = $stmt->execute();
             $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -23,12 +24,12 @@ if (isset($key) && !empty($key)) {
                $pdo->getPDO();
              }
         } catch (\Throwable $th) {
-            //throw $th;
+            echo "PROBLEME RECUPERATION DE LA LISTE DES OBJETS TROUVES";
         }
         break;
         case 'lost':
             try {
-                $req = "SELECT * FROM foundlost WHERE status=0 ORDER BY date DESC";
+                $req = "SELECT id_object,status,description,date,firstname,lastname,email,checkedpicture,filename FROM foundlost WHERE status=0 ORDER BY date DESC";
                 $stmt = $pdo->getPDO()->prepare($req);
                 $resultat = $stmt->execute();
                 $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -38,6 +39,7 @@ if (isset($key) && !empty($key)) {
                    $pdo->getPDO();
                  }
             } catch (\Throwable $th) {
+                echo "PROBLEME RECUPERATION DE LA LISTE DES OBJETS PERDUS";
                 //throw $th;
             }
             break;
@@ -45,7 +47,7 @@ if (isset($key) && !empty($key)) {
             //var_dump("ID DETECTE");
             try {
                 $key = intval($key);      
-                $req = "SELECT * FROM foundlost WHERE id_object=:id";
+                $req = "SELECT id_object,status,description,date,firstname,lastname,email,checkedpicture,filename FROM foundlost WHERE id_object=:id";
                 $stmt = $pdo->getPDO()->prepare($req);
                 $stmt->bindValue(":id",$key,PDO::PARAM_INT);
                 $resultat = $stmt->execute();

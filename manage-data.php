@@ -21,7 +21,7 @@ define("MAX_EMAIL_SIZE", MAX_LOGIN_SIZE);
 define("MIN_EMAIL_SIZE", MIN_LOGIN_SIZE);
 
 
-// s'assure qu'il n'y a pas d'injection sql"
+// s'assure que le code est propr"
 function valid_data($data)
 {
     $data = trim($data);
@@ -29,7 +29,7 @@ function valid_data($data)
     $data = htmlspecialchars($data);
     return $data;
 }
-// s'assure que la date est on bon format
+// s'assure que la date est au bon format
 function is_date_valid($date, $format = "Y-m-d")
 {
     $parsed_date = date_parse_from_format($format, $date);
@@ -39,13 +39,9 @@ function is_date_valid($date, $format = "Y-m-d")
 
     return false;
 }
-function valid_password($password1, $password2)
+function valid_identical_element($password1, $password2)
 {
     return ($password1 == $password2) ? true : false;
-}
-function valid_captcha($valeur, $valeur2)
-{
-    return ($valeur == $valeur2) ? true : false;
 }
 // TODO : Définir les paramètres de connexion à la base
 require_once 'models/Database.php';
@@ -325,7 +321,7 @@ if (!empty($input) || (@$key == 'delete')) {
             // trois elements a comparer avant d'inserer  le nouvel element
             // le mail est valide et existe dans la base de donnée
             // le captcha generer en php correspond au captcha saisie dans le formulaire
-            // les passwords corresponds
+            // les passwords correspondent
             if (!empty($email_user) && filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
                 try {
                     $reqExistence = "SELECT email_user FROM user WHERE email_user=:email_user";
@@ -335,9 +331,9 @@ if (!empty($input) || (@$key == 'delete')) {
                     $element = $stmt->fetch(PDO::FETCH_ASSOC);
                     if ($stmt->rowCount() > 0) {
                         $stmt->closeCursor();
-                        if (valid_password($password, $passwordVerify)) {
-                            if (valid_captcha(intval($captcha), $GLOBALS["captcha"])) {
-                                // tout est bon -> on injecte le nouveau password
+                        if (valid_identical_element($password, $passwordVerify)) {
+                            if (valid_identical_element(intval($captcha), $GLOBALS["captcha"])) {
+                                // tout est bon -> on inserse le nouveau password
                                 try {
                                     // on supprime la variable captcha;
                                     unset($GLOBALS["captcha"]);
@@ -360,8 +356,6 @@ if (!empty($input) || (@$key == 'delete')) {
                         }
                     } else {
                         $stmt->closeCursor();
-                        // on prepare les variables test des password
-
                     }
                 } catch (\Throwable $th) {
                     echo "ERREUR EMAIL NON REFERENCE";
@@ -382,6 +376,7 @@ if (!empty($input) || (@$key == 'delete')) {
                     $resultat = $stmt->execute();
                     $element = $stmt->fetch(PDO::FETCH_ASSOC);
                     if ($stmt->rowCount() > 0) {
+                        // on revoie le message d'erreur false au front
                         echo json_encode(false);
                         $stmt->closeCursor();
                     } else {
@@ -404,9 +399,8 @@ if (!empty($input) || (@$key == 'delete')) {
                     echo "PROBLEME SUR LA REQUETE";
                 }
             } else {
-                echo "Probleme email";
+                echo "PROBLEME D'EMAIL";
             }
-
             break;
         case 'connexion':
             //var_dump("CONNEXION USER detecté");
@@ -427,11 +421,11 @@ if (!empty($input) || (@$key == 'delete')) {
                             echo json_encode($connexion = false);
                         }
                     } else {
-                        //errreur le login n'existe pas-> nrenvoie la connexion à faux
+                        //erreur le login n'existe pas-> on renvoie la connexion à faux
                         echo json_encode($connexion = false);
                     }
                 } else {
-                    // element non trouve
+                    // element non trouve-> en renvoie la connexion à false
                     echo json_encode($connexion = false);
                 }
             } catch (\Throwable $th) {
@@ -443,5 +437,3 @@ if (!empty($input) || (@$key == 'delete')) {
             break;
     }
 }
-    // fin switch
-    // fin if
