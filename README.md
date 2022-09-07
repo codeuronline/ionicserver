@@ -4,7 +4,7 @@
 
 ## 3 éléments du serveurs :
 
-### [appli manage-data.php](https://github.com/codeuronline/ionicserver/blob/main/manage-data.php)
+### [fichier manage-data.php](https://github.com/codeuronline/ionicserver/blob/main/manage-data.php)
 
 Permet de gérer la BD foundlist(create/modification/suppression)
 
@@ -75,7 +75,21 @@ Retourne l'objet dont la key est le **numéro**
 
 http//:`<adresse du ionicserver>`/manage-data.php?key=numero
 
-### [appli retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
+#### Recover
+nouvelle route pour renitialiser le mot de pass via methode POST
+--> nécessite 3 champs
+--> compare avec éléments dejà present en BD
+--> élément contenu pour les test
+-> mail pour login s'il existe
+-> le captcha recopié de captcha.php généré
+-> et les 2 password pour vérifier de leur coincidence 
+
+#### Syntaxe: 
+http//:`<adresse du ionicserver>`/manage-data.php?key=recover
+-> change le comportement du create en mode recover qui écrase l'ancien mot de pass pour le meme login
+
+
+### [fichier retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
 
 #### Syntaxe:
 
@@ -106,9 +120,11 @@ compare avec éléments dejàa present en BD
 http//:`<adresse du ionicserver>`/manage-data.php?key=recover
 -> change le comportement du create en mode recover qui écrase l'ancien mot de pass pour le meme login
 
-### [appli image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
+### [fichier image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
 
 Permet de réceptionner le fichier image pour l'appli [foundlost](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost) dans le repertoire upload/
+### [fichier captcha.php](https://github.com/codeuronline/ionicserver/blob/master/captcha.php)
+-> Créer un élément de Session captcha et renvoie l'image du captcha au format jpeg
 
 ### Mise à jour du 28/07/2022
 

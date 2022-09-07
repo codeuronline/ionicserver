@@ -24,7 +24,7 @@ if (isset($key) && !empty($key)) {
                $pdo->getPDO();
              }
         } catch (\Throwable $th) {
-            echo "PROBLEME RECUPERATION DE LA LISTE DES OBJETS TROUVES";
+            echo "PROBLEME  DE RECUPERATION DE LA LISTE DES OBJETS TROUVES";
         }
         break;
         case 'lost':
@@ -39,7 +39,7 @@ if (isset($key) && !empty($key)) {
                    $pdo->getPDO();
                  }
             } catch (\Throwable $th) {
-                echo "PROBLEME RECUPERATION DE LA LISTE DES OBJETS PERDUS";
+                echo "PROBLEME DE RECUPERATION DE LA LISTE DES OBJETS PERDUS";
                 //throw $th;
             }
             break;
