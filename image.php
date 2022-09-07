@@ -3,7 +3,7 @@ function check_image_mime($tmpname){
 	$finfo = finfo_open(FILEINFO_MIME_TYPE);
 	$mtype = finfo_file($finfo, $tmpname);
 
-   error_log($mtype);
+   //error_log($mtype);
    
 	if(strpos($mtype, 'image/') === 0){
 		return true;
