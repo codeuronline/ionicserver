@@ -1,7 +1,7 @@
 <?php
 // liste des extensions autorisés par l'appli
 $valid_ext = array("gif","jpg","png","jpeg","webp","jfif"); 
-// fonction qui determine si le fichier est une image on verfiant son type mime
+// fonction qui determine si le fichier est une image en verfiant son type mime
 function check_image_mime($tmpname){
 	$finfo = finfo_open(FILEINFO_MIME_TYPE);
 	$mtype = finfo_file($finfo, $tmpname);
