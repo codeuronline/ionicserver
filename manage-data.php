@@ -320,8 +320,8 @@ if (!empty($input) || (@$key == 'delete')) {
             echo "RECOVER DETECTE";
             // trois elements a comparer avant d'inserer  le nouvel element
             // le mail est valide et existe dans la base de donnée
-            // le captcha generer en php correspond au captcha saisie dans le formulaire
-            // les passwords correspondent
+            // le captcha generer par le fichier image.php correspond au captcha saisie dans le formulaire
+            // les 2 passwords correspondent
             if (!empty($email_user) && filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
                 try {
                     $reqExistence = "SELECT email_user FROM user WHERE email_user=:email_user";
@@ -332,11 +332,14 @@ if (!empty($input) || (@$key == 'delete')) {
                     if ($stmt->rowCount() > 0) {
                         $stmt->closeCursor();
                         if (valid_identical_element($password, $passwordVerify)) {
+                            //if (valid_identical_element(intval($captcha), $_SESSION["captcha"])) {
                             if (valid_identical_element(intval($captcha), $GLOBALS["captcha"])) {
                                 // tout est bon -> on inserse le nouveau password
                                 try {
                                     // on supprime la variable captcha;
+                                    // unset($_SESSION["captcha"]);
                                     unset($GLOBALS["captcha"]);
+                                    // on crypte le password;
                                     $password = password_hash($password, PASSWORD_DEFAULT);
                                     $reqUpdate = "UPDATE user SET password=:password WHERE email_user = :email_user";
                                     $stmt = $pdo->getPDO()->prepare($reqUpdate);
@@ -346,13 +349,13 @@ if (!empty($input) || (@$key == 'delete')) {
                                     $stmt->closeCursor();
                                     echo json_encode($recover = true);
                                 } catch (\Throwable $th) {
-                                    echo "ERREUR D'UPDATE";
+                                    echo "ERREUR D'UPDATE DANS LA BD";
                                 }
                             } else {
                                 echo "ERREUR DE CAPTCHA";
                             }
                         } else {
-                            echo "ERREUR LES PASSWORDS NE SONT PAS IDENTIQUES";
+                            echo "ERREUR : LES PASSWORDS NE SONT PAS IDENTIQUES";
                         }
                     } else {
                         $stmt->closeCursor();
