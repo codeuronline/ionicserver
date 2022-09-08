@@ -285,10 +285,12 @@ if (!empty($input) || (@$key == 'delete')) {
             break;
             // Supprimer un enregistrement existant
         case 'delete':
-            echo "DELETE DETECTE";
+            echo " DELETE DETECTE";
             // TODO : Nettoyer les valeurs de l’URL client (id_task)
             if (isset(($_GET["id_task"]))) {
                 var_dump($id_task);
+                try {
+                    //code...
                 /**on vérifie s'il n'existe pas une trace d'un enregistrement précédent */
                 $reqExistence = "SELECT filename FROM foundlost WHERE id_object=:id_task";
                 $stmt = $pdo->getPDO()->prepare($reqExistence);
@@ -307,17 +309,20 @@ if (!empty($input) || (@$key == 'delete')) {
                 $req = "DELETE FROM foundlost WHERE id_object=:id_task";
                 $stmt = $pdo->getPDO()->prepare($req);
                 $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
-                $resultat1 = $stmt->execute();    //code...
+                $resultat1 = $stmt->execute();   
                 $stmt->closeCursor();
                 if ($resultat1 > 0) {
                     var_dump("SUPPRESSION PRODUCT IN BD");
                     $pdo->getPDO();
                 }
+            } catch (\Throwable $th) {
+                "ERREUR DE SUPRESSION IN BD";
             }
+        }
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
         case 'recover':
-            echo "RECOVER DETECTE";
+            //  echo "RECOVER DETECTE";
             // trois elements a comparer avant d'inserer  le nouvel element
             // le mail est valide et existe dans la base de donnée
             // le captcha generer par le fichier image.php correspond au captcha saisie dans le formulaire
