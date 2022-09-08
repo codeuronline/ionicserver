@@ -378,8 +378,9 @@ if (!empty($input) || (@$key == 'delete')) {
                     $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
                     $resultat = $stmt->execute();
                     $element = $stmt->fetch(PDO::FETCH_ASSOC);
+                    var_dump($stmt->rowCount());
                     if ($stmt->rowCount() > 0) {
-                        // on revoie le message d'erreur false au front
+                        // on renvoie le message d'erreur false au front
                         echo json_encode(false);
                         $stmt->closeCursor();
                     } else {
@@ -395,11 +396,11 @@ if (!empty($input) || (@$key == 'delete')) {
                             $stmt->closeCursor();
                             echo json_encode($create = true);
                         } catch (\Throwable $th) {
-                            echo "ERREUR d'INSERTION";
+                            echo "ERREUR D'INSERTION";
                         }
                     }
                 } catch (\Throwable $th) {
-                    echo "PROBLEME SUR LA REQUETE";
+                    echo "PROBLEME DANS LA CREATION EN BD";
                 }
             } else {
                 echo "PROBLEME D'EMAIL";
