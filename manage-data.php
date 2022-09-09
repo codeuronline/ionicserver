@@ -3,49 +3,11 @@
 header('Access-Control-Allow-Origin: *');
 //header('Access-Control-Methods:GET, POST, OPTIONS, PUT, DELETE');
 header("Access-Control-Allow-Headers: Content-type");
-//header('Access-Control-Allow-Headers: Content-Type');
-// definition des constantes de tailles pour chaque
-define("MAX_LOGIN_SIZE", 50);
-define("MIN_LOGIN_SIZE", 6);
-define("MAX_PASSWORD_SIZE", 20);
-define("MIN_PASSWORD_SIZE", 20);
-define("MAX_DESCRIPTION_SIZE", 100);
-define("MIN_DESCRIPTION_SIZE", 0);
-define("MAX_LOCATION_SIZE", 50);
-define("MIN_LOCATION_SIZE", 2);
-define("MAX_FIRSTNAME_SIZE", 20);
-define("MIN_FIRSTNAME_SIZE", 0);
-define("MAX_LASTNAME_SIZE", 20);
-define("MIN_LASTNAME_SIZE", 0);
-define("MAX_EMAIL_SIZE", MAX_LOGIN_SIZE);
-define("MIN_EMAIL_SIZE", MIN_LOGIN_SIZE);
 
-
-// s'assure que le code est propr"
-function valid_data($data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
-// s'assure que la date est au bon format
-function is_date_valid($date, $format = "Y-m-d")
-{
-    $parsed_date = date_parse_from_format($format, $date);
-    if (!$parsed_date['error_count'] && !$parsed_date['warning_count']) {
-        return true;
-    }
-
-    return false;
-}
-function valid_identical_element($password1, $password2)
-{
-    return ($password1 == $password2) ? true : false;
-}
 // TODO : Définir les paramètres de connexion à la base
 require_once 'models/Database.php';
-
+require_once 'tools/functions.php';
+require_once 'tools/const.php';
 // TODO : Créer une instance de la classe PDO
 $pdo = new Database;
 // var_dump("Instance PDO crée");
@@ -59,10 +21,12 @@ if (isset($id_task)) {
     $id_task = strip_tags(valid_data($id_task));
 }
 //var_dump("key", $key);
+
 // Récupérer les paramètres envoyés par le client vers l’API
 $input = file_get_contents('php://input');
 if (!empty($input) || (@$key == 'delete')) {
     $data = json_decode($input, true);
+    //extract($data);
     if ($key != 'delete') {
         if ($key == "connexion" || $key == "user" || $key == "recover") {
             $email_user = strip_tags(valid_data($data['email_user']));
@@ -72,6 +36,7 @@ if (!empty($input) || (@$key == 'delete')) {
                 $passwordVerify = strip_tags(valid_data($data['passwordVerify']));
             }
         } else {
+            //dernier nettoyage des elements
             $id_object =  strip_tags($data['id_object']);
             $description = strip_tags(valid_data($data['description']));
             $status = strip_tags($data['status']);
