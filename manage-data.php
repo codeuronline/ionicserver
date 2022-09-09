@@ -1,8 +1,8 @@
 <?php
 //define("URL", str_replace("manage-data.php", "", (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Methods:GET, POST, OPTIONS, PUT, DELETE');
-header("Access-Control-Allow-Headers: Content-type, authorization");
+//header('Access-Control-Methods:GET, POST, OPTIONS, PUT, DELETE');
+header("Access-Control-Allow-Headers: Content-type");
 //header('Access-Control-Allow-Headers: Content-Type');
 // definition des constantes de tailles pour chaque
 define("MAX_LOGIN_SIZE", 50);

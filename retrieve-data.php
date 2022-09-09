@@ -2,7 +2,7 @@
 // TODO : Définir les paramètres de connexion
 // accepte toute les requetes
 header('Access-Control-Allow-Origin: *');
-//header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Headers: Content-Type');
 require_once 'models/Database.php';
 // TODO : Créer une instance de la classe PDO (connexion à la base)
 $pdo = new Database;
