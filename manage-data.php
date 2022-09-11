@@ -330,7 +330,7 @@ if (!empty($input) || (@$key == 'delete')) {
                                     $stmt->bindValue(":password", $password, PDO::PARAM_STR);
                                     $resultat = $stmt->execute();
                                     $stmt->closeCursor();
-                                    echo json_encode($recover = true);
+                                    echo json_encode($recover = $element['id']);
                                 } catch (\Throwable $th) {
                                     echo "ERREUR D'UPDATE DANS LA BD";
                                 }
@@ -404,18 +404,18 @@ if (!empty($input) || (@$key == 'delete')) {
                     if ($email_user == $element['email_user']) {
                         if (password_verify($password, $element['password'])) {
                             // les mots de pass coincide -> on renvoie la connexion à vrai
-                            echo json_encode($user_id = $element['id']);
+                            echo json_encode($connexion = $element['id']);
                         } else {
                             // erreur sur le mot de pass -> on renvoie la connexion à faux 
-                            echo json_encode($connexion = false);
+                            echo json_encode($connexion = "defaumdp");
                         }
                     } else {
                         //erreur le login n'existe pas-> on renvoie la connexion à faux
-                        echo json_encode($connexion = false);
+                        echo json_encode($connexion = "defautlogin");
                     }
                 } else {
                     // element non trouve-> en renvoie la connexion à false
-                    echo json_encode($connexion = false);
+                    echo json_encode($connexion = "defaut inexistant");
                 }
             } catch (\Throwable $th) {
                 echo "ERREUR DE CONNEXION";
