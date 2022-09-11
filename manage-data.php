@@ -28,6 +28,8 @@ if (!empty($input) || (@$key == 'delete')) {
     $data = json_decode($input, true);
     //extract($data);
     if ($key != 'delete') {
+        // cas de a creation d'un user ->pas  user_id on doit on cree 1
+        // cas  de connexion  et recover ->on doit le recuperer 
         if ($key == "connexion" || $key == "user" || $key == "recover") {
             $email_user = strip_tags(valid_data($data['email_user']));
             $password = strip_tags(valid_data($data['password']));
@@ -37,6 +39,7 @@ if (!empty($input) || (@$key == 'delete')) {
             }
         } else {
             //dernier nettoyage des elements
+            $user_id = intVal(strip_tags($data['user_id']));
             $id_object =  strip_tags($data['id_object']);
             $description = strip_tags(valid_data($data['description']));
             $status = strip_tags($data['status']);
@@ -54,6 +57,8 @@ if (!empty($input) || (@$key == 'delete')) {
                 $password = strip_tags(valid_data($data['password']));
             }
         }
+    } else {
+        $user_id=intVal(strip_tags($_GET['user_id']));
     }
 
     // En fonction du mode d’action requis
@@ -70,11 +75,13 @@ if (!empty($input) || (@$key == 'delete')) {
                             if (!empty($firstname) && (strlen($firstname) > MIN_FIRSTNAME_SIZE) && (strlen($firstname) <= MAX_FIRSTNAME_SIZE)) {
                                 if (!empty($lastname) && (strlen($lastname) > MIN_LASTNAME_SIZE) && (strlen($lastname) <= MAX_LASTNAME_SIZE)) {
                                     if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) && (strlen($email) > MIN_EMAIL_SIZE) && (strlen($email) <= MAX_EMAIL_SIZE)) {
+                                        if (!empty($user_id)&&  filter_var($user_id,FILTER_VALIDATE_INT)) {
+                                        //debut
                                         try {
                                             // TODO : Préparer la requête dans un try/catch
                                             $req = "INSERT INTO 
-                                            foundlost (description,status,date,location,firstname,lastname,email) 
-                                            values (:description,:status,:date,:location,:firstname,:lastname,:email)";
+                                            foundlost (description,status,date,location,firstname,lastname,email,user_id) 
+                                            values (:description,:status,:date,:location,:firstname,:lastname,:email,:user_id)";
                                             $stmt = $pdo->getPDO()->prepare($req);
                                             $stmt->bindValue(":description", $description, PDO::PARAM_STR);
                                             $stmt->bindValue(":status", $status, PDO::PARAM_BOOL);
@@ -83,6 +90,7 @@ if (!empty($input) || (@$key == 'delete')) {
                                             $stmt->bindValue(":firstname", $firstname, PDO::PARAM_STR);
                                             $stmt->bindValue(":lastname", $lastname, PDO::PARAM_STR);
                                             $stmt->bindValue(":email", $email, PDO::PARAM_STR);
+                                            $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
                                             $resultat = $stmt->execute();
                                             $stmt->closeCursor();
                                             if ($resultat > 0) {
@@ -93,6 +101,11 @@ if (!empty($input) || (@$key == 'delete')) {
                                             echo $th;
                                             //throw $th;
                                         }
+                                        //fin
+                                        }else{
+                                            var_dump("Problème Insertion sur user_id", $user_id);
+                                        }
+                                        
                                     } else {
                                         var_dump("Problème Insertion sur Email", $email);
                                     }
@@ -294,7 +307,7 @@ if (!empty($input) || (@$key == 'delete')) {
             // les 2 passwords correspondent
             if (!empty($email_user) && filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
                 try {
-                    $reqExistence = "SELECT email_user FROM user WHERE email_user=:email_user";
+                    $reqExistence = "SELECT email_user,id FROM user WHERE email_user=:email_user";
                     $stmt = $pdo->getPDO()->prepare($reqExistence);
                     $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
                     $resultat = $stmt->execute();
@@ -350,6 +363,7 @@ if (!empty($input) || (@$key == 'delete')) {
                     $element = $stmt->fetch(PDO::FETCH_ASSOC);
                     var_dump($stmt->rowCount());
                     if ($stmt->rowCount() > 0) {
+                        // on a resultat dans la bd donc 
                         // on renvoie le message d'erreur false au front
                         echo json_encode(false);
                         $stmt->closeCursor();
@@ -363,8 +377,9 @@ if (!empty($input) || (@$key == 'delete')) {
                             $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
                             $stmt->bindValue(":password", $password, PDO::PARAM_STR);
                             $resultat = $stmt->execute();
+                            $user_id= $resultat->lastInsertId();
                             $stmt->closeCursor();
-                            echo json_encode($create = true);
+                            echo json_encode($user_id);
                         } catch (\Throwable $th) {
                             echo "ERREUR D'INSERTION";
                         }
@@ -379,7 +394,7 @@ if (!empty($input) || (@$key == 'delete')) {
         case 'connexion':
             //var_dump("CONNEXION USER detecté");
             try {
-                $reqExistence = "SELECT email_user,password FROM user WHERE email_user=:email_user";
+                $reqExistence = "SELECT id,email_user,password FROM user WHERE email_user=:email_user";
                 $stmt = $pdo->getPDO()->prepare($reqExistence);
                 $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
                 $resultat = $stmt->execute();
@@ -389,7 +404,7 @@ if (!empty($input) || (@$key == 'delete')) {
                     if ($email_user == $element['email_user']) {
                         if (password_verify($password, $element['password'])) {
                             // les mots de pass coincide -> on renvoie la connexion à vrai
-                            echo json_encode($connexion = true);
+                            echo json_encode($user_id = $element['id']);
                         } else {
                             // erreur sur le mot de pass -> on renvoie la connexion à faux 
                             echo json_encode($connexion = false);
