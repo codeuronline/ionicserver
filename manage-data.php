@@ -332,13 +332,13 @@ if (!empty($input) || (@$key == 'delete')) {
                     if ($stmt->rowCount() > 0) {
                         $stmt->closeCursor();
                         if (valid_identical_element($password, $passwordVerify)) {
-                            //if (valid_identical_element(intval($captcha), $_SESSION["captcha"])) {
-                            if (valid_identical_element(intval($captcha), $GLOBALS["captcha"])) {
+                            if (valid_identical_element(intval($captcha), $_SESSION["captcha"])) {
+                            //if (valid_identical_element(intval($captcha), $GLOBALS["captcha"])) {
                                 // tout est bon -> on inserse le nouveau password
                                 try {
                                     // on supprime la variable captcha;
-                                    // unset($_SESSION["captcha"]);
-                                    unset($GLOBALS["captcha"]);
+                                    unset($_SESSION["captcha"]);
+                                    //unset($GLOBALS["captcha"]);
                                     // on crypte le password;
                                     $password = password_hash($password, PASSWORD_DEFAULT);
                                     $reqUpdate = "UPDATE user SET password=:password WHERE email_user = :email_user";
