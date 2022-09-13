@@ -381,7 +381,7 @@ if (!empty($input) || (@$key == 'delete')) {
                             $stmt->closeCursor();
                             echo json_encode($user_id);
                         } catch (\Throwable $th) {
-                            echo "ERREUR D'INSERTION";
+                            echo "ERREUR D'INSERTION".$th;
                         }
                     }
                 } catch (\Throwable $th) {
