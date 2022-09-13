@@ -14,7 +14,7 @@ if (isset($key) && !empty($key)) {
         case 'found':
         try {
             //code...
-            $req = "SELECT id_object,status,description,date,location,firstname,lastname,email,checkedpicture,filename FROM foundlost WHERE status=1 ORDER BY date DESC";
+            $req = "SELECT id_object,status,description,date,location,firstname,lastname,email,checkedpicture,filename,user_id FROM foundlost WHERE status=1 ORDER BY date DESC";
             $stmt = $pdo->getPDO()->prepare($req);
             $resultat = $stmt->execute();
             $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -29,7 +29,7 @@ if (isset($key) && !empty($key)) {
         break;
         case 'lost':
             try {
-                $req = "SELECT id_object,status,description,date,location,firstname,lastname,email,checkedpicture,filename FROM foundlost WHERE status=0 ORDER BY date DESC";
+                $req = "SELECT id_object,status,description,date,location,firstname,lastname,email,checkedpicture,filename,user_id FROM foundlost WHERE status=0 ORDER BY date DESC";
                 $stmt = $pdo->getPDO()->prepare($req);
                 $resultat = $stmt->execute();
                 $resultatValue=$stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -47,7 +47,7 @@ if (isset($key) && !empty($key)) {
             //var_dump("ID DETECTE");
             try {
                 $key = intval($key);      
-                $req = "SELECT id_object,status,description,date,location,firstname,lastname,email,checkedpicture,filename FROM foundlost WHERE id_object=:id";
+                $req = "SELECT id_object,status,description,date,location,firstname,lastname,email,checkedpicture,filename,user_id FROM foundlost WHERE id_object=:id";
                 $stmt = $pdo->getPDO()->prepare($req);
                 $stmt->bindValue(":id",$key,PDO::PARAM_INT);
                 $resultat = $stmt->execute();
