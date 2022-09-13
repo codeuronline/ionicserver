@@ -330,7 +330,7 @@ if (!empty($input) || (@$key == 'delete')) {
                                     $stmt->bindValue(":password", $password, PDO::PARAM_STR);
                                     $resultat = $stmt->execute();
                                     $stmt->closeCursor();
-                                    echo json_encode($recover = $element['id']);
+                                    echo json_encode($element['id']);
                                 } catch (\Throwable $th) {
                                     echo "ERREUR D'UPDATE DANS LA BD";
                                 }
@@ -365,7 +365,7 @@ if (!empty($input) || (@$key == 'delete')) {
                     if ($stmt->rowCount() > 0) {
                         // on a resultat dans la bd donc 
                         // on renvoie le message d'erreur false au front
-                        echo json_encode($connexion=false);
+                        echo json_encode(false);
                         $stmt->closeCursor();
                     } else {
                         $stmt->closeCursor();
@@ -377,14 +377,9 @@ if (!empty($input) || (@$key == 'delete')) {
                             $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
                             $stmt->bindValue(":password", $password, PDO::PARAM_STR);
                             $resultat = $stmt->execute();
-                            $user_id= $resultat->lastInsertId();
-                            if ($stmt->rowcount()>0) {
-                                echo json_encode($connexion=$user_id);
-                            }else{
-                                echo json_encode($connexion=false);
-                            }
+                            $user_id= $pdo->getPDO()->lastInsertId();
                             $stmt->closeCursor();
-                            
+                            echo json_encode($user_id);
                         } catch (\Throwable $th) {
                             echo "ERREUR D'INSERTION";
                         }
