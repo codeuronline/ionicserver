@@ -132,7 +132,7 @@ if (!empty($input) || (@$key == 'delete')) {
             // Mettre à jour un enregistrement existant
         case "update":
             // TODO : Nettoyer les valeurs en provenant de l’URL client
-            var_dump("UPDATE DETECTE");
+            echo "UPDATE DETECTE";
             if (isset(($_GET["id_task"]))) {
                 $id_task = strip_tags($data['id_object']);
                 $id_task = intval($id_task);
@@ -147,10 +147,10 @@ if (!empty($input) || (@$key == 'delete')) {
                                     if (!empty($lastname) && (strlen($lastname) > MIN_LASTNAME_SIZE) && (strlen($lastname) <= MAX_LASTNAME_SIZE)) {
                                         if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) && (strlen($email) > MIN_EMAIL_SIZE) && (strlen($email) <= MAX_EMAIL_SIZE)) {
                                             // TODO : Préparer la requête dans un try/catch    //pb au changement de status
-                                            var_dump('email', $email);
+                                            //var_dump('email', $email);
                                             if ($data['filename'] != null) {
                                                 if (isset($data['checkedpicture'])) {
-                                                    var_dump('FileName detected');
+                                                    //var_dump('FileName detected');
                                                     try {
                                                         /**necessite de verifier l'existence d'une image avant d'effacer de update l'obejet avec une nouvelle image*/
                                                         $reqExistence = "SELECT filename FROM foundlost WHERE id_object=$id_task";
@@ -163,7 +163,7 @@ if (!empty($input) || (@$key == 'delete')) {
                                                             if ($element['filename'] != null) {
                                                                 if ($data['filename'] != $element['filename']) {
                                                                     unlink("upload/" . $element['filename']);
-                                                                    var_dump("SUPPRESSION de l'image"); # code...
+                                                                    echo "SUPPRESSION de l'image"; # code...
                                                                 }
                                                             }
                                                         }
@@ -196,7 +196,7 @@ if (!empty($input) || (@$key == 'delete')) {
                                                         $stmt->closeCursor();
                                                         $stmt->closeCursor();
                                                         if ($resultat > 0) {
-                                                            var_dump("MODIFICATION PRODUCT IN BD AVEC INSERTION D IMAGE");
+                                                            echo "MODIFICATION PRODUCT IN BD AVEC INSERTION D IMAGE";
                                                             $pdo->getPDO();
                                                         }
                                                     } catch (\Throwable $th) {
@@ -361,11 +361,11 @@ if (!empty($input) || (@$key == 'delete')) {
                     $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
                     $resultat = $stmt->execute();
                     $element = $stmt->fetch(PDO::FETCH_ASSOC);
-                    var_dump($stmt->rowCount());
+                    //var_dump($stmt->rowCount());
                     if ($stmt->rowCount() > 0) {
                         // on a resultat dans la bd donc 
                         // on renvoie le message d'erreur false au front
-                        echo json_encode(false);
+                        echo json_encode($connexion=false);
                         $stmt->closeCursor();
                     } else {
                         $stmt->closeCursor();
@@ -378,8 +378,13 @@ if (!empty($input) || (@$key == 'delete')) {
                             $stmt->bindValue(":password", $password, PDO::PARAM_STR);
                             $resultat = $stmt->execute();
                             $user_id= $resultat->lastInsertId();
+                            if ($stmt->rowcount()>0) {
+                                echo json_encode($connexion=$user_id);
+                            }else{
+                                echo json_encode($connexion=false);
+                            }
                             $stmt->closeCursor();
-                            echo json_encode($user_id);
+                            
                         } catch (\Throwable $th) {
                             echo "ERREUR D'INSERTION".$th;
                         }
