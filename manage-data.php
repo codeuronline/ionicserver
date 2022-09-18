@@ -65,7 +65,7 @@ if (!empty($input) || (@$key == 'delete')) {
     switch ($key) {
             //Ajoute un nouvel enregistrement
         case "create":
-            var_dump("CREATE DETECTE");
+            echo "CREATE DETECTE";
             // TODO : Filtrer les valeurs entrantes
             if (!empty($description) && (strlen($description) > MIN_DESCRIPTION_SIZE) && strlen($description) <= MAX_DESCRIPTION_SIZE) {
                 //var_dump(filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE));
@@ -94,7 +94,7 @@ if (!empty($input) || (@$key == 'delete')) {
                                             $resultat = $stmt->execute();
                                             $stmt->closeCursor();
                                             if ($resultat > 0) {
-                                                var_dump("INSERTION PRODUCT IN BD");
+                                                echo "INSERTION PRODUCT IN BD";
                                                 $pdo->getPDO();
                                             }
                                         } catch (\Throwable $th) {
@@ -139,7 +139,7 @@ if (!empty($input) || (@$key == 'delete')) {
                 if (!empty($description) && (strlen($description) > MIN_DESCRIPTION_SIZE) && strlen($description) <= MAX_DESCRIPTION_SIZE) {
                     $status = boolval($status);
                     if (($status == 0) || ($status == 1) || ($status == false) || ($status = true)) {
-                        var_dump('status', $status);
+                        echo 'status : '.$status;
                         $status = ($status == true) ? 1 : 0;
                         if (is_date_valid($date)) {
                             if (!empty($location) && (strlen($location) > MIN_LOCATION_SIZE) && (strlen($location) <= MAX_LOCATION_SIZE)) {
@@ -229,7 +229,7 @@ if (!empty($input) || (@$key == 'delete')) {
                                                     $resultat = $stmt->execute();
                                                     $stmt->closeCursor();
                                                     if ($resultat > 0) {
-                                                        var_dump("MODIFICATION PRODUCT IN BD");
+                                                        echo "MODIFICATION PRODUCT IN BD";
                                                         $pdo->getPDO();
                                                     }
                                                 } catch (\Throwable $th) {
@@ -280,7 +280,7 @@ if (!empty($input) || (@$key == 'delete')) {
                 //if ($element['filename'] != null) {
                 if (isset($element['filename']) && !empty($element['filename'])) {
                     unlink("upload/" . $element['filename']);
-                    var_dump("SUPPRESSION de l'image");
+                    echo "SUPPRESSION DE L'IMAGE";
                 }
                 $pdo->getPDO();
                 // TODO : Préparer la requête dans un try/catch
@@ -290,7 +290,7 @@ if (!empty($input) || (@$key == 'delete')) {
                 $resultat1 = $stmt->execute();   
                 $stmt->closeCursor();
                 if ($resultat1 > 0) {
-                    var_dump("SUPPRESSION PRODUCT IN BD");
+                    echo "SUPPRESSION PRODUCT IN BD";
                     $pdo->getPDO();
                 }
             } catch (\Throwable $th) {
@@ -299,7 +299,8 @@ if (!empty($input) || (@$key == 'delete')) {
         }
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
-        case 'recover':
+    //  Traitement de  la connexion 
+            case 'recover':
             //  echo "RECOVER DETECTE";
             // trois elements a comparer avant d'inserer  le nouvel element
             // le mail est valide et existe dans la base de donnée
