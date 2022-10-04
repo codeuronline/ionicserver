@@ -142,7 +142,7 @@ if (!empty($input) || (@$key == 'delete')) {
                 if (!empty($description) && (strlen($description) > MIN_DESCRIPTION_SIZE) && strlen($description) <= MAX_DESCRIPTION_SIZE) {
                     $status = boolval($status);
                     if (($status == 0) || ($status == 1) || ($status == false) || ($status = true)) {
-                        echo 'status : '.$status;
+                        // echo 'status : '.$status;
                         $status = ($status == true) ? 1 : 0;
                         if (is_date_valid($date)) {
                             if (!empty($location) && (strlen($location) > MIN_LOCATION_SIZE) && (strlen($location) <= MAX_LOCATION_SIZE)) {
