@@ -265,6 +265,7 @@ if (!empty($input) || (@$key == 'delete')) {
         case 'delete':
             echo " DELETE DETECTE";
             // rajouter une condition au niveau de l'utilisateur qui est bian le proprietaire de la declaration
+            // -> fait
             // TODO : Nettoyer les valeurs de l’URL client (id_task)
             if (isset(($_GET["id_task"]))) {
                 var_dump($id_task);
@@ -286,9 +287,10 @@ if (!empty($input) || (@$key == 'delete')) {
                 }
                 $pdo->getPDO();
                 // TODO : Préparer la requête dans un try/catch
-                $req = "DELETE FROM foundlost WHERE id_object=:id_task";
+                $req = "DELETE FROM foundlost WHERE id_object=:id_task AND user_id=:user_id";
                 $stmt = $pdo->getPDO()->prepare($req);
                 $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
+                $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
                 $resultat1 = $stmt->execute();   
                 $stmt->closeCursor();
                 if ($resultat1 > 0) {
