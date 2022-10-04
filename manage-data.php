@@ -264,6 +264,7 @@ if (!empty($input) || (@$key == 'delete')) {
             // Supprimer un enregistrement existant
         case 'delete':
             echo " DELETE DETECTE";
+            // rajouter une condition au niveau de l'utilisateur qui est bian le proprietaire de la declaration
             // TODO : Nettoyer les valeurs de l’URL client (id_task)
             if (isset(($_GET["id_task"]))) {
                 var_dump($id_task);
