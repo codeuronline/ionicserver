@@ -109,3 +109,5 @@ Permet de réceptionner le fichier image pour l'appli [foundlost](https://github
 ### Mise à jour du 28/08/2022
 #### -> Renforcement de la sécurité au niveau de taille des champs acceptés
 #### -> Ajout d'un fichier captcha.php générant les images de (https://github.com/codeuronline/ionicserver/blob/main/captcha.php) à la demande
+### Mise à jour du 04/10/2022
+#### -> Renforcement de la sécurite au niveau de la suppression l'utilsateur doit être le "créateur de la déclaration"
