@@ -9,7 +9,9 @@
 Permet de gérer la BD foundlist(create/modification/suppression)
 
 #### Create
-#### Syntaxe:  
+
+#### Syntaxe:
+
 http//:`<adresse du ionicserver>`/manage-data.php?key=create
 
 Il doit être associé à un objet json avec un certain nombre de champs
@@ -22,32 +24,39 @@ Il doit être associé à un objet json avec un certain nombre de champs
 * prénom (string)
 * email(valide)
 * checkedpicture(boolean) ** champ optionnel
-* filename(string) ** champ optionnel 
+* filename(string) ** champ optionnel
 
-#### Update 
+#### Update
+
 Met à jour un objet dans la BD
 Néccsite une seconde clé id_task pour définir l'objet à modifier
 
 #### Syntaxe:
+
 http//:`<adresse du ionicserver>`/manage-data.php?key=update&id_task=
 
-#### Delete 
+#### Delete
+
 Nécessite une second clé id_task pour définir l'objet à effacer
 Supprime un objet dans la BD et efface le cas échéant l'image stockée sur le serveur
 
 #### Syntaxe:
+
 http//:`<adresse du ionicserver>`/manage-data.php?key=delete&id_task=
 
 #### User
+
 Nouvelle route pour ajouter un utlisateur via methode POST
 nécessite 2 champs
 --> mail pour login
 --> mot de passe
 
 #### Syntaxe:
+
 http//:`<adresse du ionicserver>`/manage-data.php?key=user
 
-#### Connexion
+#### connexion
+
 Nouvelle route pour verifier un utlisateur via methode POST
 nécessite 2 champs
 compare avec les élements deja present en BD
@@ -55,12 +64,15 @@ compare avec les élements deja present en BD
 --> mot de passe
 
 #### Syntaxe:
+
 http//:`<adresse du ionicserver>`/manage-data.php?key=connexion
 
 #### un numero (integer)
+
 Retourne l'objet dont la key est le **numéro**
 
 #### Syntaxe:
+
 http//:`<adresse du ionicserver>`/manage-data.php?key=numero
 
 #### Recover
@@ -80,17 +92,33 @@ http//:`<adresse du ionicserver>`/manage-data.php?key=recover
 ### [fichier retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
 
 #### Syntaxe:
+
 http//:`<adresse du ionicserver>`/manage-data.php?key=found
 found -> Renvoie la liste des objets trouvés
 
 #### Syntaxe:
+
 http//:`<adresse du ionicserver>`/manage-data.php?key=lost
 lost  -> Renvoie la liste des objets perdus
 
-#### Syntaxe: 
+#### Syntaxe:
+
 http//:`<adresse du ionicserver>`/manage-data.php?key=integer
 un numéro -> Renvoie l'objet qui porte ce numéro
 
+#### recover
+
+nouvelle route pour renitialiser le mot de pass via methoded POST
+nécessite 3 champs
+compare avec éléments dejàa present en BD
+-> mail pour login s'il existe
+-> le captcha recopié de captcha.php généré
+-> et de la vérification de la coincidence des passwords
+
+#### Syntaxe:
+
+http//:`<adresse du ionicserver>`/manage-data.php?key=recover
+-> change le comportement du create en mode recover qui écrase l'ancien mot de pass pour le meme login
 
 ### [fichier image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
 
@@ -99,13 +127,23 @@ Permet de réceptionner le fichier image pour l'appli [foundlost](https://github
 -> Créer un élément de Session captcha et renvoie l'image du captcha au format jpeg
 
 ### Mise à jour du 28/07/2022
+
 #### -> déplacement de la condition sur le status qui était mis au mauvais endroit et par conséquent ne traitait pas le changement de statuts
-#### -> correction d'un bug si l'image était déja insérée en BD 
+
+#### -> correction d'un bug si l'image était déja insérée en BD
+
 ### Mise à jour du 01/08/2022
+
 #### -> correction d'un bug qui effaçait systématiquement l'ancienne image stockée sur le serveur en mode update
+
 ### Mise à jour du 04/08/2022
+
 #### -> Modification interface pour gérer une authentification mail/mot de passe -> terminer
+
 #### -> Creation d'un nouveau fichier (https://github.com/codeuronline/ionicserver/blob/main/existence.php) pour gérer les requêtes ajax au niveau des utilisateurs déjà présents
+
 ### Mise à jour du 28/08/2022
+
 #### -> Renforcement de la sécurité au niveau de taille des champs acceptés
-#### -> Ajout d'un fichier captcha.php générant les images de (https://github.com/codeuronline/ionicserver/blob/main/captcha.php) à la demande
+
+#### -> Ajout d'un fichier captcha.php générant les images de captcha (https://github.com/codeuronline/ionicserver/blob/master/captcha.php) à la demande
