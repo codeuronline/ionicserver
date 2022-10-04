@@ -97,7 +97,7 @@ if (!empty($input) || (@$key == 'delete')) {
                                             $resultat = $stmt->execute();
                                             $stmt->closeCursor();
                                             if ($resultat > 0) {
-                                                echo "INSERTION PRODUCT IN BD";
+                                                echo "-> INSERTION PRODUCT IN BD";
                                                 $pdo->getPDO();
                                             }
                                         } catch (\Throwable $th) {
