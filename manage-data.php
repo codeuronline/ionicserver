@@ -271,9 +271,10 @@ if (!empty($input) || (@$key == 'delete')) {
                 try {
                     //code...
                 /**on vérifie s'il n'existe pas une trace d'un enregistrement précédent */
-                $reqExistence = "SELECT filename FROM foundlost WHERE id_object=:id_task";
+                $reqExistence = "SELECT filename FROM foundlost WHERE id_object=:id_task AND user_id=:user_id";
                 $stmt = $pdo->getPDO()->prepare($reqExistence);
                 $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
+                $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
                 //$stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
                 $resultat = $stmt->execute();
                 $element = $stmt->fetch(PDO::FETCH_ASSOC);
