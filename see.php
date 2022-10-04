@@ -10,12 +10,13 @@
 </head>
 
 <body>
+    SUCCES === <br />
     <font size='1'>
         <table class='xdebug-error xe-notice' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
             <tr>
                 <th align='left' bgcolor='#f57900' colspan="5"><span
                         style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Notice:
-                    Undefined index: user_id in C:\laragon\www\ionicserver\manage-data.php on line <i>61</i></th>
+                    Undefined index: id_object in C:\laragon\www\ionicserver\manage-data.php on line <i>43</i></th>
             </tr>
             <tr>
                 <th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th>
@@ -29,18 +30,15 @@
             </tr>
             <tr>
                 <td bgcolor='#eeeeec' align='center'>1</td>
-                <td bgcolor='#eeeeec' align='center'>0.0005</td>
-                <td bgcolor='#eeeeec' align='right'>471544</td>
+                <td bgcolor='#eeeeec' align='center'>0.0007</td>
+                <td bgcolor='#eeeeec' align='right'>472120</td>
                 <td bgcolor='#eeeeec'>{main}( )</td>
                 <td title='C:\laragon\www\ionicserver\manage-data.php' bgcolor='#eeeeec'>...\manage-data.php<b>:</b>0
                 </td>
             </tr>
         </table>
     </font>
-    DELETE DETECTE
-    <pre class='xdebug-var-dump' dir='ltr'>
-<small>C:\laragon\www\ionicserver\manage-data.php:269:</small><small>string</small> <font color='#cc0000'>'22'</font> <i>(length=2)</i>
-</pre>SUPPRESSION PRODUCT IN BD
+    CREATE DETECTEINSERTION PRODUCT IN BD
 </body>
 
 </html>

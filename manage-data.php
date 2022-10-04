@@ -39,8 +39,11 @@ if (!empty($input) || (@$key == 'delete')) {
             }
         } else {
             //dernier nettoyage des elements
+            if ($key!="create") {
+                $id_object =  strip_tags($data['id_object']);
+            }
+            
             $user_id = intVal(strip_tags($data['user_id']));
-            $id_object =  strip_tags($data['id_object']);
             $description = strip_tags(valid_data($data['description']));
             $status = strip_tags($data['status']);
             $date = strip_tags($data['date']);
@@ -163,7 +166,7 @@ if (!empty($input) || (@$key == 'delete')) {
                                                             if ($element['filename'] != null) {
                                                                 if ($data['filename'] != $element['filename']) {
                                                                     unlink("upload/" . $element['filename']);
-                                                                    echo "SUPPRESSION de l'image"; # code...
+                                                                    echo "-> SUPPRESSION de l'image"; # code...
                                                                 }
                                                             }
                                                         }
@@ -196,16 +199,16 @@ if (!empty($input) || (@$key == 'delete')) {
                                                         $stmt->closeCursor();
                                                         $stmt->closeCursor();
                                                         if ($resultat > 0) {
-                                                            echo "MODIFICATION PRODUCT IN BD AVEC INSERTION D IMAGE";
+                                                            echo "-> MODIFICATION PRODUCT IN BD AVEC INSERTION D IMAGE";
                                                             $pdo->getPDO();
                                                         }
                                                     } catch (\Throwable $th) {
                                                         var_dump($th);
-                                                        echo "ERREUR DE MODIFICATION";
+                                                        echo "-> ERREUR DE MODIFICATION";
                                                     }
                                                 }
                                             } else {
-                                                var_dump('no ');
+                                                echo "-> No";
                                                 try {
                                                     $req = "UPDATE foundlost SET 
                                                     id_object=:id_object,
@@ -229,11 +232,11 @@ if (!empty($input) || (@$key == 'delete')) {
                                                     $resultat = $stmt->execute();
                                                     $stmt->closeCursor();
                                                     if ($resultat > 0) {
-                                                        echo "MODIFICATION PRODUCT IN BD";
+                                                        echo "-> MODIFICATION PRODUCT IN BD";
                                                         $pdo->getPDO();
                                                     }
                                                 } catch (\Throwable $th) {
-                                                    echo "ERREUR DE MODIFICATION";
+                                                    echo "-> ERREUR DE MODIFICATION";
                                                 }
                                             }
                                         }
@@ -283,7 +286,7 @@ if (!empty($input) || (@$key == 'delete')) {
                 //if ($element['filename'] != null) {
                 if (isset($element['filename']) && !empty($element['filename'])) {
                     unlink("upload/" . $element['filename']);
-                    echo "SUPPRESSION DE L'IMAGE";
+                    echo "-> SUPPRESSION DE L'IMAGE";
                 }
                 $pdo->getPDO();
                 // TODO : Préparer la requête dans un try/catch
@@ -294,11 +297,11 @@ if (!empty($input) || (@$key == 'delete')) {
                 $resultat1 = $stmt->execute();   
                 $stmt->closeCursor();
                 if ($resultat1 > 0) {
-                    echo "SUPPRESSION PRODUCT IN BD";
+                    echo "-> SUPPRESSION PRODUCT IN BD";
                     $pdo->getPDO();
                 }
             } catch (\Throwable $th) {
-                "ERREUR DE SUPRESSION IN BD";
+                "-> ERREUR DE SUPRESSION IN BD";
             }
         }
             // TODO : Préparer et exécuter la requête (dans un try/catch)
@@ -337,22 +340,22 @@ if (!empty($input) || (@$key == 'delete')) {
                                     $stmt->closeCursor();
                                     echo json_encode($element['id']);
                                 } catch (\Throwable $th) {
-                                    echo "ERREUR D'UPDATE DANS LA BD";
+                                    echo "-> ERREUR D'UPDATE DANS LA BD";
                                 }
                             } else {
-                                echo "ERREUR DE CAPTCHA";
+                                echo "-> ERREUR DE CAPTCHA";
                             }
                         } else {
-                            echo "ERREUR : LES PASSWORDS NE SONT PAS IDENTIQUES";
+                            echo "-> ERREUR : LES PASSWORDS NE SONT PAS IDENTIQUES";
                         }
                     } else {
                         $stmt->closeCursor();
                     }
                 } catch (\Throwable $th) {
-                    echo "ERREUR EMAIL NON REFERENCE";
+                    echo "-> ERREUR EMAIL NON REFERENCE";
                 }
             } else {
-                echo "probleme d'email";
+                echo "PROBLEME D'EMAIL";
             }
             break;
         case 'user':
