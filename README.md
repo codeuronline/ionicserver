@@ -76,18 +76,19 @@ Retourne l'objet dont la key est le **numéro**
 http//:`<adresse du ionicserver>`/manage-data.php?key=numero
 
 #### Recover
+
 nouvelle route pour renitialiser le mot de pass via methode POST
 --> nécessite 3 champs
 --> compare avec éléments dejà present en BD
 --> élément contenu pour les test
 -> mail pour login s'il existe
 -> le captcha recopié de captcha.php généré
--> et les 2 password pour vérifier de leur coincidence 
+-> et les 2 password pour vérifier de leur coincidence
 
-#### Syntaxe: 
+#### Syntaxe:
+
 http//:`<adresse du ionicserver>`/manage-data.php?key=recover
 -> change le comportement du create en mode recover qui écrase l'ancien mot de pass pour le meme login
-
 
 ### [fichier retrieve-data.php](https://github.com/codeuronline/ionicserver/blob/main/retrieve-data.php)
 
@@ -123,7 +124,9 @@ http//:`<adresse du ionicserver>`/manage-data.php?key=recover
 ### [fichier image.php](https://github.com/codeuronline/ionicserver/blob/main/image.php)
 
 Permet de réceptionner le fichier image pour l'appli [foundlost](https://github.com/codeuronline/appli-ionic/tree/master/ionicfoundlost/foundlost) dans le repertoire upload/
+
 ### [fichier captcha.php](https://github.com/codeuronline/ionicserver/blob/master/captcha.php)
+
 -> Créer un élément de Session captcha et renvoie l'image du captcha au format jpeg
 
 ### Mise à jour du 28/07/2022
@@ -147,3 +150,9 @@ Permet de réceptionner le fichier image pour l'appli [foundlost](https://github
 #### -> Renforcement de la sécurité au niveau de taille des champs acceptés
 
 #### -> Ajout d'un fichier captcha.php générant les images de captcha (https://github.com/codeuronline/ionicserver/blob/master/captcha.php) à la demande
+
+### Mise à jour du 13/10/2022
+
+#### -> Renforcement de la sécurité pour delete en prenant en compte id_user de la session
+
+#### -> Ne peut etre supprimer que par son propriétaire
