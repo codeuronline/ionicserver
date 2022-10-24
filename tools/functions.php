@@ -1,5 +1,5 @@
 <?php 
-// s'assure que le code est proprE"
+// s'assure que le code est propre"
 function valid_data($data)
 {
     $data = trim($data);
