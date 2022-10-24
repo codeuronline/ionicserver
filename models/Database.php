@@ -9,7 +9,7 @@ class Database
     private static $pdo;                            // variable d'instance PDO
     
     // Appliquer les paramètres à PDO
-    //  
+    
     private static function setBdd(){
 
             self::$pdo = new PDO("mysql:host=".self::$host.";dbname=".self::$dbname.";".self::$attribut,self::$user,self::$pwd);
