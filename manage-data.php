@@ -3,7 +3,6 @@
 header('Access-Control-Allow-Origin: *');
 //header('Access-Control-Methods:GET, POST, OPTIONS, PUT, DELETE');
 header("Access-Control-Allow-Headers: Content-type");
-
 // TODO : Définir les paramètres de connexion à la base
 require_once 'models/Database.php';
 require_once 'tools/functions.php';
@@ -39,10 +38,9 @@ if (!empty($input) || (@$key == 'delete')) {
             }
         } else {
             //dernier nettoyage des elements
-            if ($key!="create") {
+            if ($key != "create") {
                 $id_object =  strip_tags($data['id_object']);
             }
-            
             $user_id = intVal(strip_tags($data['user_id']));
             $description = strip_tags(valid_data($data['description']));
             $status = strip_tags($data['status']);
@@ -61,7 +59,7 @@ if (!empty($input) || (@$key == 'delete')) {
             }
         }
     } else {
-        $user_id=intVal(strip_tags($_GET['user_id']));
+        $user_id = intVal(strip_tags($_GET['user_id']));
     }
 
     // En fonction du mode d’action requis
@@ -78,37 +76,36 @@ if (!empty($input) || (@$key == 'delete')) {
                             if (!empty($firstname) && (strlen($firstname) > MIN_FIRSTNAME_SIZE) && (strlen($firstname) <= MAX_FIRSTNAME_SIZE)) {
                                 if (!empty($lastname) && (strlen($lastname) > MIN_LASTNAME_SIZE) && (strlen($lastname) <= MAX_LASTNAME_SIZE)) {
                                     if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) && (strlen($email) > MIN_EMAIL_SIZE) && (strlen($email) <= MAX_EMAIL_SIZE)) {
-                                        if (!empty($user_id)&&  filter_var($user_id,FILTER_VALIDATE_INT)) {
-                                        //debut
-                                        try {
-                                            // TODO : Préparer la requête dans un try/catch
-                                            $req = "INSERT INTO 
+                                        if (!empty($user_id) &&  filter_var($user_id, FILTER_VALIDATE_INT)) {
+                                            //debut
+                                            try {
+                                                // TODO : Préparer la requête dans un try/catch
+                                                $req = "INSERT INTO 
                                             foundlost (description,status,date,location,firstname,lastname,email,user_id) 
                                             values (:description,:status,:date,:location,:firstname,:lastname,:email,:user_id)";
-                                            $stmt = $pdo->getPDO()->prepare($req);
-                                            $stmt->bindValue(":description", $description, PDO::PARAM_STR);
-                                            $stmt->bindValue(":status", $status, PDO::PARAM_BOOL);
-                                            $stmt->bindValue(":date", $date, PDO::PARAM_STR);
-                                            $stmt->bindValue(":location", $location, PDO::PARAM_STR);
-                                            $stmt->bindValue(":firstname", $firstname, PDO::PARAM_STR);
-                                            $stmt->bindValue(":lastname", $lastname, PDO::PARAM_STR);
-                                            $stmt->bindValue(":email", $email, PDO::PARAM_STR);
-                                            $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
-                                            $resultat = $stmt->execute();
-                                            $stmt->closeCursor();
-                                            if ($resultat > 0) {
-                                                echo "-> INSERTION PRODUCT IN BD";
-                                                $pdo->getPDO();
+                                                $stmt = $pdo->getPDO()->prepare($req);
+                                                $stmt->bindValue(":description", $description, PDO::PARAM_STR);
+                                                $stmt->bindValue(":status", $status, PDO::PARAM_BOOL);
+                                                $stmt->bindValue(":date", $date, PDO::PARAM_STR);
+                                                $stmt->bindValue(":location", $location, PDO::PARAM_STR);
+                                                $stmt->bindValue(":firstname", $firstname, PDO::PARAM_STR);
+                                                $stmt->bindValue(":lastname", $lastname, PDO::PARAM_STR);
+                                                $stmt->bindValue(":email", $email, PDO::PARAM_STR);
+                                                $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
+                                                $resultat = $stmt->execute();
+                                                $stmt->closeCursor();
+                                                if ($resultat > 0) {
+                                                    echo "-> INSERTION PRODUCT IN BD";
+                                                    $pdo->getPDO();
+                                                }
+                                            } catch (\Throwable $th) {
+                                                echo $th;
+                                                //throw $th;
                                             }
-                                        } catch (\Throwable $th) {
-                                            echo $th;
-                                            //throw $th;
-                                        }
-                                        //fin
-                                        }else{
+                                            //fin
+                                        } else {
                                             var_dump("Problème Insertion sur user_id", $user_id);
                                         }
-                                        
                                     } else {
                                         var_dump("Problème Insertion sur Email", $email);
                                     }
@@ -274,40 +271,39 @@ if (!empty($input) || (@$key == 'delete')) {
                 var_dump($id_task);
                 try {
                     //code...
-                /**on vérifie s'il n'existe pas une trace d'un enregistrement précédent */
-                $reqExistence = "SELECT filename FROM foundlost WHERE id_object=:id_task AND user_id=:user_id";
-                $stmt = $pdo->getPDO()->prepare($reqExistence);
-                $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
-                $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
-                //$stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
-                $resultat = $stmt->execute();
-                $element = $stmt->fetch(PDO::FETCH_ASSOC);
-                $stmt->closeCursor();
-                //if ($element['filename'] != null) {
-                if (isset($element['filename']) && !empty($element['filename'])) {
-                    unlink("upload/" . $element['filename']);
-                    echo "-> SUPPRESSION DE L'IMAGE";
-                }
-                $pdo->getPDO();
-                // TODO : Préparer la requête dans un try/catch
-                $req = "DELETE FROM foundlost WHERE id_object=:id_task AND user_id=:user_id";
-                $stmt = $pdo->getPDO()->prepare($req);
-                $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
-                $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
-                $resultat1 = $stmt->execute();   
-                $stmt->closeCursor();
-                if ($resultat1 > 0) {
-                    echo "-> SUPPRESSION PRODUCT IN BD";
+                    /**on vérifie s'il n'existe pas une trace d'un enregistrement précédent */
+                    $reqExistence = "SELECT filename FROM foundlost WHERE id_object=:id_task AND user_id=:user_id";
+                    $stmt = $pdo->getPDO()->prepare($reqExistence);
+                    $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
+                    $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
+                    //$stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
+                    $resultat = $stmt->execute();
+                    $element = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $stmt->closeCursor();
+                    //if ($element['filename'] != null) {
+                    if (isset($element['filename']) && !empty($element['filename'])) {
+                        unlink("upload/" . $element['filename']);
+                        echo "-> SUPPRESSION DE L'IMAGE";
+                    }
                     $pdo->getPDO();
+                    // TODO : Préparer la requête dans un try/catch
+                    $req = "DELETE FROM foundlost WHERE id_object=:id_task AND user_id=:user_id";
+                    $stmt = $pdo->getPDO()->prepare($req);
+                    $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
+                    $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
+                    $resultat1 = $stmt->execute();
+                    $stmt->closeCursor();
+                    if ($resultat1 > 0) {
+                        echo "-> SUPPRESSION PRODUCT IN BD";
+                        $pdo->getPDO();
+                    }
+                } catch (\Throwable $th) {
+                    "-> ERREUR DE SUPRESSION IN BD";
                 }
-            } catch (\Throwable $th) {
-                "-> ERREUR DE SUPRESSION IN BD";
             }
-        }
             // TODO : Préparer et exécuter la requête (dans un try/catch)
             break;
-    //  Traitement de  la connexion 
-            case 'recover':
+        case 'recover':
             //  echo "RECOVER DETECTE";
             // trois elements a comparer avant d'inserer  le nouvel element
             // le mail est valide et existe dans la base de donnée
@@ -385,11 +381,11 @@ if (!empty($input) || (@$key == 'delete')) {
                             $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
                             $stmt->bindValue(":password", $password, PDO::PARAM_STR);
                             $resultat = $stmt->execute();
-                            $user_id= $pdo->getPDO()->lastInsertId();
+                            $user_id = $pdo->getPDO()->lastInsertId();
                             $stmt->closeCursor();
                             echo json_encode($user_id);
                         } catch (\Throwable $th) {
-                            echo "ERREUR D'INSERTION".$th;
+                            echo "ERREUR D'INSERTION" . $th;
                         }
                     }
                 } catch (\Throwable $th) {
