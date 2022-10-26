@@ -1,8 +1,8 @@
 <?php
-//define("URL", str_replace("manage-data.php", "", (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
-header('Access-Control-Allow-Origin: *');
-//header('Access-Control-Methods:GET, POST, OPTIONS, PUT, DELETE');
-header("Access-Control-Allow-Headers: Content-type");
+header('Access-Control-Allow-Origin: *');               // renvoie une entete HTTP qui prend Access-Control-Allow-Origin 
+                                                        // qui accepte toutes requetes provenant de tous sites
+header("Access-Control-Allow-Headers: Content-type");   // renvoie une entete HTTP qui prend Access-Control-Allow-Headers 
+                                                        // qui accepte tout les types mime de Content-type
 // TODO : Définir les paramètres de connexion à la base
 require_once 'models/Database.php';
 require_once 'tools/functions.php';
@@ -14,52 +14,53 @@ $pdo = new Database;
 // et nettoyer la valeur
 extract($_GET);
 if (isset($key)) {
-    $key = strip_tags(valid_data($key));
+    $key = valid_data($key);
 }
 if (isset($id_task)) {
-    $id_task = strip_tags(valid_data($id_task));
+    $id_task = valid_data($id_task);
 }
 //var_dump("key", $key);
 
 // Récupérer les paramètres envoyés par le client vers l’API
+// on li
 $input = file_get_contents('php://input');
 if (!empty($input) || (@$key == 'delete')) {
     $data = json_decode($input, true);
     //extract($data);
     if ($key != 'delete') {
-        // cas de a creation d'un user ->pas  user_id on doit on cree 1
-        // cas  de connexion  et recover ->on doit le recuperer 
+        // cas de la creation d'un user -> pas user_id on doit on crée 1
+        // cas de la connexion  et recover -> on doit le recuperer 
         if ($key == "connexion" || $key == "user" || $key == "recover") {
-            $email_user = strip_tags(valid_data($data['email_user']));
-            $password = strip_tags(valid_data($data['password']));
+            $email_user = valid_data($data['email_user']);
+            $password = valid_data($data['password']);
             if ($key == "recover") {
-                $captcha = strip_tags(valid_data($data['captcha']));
-                $passwordVerify = strip_tags(valid_data($data['passwordVerify']));
+                $captcha = valid_data($data['captcha']);
+                $passwordVerify = valid_data($data['passwordVerify']);
             }
         } else {
-            //dernier nettoyage des elements
+            // dernier nettoyage des éléments
             if ($key != "create") {
-                $id_object =  strip_tags($data['id_object']);
+                $id_object =  intVal(valid_data($data['id_object']));
             }
-            $user_id = intVal(strip_tags($data['user_id']));
-            $description = strip_tags(valid_data($data['description']));
-            $status = strip_tags($data['status']);
-            $date = strip_tags($data['date']);
-            $location = strip_tags(valid_data($data['location']));
-            $firstname = strip_tags(valid_data($data['firstname']));
-            $lastname = strip_tags(valid_data($data['lastname']));
-            $email = strip_tags(valid_data($data['email']));
+            $user_id = intVal($data['user_id']);
+            $description = valid_data($data['description']);
+            $status = $data['status'];
+            $date = $data['date'];
+            $location = valid_data($data['location']);
+            $firstname = valid_data($data['firstname']);
+            $lastname = valid_data($data['lastname']);
+            $email = valid_data($data['email']);
             if (isset($data['checkedpicture'])) {
-                $checkedpicture = strip_tags($data['checkedpicture']);
-                $filename = strip_tags(valid_data($data['filename']));
+                $checkedpicture = $data['checkedpicture'];
+                $filename = valid_data($data['filename']);
             }
             if (isset($data['email_user'])) {
-                $email_user = strip_tags(valid_data($data['email_user']));
-                $password = strip_tags(valid_data($data['password']));
+                $email_user = valid_data($data['email_user']);
+                $password = valid_data($data['password']);
             }
         }
     } else {
-        $user_id = intVal(strip_tags($_GET['user_id']));
+        $user_id = intVal($_GET['user_id']);
     }
 
     // En fonction du mode d’action requis
@@ -67,9 +68,7 @@ if (!empty($input) || (@$key == 'delete')) {
             //Ajoute un nouvel enregistrement
         case "create":
             echo "CREATE DETECTE";
-            // TODO : Filtrer les valeurs entrantes
             if (!empty($description) && (strlen($description) > MIN_DESCRIPTION_SIZE) && strlen($description) <= MAX_DESCRIPTION_SIZE) {
-                //var_dump(filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE));
                 if (filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) !== null) {
                     if (is_date_valid($date)) {
                         if (!empty($location) && (strlen($location) > MIN_LOCATION_SIZE) && (strlen($location) <= MAX_LOCATION_SIZE)) {
@@ -77,7 +76,6 @@ if (!empty($input) || (@$key == 'delete')) {
                                 if (!empty($lastname) && (strlen($lastname) > MIN_LASTNAME_SIZE) && (strlen($lastname) <= MAX_LASTNAME_SIZE)) {
                                     if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) && (strlen($email) > MIN_EMAIL_SIZE) && (strlen($email) <= MAX_EMAIL_SIZE)) {
                                         if (!empty($user_id) &&  filter_var($user_id, FILTER_VALIDATE_INT)) {
-                                            //debut
                                             try {
                                                 // TODO : Préparer la requête dans un try/catch
                                                 $req = "INSERT INTO 
@@ -102,7 +100,6 @@ if (!empty($input) || (@$key == 'delete')) {
                                                 echo $th;
                                                 //throw $th;
                                             }
-                                            //fin
                                         } else {
                                             var_dump("Problème Insertion sur user_id", $user_id);
                                         }
@@ -121,7 +118,6 @@ if (!empty($input) || (@$key == 'delete')) {
                     } else {
                         var_dump("Problème Insertion sur Date: ", $date);
                     }
-                    //DATE - format YYYY-MM-DDilter_var($date,FILTER_V))
                 } else {
                     var_dump("Problème Insertion sur Status: ", $status);
                 }
@@ -129,13 +125,12 @@ if (!empty($input) || (@$key == 'delete')) {
                 var_dump("Problème Insertion sur Description: ", $description);
             }
             break;
-            // Mettre à jour un enregistrement existant
         case "update":
             // TODO : Nettoyer les valeurs en provenant de l’URL client
             echo "UPDATE DETECTE";
             if (isset(($_GET["id_task"]))) {
-                $id_task = strip_tags($data['id_object']);
-                $id_task = intval($id_task);
+                $id_task = $id_object;
+                $id_task = $id_task;
                 if (!empty($description) && (strlen($description) > MIN_DESCRIPTION_SIZE) && strlen($description) <= MAX_DESCRIPTION_SIZE) {
                     $status = boolval($status);
                     if (($status == 0) || ($status == 1) || ($status == false) || ($status = true)) {
@@ -426,7 +421,7 @@ if (!empty($input) || (@$key == 'delete')) {
             }
             break;
         default:
-            var_dump('ERREUR DE CLE');
+            var_dump("ERREUR D'ACTION : $key NON RECONNUE ");
             break;
     }
 }
