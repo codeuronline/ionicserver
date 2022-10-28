@@ -363,14 +363,14 @@ if (!empty($input) || (@$key == 'delete')) {
                     //var_dump($stmt->rowCount());
                     if ($stmt->rowCount() > 0) {
                         // on a resultat dans la bd donc 
-                        // on renvoie le message d'erreur false au front
+                        // on renvoie le message d'erreur ici false au front
                         echo json_encode(false);
                         $stmt->closeCursor();
-                    } else {
-                        $stmt->closeCursor();
-                        //on prepare les variables
+                    } else { // sinon on prépare la requete afin d'introduire un nouvel utilisateur
                         try {
                             $reqInsert = "INSERT INTO user (email_user,password) VALUES(:email_user,:password)";
+                            //  on s'assure que le mot de passe est crypté
+                            //  on hash le password avec l'algorithme PASSWORD_DEFAULT correspondant au cryptage le plus securisé du moment
                             $password = password_hash($password, PASSWORD_DEFAULT);
                             $stmt = $pdo->getPDO()->prepare($reqInsert);
                             $stmt->bindValue(":email_user", $email_user, PDO::PARAM_STR);
