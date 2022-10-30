@@ -1,4 +1,16 @@
 <?php
+
+session_start();
+error_log(print_r($_SESSION,1));
+error_log("manage-data");
+error_log("SESSION");
+if (isset($_SESSION['captcha'])) {
+    
+    $GLOBALS['captcha']= $_SESSION['captcha'];
+    error_log(print_r($_SESSION,1));
+    error_log(print_r($GLOBALS,1));
+    
+}
 header('Access-Control-Allow-Origin: *');               // renvoie une entete HTTP qui prend Access-Control-Allow-Origin 
                                                         // qui accepte toutes requetes provenant de tous sites
 header("Access-Control-Allow-Headers: Content-type");   // renvoie une entete HTTP qui prend Access-Control-Allow-Headers 
@@ -320,7 +332,7 @@ if (!empty($input) || (@$key == 'delete')) {
                                 try {
                                     // on supprime la variable captcha;
                                     // unset($_SESSION["captcha"]);
-                                    unset($GLOBALS["captcha"]);
+                                    unset($_SESSION["captcha"]);
                                     // on crypte le password;
                                     $password = password_hash($password, PASSWORD_DEFAULT);
                                     $reqUpdate = "UPDATE user SET password=:password WHERE email_user = :email_user";
@@ -334,7 +346,7 @@ if (!empty($input) || (@$key == 'delete')) {
                                     echo "-> ERREUR D'UPDATE DANS LA BD";
                                 }
                             } else {
-                                echo "-> ERREUR DE CAPTCHA";
+                                echo "CAPTCHA";
                             }
                         } else {
                             echo "-> ERREUR : LES PASSWORDS NE SONT PAS IDENTIQUES";
