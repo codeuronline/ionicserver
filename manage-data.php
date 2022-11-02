@@ -164,7 +164,7 @@ if (!empty($input) || (@$key == 'delete')) {
                                                             if ($element['filename'] != null) {
                                                                 if ($data['filename'] != $element['filename']) {
                                                                     unlink("upload/" . $element['filename']);
-                                                                    echo "-> SUPPRESSION de l'image"; # code...
+                                                                    echo "-> SUPPRESSION de l'image";
                                                                 }
                                                             }
                                                         }
