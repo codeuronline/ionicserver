@@ -1,15 +1,11 @@
 <?php
-
 session_start();
-error_log(print_r($_SESSION,1));
-error_log("manage-data");
+error_log(print_r($_SESSION,1));// cas du captcha
 error_log("SESSION");
 if (isset($_SESSION['captcha'])) {
-    
     $GLOBALS['captcha']= $_SESSION['captcha'];
     error_log(print_r($_SESSION,1));
-    error_log(print_r($GLOBALS,1));
-    
+    error_log(print_r($GLOBALS,1));   
 }
 header('Access-Control-Allow-Origin: *');               // renvoie une entete HTTP qui prend Access-Control-Allow-Origin 
                                                         // qui accepte toutes requetes provenant de tous sites
@@ -32,9 +28,7 @@ if (isset($id_task)) {
     $id_task = valid_data($id_task);
 }
 //var_dump("key", $key);
-
-// Récupérer les paramètres envoyés par le client vers l’API
-// on li
+// Récupérer les paramètres envoyés par le client à l’API
 $input = file_get_contents('php://input');
 if (!empty($input) || (@$key == 'delete')) {
     $data = json_decode($input, true);
@@ -74,7 +68,7 @@ if (!empty($input) || (@$key == 'delete')) {
     } else {
         $user_id = intVal($_GET['user_id']);
     }
-
+    // fin des données structurées
     // En fonction du mode d’action requis
     switch ($key) {
             //Ajoute un nouvel enregistrement
@@ -271,9 +265,7 @@ if (!empty($input) || (@$key == 'delete')) {
             // Supprimer un enregistrement existant
         case 'delete':
             echo " DELETE DETECTE";
-            // rajouter une condition au niveau de l'utilisateur qui est bian le proprietaire de la declaration
-            // -> fait
-            // TODO : Nettoyer les valeurs de l’URL client (id_task)
+                 // TODO : Nettoyer les valeurs de l’URL client (id_task)
             if (isset(($_GET["id_task"]))) {
                 var_dump($id_task);
                 try {
@@ -283,8 +275,7 @@ if (!empty($input) || (@$key == 'delete')) {
                     $stmt = $pdo->getPDO()->prepare($reqExistence);
                     $stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
                     $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
-                    //$stmt->bindValue(":id_task", $id_task, PDO::PARAM_INT);
-                    $resultat = $stmt->execute();
+                   $resultat = $stmt->execute();
                     $element = $stmt->fetch(PDO::FETCH_ASSOC);
                     $stmt->closeCursor();
                     //if ($element['filename'] != null) {
@@ -301,8 +292,7 @@ if (!empty($input) || (@$key == 'delete')) {
                     $resultat1 = $stmt->execute();
                     $stmt->closeCursor();
                     if ($resultat1 > 0) {
-                        echo "-> SUPPRESSION PRODUCT IN BD";
-                        $pdo->getPDO();
+                        echo "-> SUPPRESSION PRODUCT IN BD";     
                     }
                 } catch (\Throwable $th) {
                     "-> ERREUR DE SUPRESSION IN BD";

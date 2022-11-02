@@ -10,8 +10,9 @@ function valid_data($data): string
 }
 // s'assure que la date est au bon format
 function is_date_valid($date, $format = "Y-m-d")
-{
+{//renvoie un tableau contenant l'état d'application du format à date
     $parsed_date = date_parse_from_format($format, $date);
+    // si error_count ou warning_count ne sont définis on renvoie true
     if (!$parsed_date['error_count'] && !$parsed_date['warning_count']) {
         return true;
     }
