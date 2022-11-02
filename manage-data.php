@@ -68,7 +68,7 @@ if (!empty($input) || (@$key == 'delete')) {
     } else {
         $user_id = intVal($_GET['user_id']);
     }
-    // fin des données structurées
+    // fin de structuration des données
     // En fonction du mode d’action requis
     switch ($key) {
             //Ajoute un nouvel enregistrement
